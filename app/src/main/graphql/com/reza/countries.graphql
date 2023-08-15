@@ -3,6 +3,16 @@ query Continent($continent_code: ID!) {
         countries {
             name
             emoji
+            native
+            currency
+            phone
+            languages {
+                name
+                rtl
+            }
+            states {
+                name
+            }
         }
     }
 }
