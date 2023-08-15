@@ -3,12 +3,11 @@ query Continent($continent_code: ID!) {
         countries {
             name
             emoji
-            native
             currency
+            capital
             phone
             languages {
                 name
-                rtl
             }
             states {
                 name
