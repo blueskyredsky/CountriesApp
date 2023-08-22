@@ -13,5 +13,7 @@ query Continent($continent_code: ID!) {
                 name
             }
         }
+        name
+        code
     }
 }

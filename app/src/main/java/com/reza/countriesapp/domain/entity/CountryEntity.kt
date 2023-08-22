@@ -1,6 +1,6 @@
-package com.reza.countriesapp.domain
+package com.reza.countriesapp.domain.entity
 
-data class Country(
+data class CountryEntity(
     val name: String?,
     val emoji: String?,
     val currency: String?,
