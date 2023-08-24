@@ -4,7 +4,7 @@ import com.reza.ContinentQuery
 import com.reza.countriesapp.domain.entity.ContinentEntity
 import com.reza.countriesapp.domain.entity.CountryEntity
 
-fun ContinentQuery.Continent.toContinent(): ContinentEntity {
+fun ContinentQuery.Continent.toContinentEntity(): ContinentEntity {
     return ContinentEntity(
         name = name,
         code = code,

@@ -5,5 +5,5 @@ import com.reza.countriesapp.domain.entity.CountryEntity
 
 interface ContinentRepository {
     suspend fun getContinents(): List<ContinentEntity>
-    suspend fun getContinent(code: String): ContinentEntity?
+    suspend fun getContinentDetails(code: String): ContinentEntity?
 }
