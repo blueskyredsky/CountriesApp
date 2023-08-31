@@ -28,16 +28,37 @@ class ContinentViewModel @Inject constructor(
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
         _continentsState.update { continentsState ->
             continentsState.copy(
-                continents = emptyList(),
-                isLoading = false,
                 errorMessage = exception.message ?: "Something went wrong, please try again!"
             )
         }
     }
 
     init {
-        viewModelScope.launch(mainDispatcher) {
+        viewModelScope.launch(mainDispatcher + exceptionHandler) {
+            // Loading state
+            _continentsState.update { continentsState ->
+                continentsState.copy(
+                    isLoading = true
+                )
+            }
 
+            // Getting continents
+            _continentsState.update { continentsState ->
+                continentsState.copy(
+                    continents = continentsUseCase.getContinents(),
+                    isLoading = false
+                )
+            }
+        }
+    }
+
+    fun selectContinent(continent: Continent) {
+        viewModelScope.launch(mainDispatcher + exceptionHandler) {
+            _continentsState.update { continentsState ->
+                continentsState.copy(
+                    selectedContinent = continent
+                )
+            }
         }
     }
 
@@ -45,6 +66,7 @@ class ContinentViewModel @Inject constructor(
     data class ContinentsState(
         val continents: List<Continent> = emptyList(),
         val isLoading: Boolean = false,
-        val errorMessage: String? = null
+        val errorMessage: String? = null,
+        val selectedContinent: Continent? = null
     )
 }

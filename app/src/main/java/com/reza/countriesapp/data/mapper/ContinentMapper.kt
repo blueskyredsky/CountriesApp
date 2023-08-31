@@ -48,5 +48,4 @@ class ContinentMapper @Inject constructor() : DomainMapper<ContinentQuery.Contin
             code = domainModel.code ?: ""
         )
     }
-
 }

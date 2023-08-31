@@ -5,7 +5,6 @@ import com.reza.ContinentQuery
 import com.reza.ContinentsQuery
 import com.reza.countriesapp.data.mapper.ContinentMapper
 import com.reza.countriesapp.data.mapper.ContinentsMapper
-import com.reza.countriesapp.data.mapper.toContinentEntity
 import com.reza.countriesapp.domain.model.Continent
 import com.reza.countriesapp.domain.repository.ContinentRepository
 import javax.inject.Inject
