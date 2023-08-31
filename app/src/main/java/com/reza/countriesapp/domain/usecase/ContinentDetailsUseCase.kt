@@ -1,7 +1,7 @@
 package com.reza.countriesapp.domain.usecase
 
-import com.reza.countriesapp.domain.entity.ContinentEntity
+import com.reza.countriesapp.domain.model.Continent
 
 interface ContinentDetailsUseCase {
-    suspend fun getContinentDetails(code: String): ContinentEntity?
+    suspend fun getContinentDetails(code: String): Continent?
 }

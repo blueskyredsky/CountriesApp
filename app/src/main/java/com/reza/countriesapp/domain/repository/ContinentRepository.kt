@@ -1,9 +1,8 @@
 package com.reza.countriesapp.domain.repository
 
-import com.reza.countriesapp.domain.entity.ContinentEntity
-import com.reza.countriesapp.domain.entity.CountryEntity
+import com.reza.countriesapp.domain.model.Continent
 
 interface ContinentRepository {
-    suspend fun getContinents(): List<ContinentEntity>
-    suspend fun getContinentDetails(code: String): ContinentEntity?
+    suspend fun getContinents(): List<Continent>
+    suspend fun getContinentDetails(code: String): Continent?
 }

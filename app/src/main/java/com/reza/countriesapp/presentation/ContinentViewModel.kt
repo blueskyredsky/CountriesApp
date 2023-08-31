@@ -3,7 +3,7 @@ package com.reza.countriesapp.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.reza.countriesapp.di.MainDispatcher
-import com.reza.countriesapp.domain.entity.ContinentEntity
+import com.reza.countriesapp.domain.model.Continent
 import com.reza.countriesapp.domain.usecase.ContinentDetailsUseCase
 import com.reza.countriesapp.domain.usecase.ContinentsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -43,7 +43,7 @@ class ContinentViewModel @Inject constructor(
 
 
     data class ContinentsState(
-        val continents: List<ContinentEntity> = emptyList(),
+        val continents: List<Continent> = emptyList(),
         val isLoading: Boolean = false,
         val errorMessage: String? = null
     )

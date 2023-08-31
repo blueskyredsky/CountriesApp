@@ -1,6 +1,10 @@
-package com.reza.countriesapp.domain.entity
+package com.reza.countriesapp.domain.model
 
-data class CountryEntity(
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class Country(
     val name: String?,
     val emoji: String?,
     val currency: String?,
@@ -8,4 +12,4 @@ data class CountryEntity(
     val phone: String?,
     val states: List<String?>?,
     val languages: List<String?>?
-)
+) : Parcelable
