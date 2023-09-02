@@ -1,9 +1,9 @@
 package com.reza.countriesapp.di
 
-import com.reza.countriesapp.domain.usecase.ContinentDetailsUseCase
 import com.reza.countriesapp.domain.usecase.ContinentsUseCase
-import com.reza.countriesapp.domain.usecase.DefaultContinentDetailsUseCase
+import com.reza.countriesapp.domain.usecase.CountriesUseCase
 import com.reza.countriesapp.domain.usecase.DefaultContinentsUseCase
+import com.reza.countriesapp.domain.usecase.DefaultCountriesUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -19,7 +19,7 @@ abstract class UserCaseModule {
     ): ContinentsUseCase
 
     @Binds
-    abstract fun bindContinentDetailsUseCase(
-        defaultContinentDetailsUseCase: DefaultContinentDetailsUseCase
-    ): ContinentDetailsUseCase
+    abstract fun bindCountriesUseCase(
+        defaultCountriesUseCase: DefaultCountriesUseCase
+    ): CountriesUseCase
 }

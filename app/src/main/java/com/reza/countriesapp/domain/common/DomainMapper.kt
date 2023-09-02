@@ -1,4 +1,4 @@
-package com.reza.countriesapp.domain.mapper
+package com.reza.countriesapp.domain.common
 
 interface DomainMapper <T, DomainModel>{
 

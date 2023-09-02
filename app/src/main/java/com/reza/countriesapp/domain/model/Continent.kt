@@ -7,5 +7,4 @@ import kotlinx.parcelize.Parcelize
 data class Continent(
     val name: String?,
     val code: String?,
-    val countries: List<Country?>?
 ) : Parcelable

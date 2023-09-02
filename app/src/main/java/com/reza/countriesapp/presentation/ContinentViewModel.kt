@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.reza.countriesapp.di.MainDispatcher
 import com.reza.countriesapp.domain.model.Continent
-import com.reza.countriesapp.domain.usecase.ContinentDetailsUseCase
 import com.reza.countriesapp.domain.usecase.ContinentsUseCase
+import com.reza.countriesapp.domain.usecase.CountriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ContinentViewModel @Inject constructor(
     private val continentsUseCase: ContinentsUseCase,
-    private val continentDetailsUseCase: ContinentDetailsUseCase,
+    private val countriesUseCase: CountriesUseCase,
     @MainDispatcher private val mainDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 

@@ -8,6 +8,8 @@ class DefaultContinentsUseCase @Inject constructor(
     private val continentRepository: ContinentRepository
 ) : ContinentsUseCase {
     override suspend fun getContinents(): List<Continent> {
-        return continentRepository.getContinents().sortedBy { it.name }
+        return continentRepository
+            .getContinents()
+            .sortedBy { it.name }
     }
 }
