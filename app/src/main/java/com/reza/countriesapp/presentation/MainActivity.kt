@@ -8,12 +8,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
+import com.reza.countriesapp.presentation.home.ContinentsScreen
 import com.reza.countriesapp.presentation.navigation.AppNavGraph
 import com.reza.countriesapp.ui.theme.CountriesAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,13 +25,21 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             CountriesAppTheme {
+                val viewModel = hiltViewModel<ContinentViewModel>()
+                val state by viewModel.continentsState.collectAsState()
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val navController = rememberNavController()
-                    MainScreen(navController = navController)
+                    ContinentsScreen(
+                        state = state,
+                        onSelectContinent = { continent ->
+                            viewModel.selectContinent(continent)
+                        }
+                    )
+//                    val navController = rememberNavController()
+//                    MainScreen(navController = navController)
                 }
             }
         }

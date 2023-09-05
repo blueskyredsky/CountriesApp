@@ -1,6 +1,7 @@
 package com.reza.countriesapp.di
 
 import com.apollographql.apollo3.ApolloClient
+import com.reza.countriesapp.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +15,7 @@ object NetworkModule {
     @Singleton
     fun provideApolloClient(): ApolloClient {
         return ApolloClient.Builder()
-            .serverUrl("https://countries.trevorblades.com/graphql")
+            .serverUrl(BuildConfig.BASE_URL )
             .build()
     }
 }

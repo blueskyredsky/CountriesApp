@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.annotation.concurrent.Immutable
 import javax.inject.Inject
 
 @HiltViewModel
@@ -62,7 +63,17 @@ class ContinentViewModel @Inject constructor(
         }
     }
 
+    fun resetSelectedCountry() {
+        viewModelScope.launch(mainDispatcher + exceptionHandler) {
+            _continentsState.update { continentsState ->
+                continentsState.copy(
+                    selectedContinent = null
+                )
+            }
+        }
+    }
 
+    @Immutable
     data class ContinentsState(
         val continents: List<Continent> = emptyList(),
         val isLoading: Boolean = false,
