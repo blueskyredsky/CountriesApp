@@ -60,6 +60,7 @@ dependencies {
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
+    testImplementation("junit:junit:4.12")
 
     // Compose
     val composeBom = platform(libs.compose.bom)
