@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.pm20.util.libsDirectory
-
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -51,9 +49,9 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.8"
     }
-    packagingOptions {
+    packaging {
         resources {
-            exclude("/META-INF/{AL2.0,LGPL2.1}")
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
 }
@@ -64,36 +62,39 @@ dependencies {
     implementation(libs.lifecycle.runtime.ktx)
 
     // Compose
-    val composeBom = platform("androidx.compose:compose-bom:2023.06.01")
+    val composeBom = platform(libs.compose.bom)
     implementation(composeBom)
     androidTestImplementation(composeBom)
-    // Activity
     implementation(libs.activity.compose)
-    // Material Design 3
-    implementation("androidx.compose.material3:material3")
-    // UI Tests
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation(libs.material3)
+    debugImplementation(libs.ui.tooling)
 
     // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+    implementation(libs.viewmodel.compose)
 
     // Navigation
     implementation(libs.navigation.compose)
 
     // Hilt
     implementation(libs.hilt.android)
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    kapt(libs.hilt.kapt)
     implementation(libs.hilt.navigation.compose)
 
     // Apollo
-    implementation("com.apollographql.apollo3:apollo-runtime:3.8.2")
+    implementation(libs.apollo)
 
     // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.turbine)
+    androidTestImplementation(libs.ui.test.junit4)
+    debugImplementation(libs.ui.test.manifest)
+    testImplementation(libs.mockito.nhaarman)
+    testImplementation(libs.mockito)
+    testImplementation(libs.truth)
+    androidTestImplementation(libs.truth)
 }
 
 // Allow references to generated code
