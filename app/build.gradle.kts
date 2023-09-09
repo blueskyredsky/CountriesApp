@@ -95,6 +95,7 @@ dependencies {
     testImplementation(libs.mockito.nhaarman)
     testImplementation(libs.mockito)
     testImplementation(libs.truth)
+    testImplementation(libs.apollo.test)
     androidTestImplementation(libs.truth)
 }
 
