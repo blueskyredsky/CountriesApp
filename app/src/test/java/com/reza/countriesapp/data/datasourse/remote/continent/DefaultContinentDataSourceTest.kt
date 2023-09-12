@@ -1,7 +1,10 @@
 package com.reza.countriesapp.data.datasourse.remote.continent
 
 import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo3.mockserver.MockRequest
+import com.apollographql.apollo3.mockserver.MockResponse
 import com.apollographql.apollo3.mockserver.MockServer
+import com.apollographql.apollo3.mockserver.MockServerHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -12,7 +15,7 @@ import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@RunWith(MockitoJUnitRunner::class)
+//@RunWith(MockitoJUnitRunner::class)
 class DefaultContinentDataSourceTest {
 
     @Mock
@@ -22,16 +25,13 @@ class DefaultContinentDataSourceTest {
 
     @Before
     fun setUp() {
-        continentDataSource = DefaultContinentDataSource(apolloClient)
-        // Create a mock server
-        val mockServer = MockServer()
 
-// Provide its URL to your ApolloClient
-        val apolloClient = ApolloClient.Builder().serverUrl(mockServer.url()).store(store).build()
     }
 
     @Test
     fun `should getContinents be called`() = runTest {
+
+
 
     }
 
