@@ -84,6 +84,9 @@ dependencies {
     // Apollo
     implementation(libs.apollo)
 
+    // OkHttpLogging
+    implementation(libs.okhttp.logging)
+
     // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
@@ -96,6 +99,7 @@ dependencies {
     testImplementation(libs.mockito)
     testImplementation(libs.truth)
     testImplementation(libs.apollo.test)
+    testImplementation(libs.apollo.mock.server)
     androidTestImplementation(libs.truth)
 }
 

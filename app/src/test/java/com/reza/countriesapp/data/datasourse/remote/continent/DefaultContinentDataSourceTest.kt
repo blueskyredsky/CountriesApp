@@ -1,6 +1,7 @@
 package com.reza.countriesapp.data.datasourse.remote.continent
 
 import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo3.mockserver.MockServer
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -22,6 +23,11 @@ class DefaultContinentDataSourceTest {
     @Before
     fun setUp() {
         continentDataSource = DefaultContinentDataSource(apolloClient)
+        // Create a mock server
+        val mockServer = MockServer()
+
+// Provide its URL to your ApolloClient
+        val apolloClient = ApolloClient.Builder().serverUrl(mockServer.url()).store(store).build()
     }
 
     @Test
