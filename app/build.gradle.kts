@@ -111,5 +111,8 @@ kapt {
 apollo {
     service("service") {
         packageName.set("com.reza")
+
+        // Enable data builder generation
+        generateDataBuilders.set(true)
     }
 }
