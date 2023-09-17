@@ -112,7 +112,7 @@ apollo {
     service("service") {
         packageName.set("com.reza")
 
-        // Enable data builder generation
-        generateDataBuilders.set(true)
+        // Enable test builder generation
+        generateTestBuilders.set(true)
     }
 }
