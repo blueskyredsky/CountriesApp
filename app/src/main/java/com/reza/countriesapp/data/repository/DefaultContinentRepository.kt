@@ -14,7 +14,9 @@ class DefaultContinentRepository @Inject constructor(
     override suspend fun getContinents(): List<Continent> {
         return continentDataSource
             .getContinents()
-            ?.map { mapper.mapToDomainModel(it) }
+            ?.map {
+                mapper.mapToDomainModel(it)
+            }
             ?: emptyList()
     }
 }
