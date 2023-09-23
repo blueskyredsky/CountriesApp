@@ -101,6 +101,8 @@ dependencies {
     testImplementation(libs.apollo.test)
     testImplementation(libs.apollo.mock.server)
     androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.hilt.test)
+    kaptAndroidTest(libs.hilt.kapt.test)
 }
 
 // Allow references to generated code
