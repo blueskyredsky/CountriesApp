@@ -29,7 +29,7 @@ class DefaultContinentRepositoryTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `should return empty list`() = runTest {
+    fun `should return empty list when there is no continent`() = runTest {
         // Given
         whenever(dataSource.getContinents()).thenReturn(emptyList())
 
@@ -42,7 +42,7 @@ class DefaultContinentRepositoryTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `should return a list of continent which is not empty`() = runTest {
+    fun `should return a list of continent when calling continents`() = runTest {
         // Given
         val continentList = listOf(
             ContinentsQuery.Continent(name = "Africa", code = "AF")
