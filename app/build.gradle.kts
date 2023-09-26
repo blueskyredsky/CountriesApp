@@ -18,7 +18,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.reza.countriesapp.HiltTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -45,6 +45,16 @@ android {
     }
     buildFeatures {
         compose = true
+    }
+    // To access resources file in test package
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
+    // To access assets in androidTest package
+    sourceSets {
+        getByName("androidTest").assets.srcDirs("src/debug/assets")
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.8"

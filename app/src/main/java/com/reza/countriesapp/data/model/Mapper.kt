@@ -1,4 +1,4 @@
-package com.reza.countriesapp.data.mapper
+package com.reza.countriesapp.data.model
 
 import com.reza.ContinentQuery
 import com.reza.ContinentsQuery
