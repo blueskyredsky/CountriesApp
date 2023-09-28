@@ -1,5 +1,6 @@
 package com.reza.countriesapp.presentation
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.reza.countriesapp.di.MainDispatcher
@@ -18,6 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ContinentViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
     private val continentsUseCase: ContinentsUseCase,
     private val countriesUseCase: CountriesUseCase,
     @MainDispatcher private val mainDispatcher: CoroutineDispatcher
