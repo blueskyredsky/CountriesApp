@@ -1,4 +1,4 @@
-package com.reza.countriesapp.di
+package com.reza.countriesapp.data.di
 
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.network.okHttpClient

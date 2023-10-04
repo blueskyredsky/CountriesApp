@@ -6,8 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.reza.countriesapp.presentation.details.DetailsScreen
-import com.reza.countriesapp.presentation.home.ContinentsScreen
-import com.reza.countriesapp.presentation.home.HomeScreen
+import com.reza.countriesapp.presentation.continents.ContinentsScreen
 
 private const val HOME = "home"
 private const val DETAIL = "detail"

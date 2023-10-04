@@ -1,4 +1,4 @@
-package com.reza.countriesapp.di
+package com.reza.countriesapp.data.di
 
 import com.reza.countriesapp.data.datasourse.remote.continent.ContinentDataSource
 import com.reza.countriesapp.data.datasourse.remote.continent.DefaultContinentDataSource

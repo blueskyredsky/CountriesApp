@@ -1,12 +1,13 @@
-package com.reza.countriesapp.presentation
+package com.reza.countriesapp.presentation.continents
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.reza.countriesapp.di.MainDispatcher
+import com.reza.countriesapp.data.di.MainDispatcher
 import com.reza.countriesapp.domain.model.Continent
 import com.reza.countriesapp.domain.usecase.ContinentsUseCase
 import com.reza.countriesapp.domain.usecase.CountriesUseCase
+import com.reza.countriesapp.presentation.continents.ContinentsState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -14,11 +15,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.annotation.concurrent.Immutable
 import javax.inject.Inject
 
 @HiltViewModel
-class ContinentViewModel @Inject constructor(
+class ContinentsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val continentsUseCase: ContinentsUseCase,
     private val countriesUseCase: CountriesUseCase,
@@ -36,7 +36,7 @@ class ContinentViewModel @Inject constructor(
         }
     }
 
-    init {
+    private fun getContinents() {
         viewModelScope.launch(mainDispatcher + exceptionHandler) {
             // Loading state
             _continentsState.update { continentsState ->
@@ -52,6 +52,12 @@ class ContinentViewModel @Inject constructor(
                     isLoading = false
                 )
             }
+        }
+    }
+
+    fun onEvent(event: ContinentsEvent) {
+        when(event) {
+            is ContinentsEvent.RequestContinents -> getContinents()
         }
     }
 
@@ -74,12 +80,4 @@ class ContinentViewModel @Inject constructor(
             }
         }
     }
-
-    @Immutable
-    data class ContinentsState(
-        val continents: List<Continent> = emptyList(),
-        val isLoading: Boolean = false,
-        val errorMessage: String? = null,
-        val selectedContinent: Continent? = null
-    )
 }
