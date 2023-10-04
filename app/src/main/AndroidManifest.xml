@@ -25,6 +25,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- To benchmark an app -->
+        <profileable
+            android:shell="true"
+            tools:targetApi="29" />
     </application>
 
 </manifest>
