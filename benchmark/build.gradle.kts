@@ -22,6 +22,8 @@ android {
         targetSdk = 33
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        // This way, the :macrobenchmark module is able to only build and benchmark the production product flavor
+        missingDimensionStrategy("environment", "production")
     }
 
     buildTypes {
