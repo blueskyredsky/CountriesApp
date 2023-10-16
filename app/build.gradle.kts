@@ -88,6 +88,9 @@ android {
 
 dependencies {
 
+    // Projects
+    implementation(project(":base"))
+
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     testImplementation("junit:junit:4.12")

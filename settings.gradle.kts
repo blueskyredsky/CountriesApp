@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "CountriesApp"
 include(":app")
 include(":benchmark")
+include(":base")
