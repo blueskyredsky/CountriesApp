@@ -1,6 +1,11 @@
 package com.reza.countriesapp.presentation.continents
 
 import android.content.res.Configuration
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -23,16 +28,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.reza.countriesapp.domain.model.Continent
+import com.reza.countriesapp.presentation.common.LoadingItem
 import com.reza.countriesapp.ui.theme.CountriesAppTheme
 
 @Composable
 fun ContinentsScreen(
-    modifier: Modifier = Modifier,
-    onSelectContinent: (Continent) -> Unit
+    modifier: Modifier = Modifier, onSelectContinent: (Continent) -> Unit
 ) {
     val viewModel = hiltViewModel<ContinentsViewModel>()
     val state by viewModel.continentsState.collectAsState()
@@ -45,28 +51,34 @@ fun ContinentsScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues = paddingValues),
+            contentAlignment = Alignment.Center
         ) {
-            if (state.isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            } else {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    items(
-                        key = { item -> item.code ?: "" },
-                        items = state.continents
-                    ) { continent ->
-                        ContinentItem(
-                            modifier = Modifier
-                                .padding(horizontal = 16.dp)
-                                .padding(top = 16.dp)
-                                .fillMaxWidth(),
-                            item = continent,
-                            onSelectContinent = onSelectContinent
-                        )
+            AnimatedContent(
+                targetState = state,
+                transitionSpec = {
+                    fadeIn() togetherWith fadeOut()
+                },
+                label = "Animated Content"
+            ) { targetState ->
+                if (targetState.isLoading) {
+                    LoadingItem()
+                } else {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        items(
+                            key = { item -> item.code ?: "" }, items = state.continents
+                        ) { continent ->
+                            ContinentItem(
+                                modifier = Modifier
+                                    .padding(horizontal = 16.dp)
+                                    .padding(top = 16.dp)
+                                    .fillMaxWidth(),
+                                item = continent,
+                                onSelectContinent = onSelectContinent
+                            )
+                        }
                     }
                 }
             }
@@ -76,9 +88,7 @@ fun ContinentsScreen(
 
 @Composable
 private fun ContinentItem(
-    modifier: Modifier = Modifier,
-    item: Continent,
-    onSelectContinent: (Continent) -> Unit
+    modifier: Modifier = Modifier, item: Continent, onSelectContinent: (Continent) -> Unit
 ) {
     Card(
         modifier = modifier
@@ -91,9 +101,8 @@ private fun ContinentItem(
     ) {
         Text(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            text = item.name ?: ""
+                .fillMaxWidth()
+                .padding(16.dp), text = item.name ?: ""
         )
     }
 }
@@ -106,12 +115,10 @@ private fun ContinentItem(
 @Composable
 fun ContinentItemPreview() {
     CountriesAppTheme {
-        ContinentItem(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(IntrinsicSize.Min),
+        ContinentItem(modifier = Modifier
+            .fillMaxWidth()
+            .height(IntrinsicSize.Min),
             item = Continent(name = "name", code = "code"),
-            onSelectContinent = {}
-        )
+            onSelectContinent = {})
     }
 }
