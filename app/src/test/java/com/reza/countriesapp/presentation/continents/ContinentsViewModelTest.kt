@@ -6,12 +6,18 @@ import com.google.common.truth.Truth
 import com.reza.countriesapp.domain.model.Continent
 import com.reza.countriesapp.domain.usecase.ContinentsUseCase
 import com.reza.countriesapp.domain.usecase.CountriesUseCase
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.withContext
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
@@ -20,15 +26,16 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.whenever
+import kotlin.coroutines.CoroutineContext
 
 @RunWith(MockitoJUnitRunner::class)
 class ContinentsViewModelTest {
 
     @Mock
-    private lateinit var continentsUseCase: ContinentsUseCase
+    private lateinit var countriesUseCase: CountriesUseCase
 
     @Mock
-    private lateinit var countriesUseCase: CountriesUseCase
+    private lateinit var continentsUseCase: ContinentsUseCase
 
     private val testDispatcher = StandardTestDispatcher()
     private val savedStateHandle = SavedStateHandle()
@@ -38,7 +45,7 @@ class ContinentsViewModelTest {
     fun setup() {
         viewModel = ContinentsViewModel(
             savedStateHandle = savedStateHandle,
-            continentsUseCase = continentsUseCase,
+            continentsUseCase = FakeContinentsUseCase(),
             countriesUseCase = countriesUseCase,
             mainDispatcher = testDispatcher
         )
@@ -72,7 +79,6 @@ class ContinentsViewModelTest {
 
         // Then
         viewModel.continentsState.test {
-            val result = awaitItem()
             Truth.assertThat(
                 ContinentsState(
                     isLoading = true,
@@ -80,28 +86,29 @@ class ContinentsViewModelTest {
                     errorMessage = null,
                     selectedContinent = null
                 )
-            ).isEqualTo(result)
-//            Truth.assertThat(
-//                ContinentsState(
-//                    isLoading = false,
-//                    continents = listOfContinents,
-//                    errorMessage = null,
-//                    selectedContinent = null
-//                )
-//            ).isEqualTo(expectMostRecentItem())
+            ).isEqualTo(awaitItem())
+
+            Truth.assertThat(
+                ContinentsState(
+                    isLoading = false,
+                    continents = listOfContinents,
+                    errorMessage = null,
+                    selectedContinent = null
+                )
+            ).isEqualTo(awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
+}
 
-    @Test
-    fun `t`() = runTest {
-        val flow = MutableStateFlow<String>("")
-        flow.value = "1"
-        flow.value = "2"
-        flow.test {
-            assertEquals("1", awaitItem())
-            assertEquals("2", awaitItem())
-            cancelAndIgnoreRemainingEvents()
-        }
+
+class FakeContinentsUseCase : ContinentsUseCase {
+
+    private val scope = CoroutineScope(Dispatchers.IO + CoroutineName("A name") + SupervisorJob())
+    override suspend fun getContinents(): List<Continent> {
+        return scope.async {
+            delay(1000)
+            listOf(Continent("Africa", "AF"), Continent("Asia", "AS"))
+        }.await()
     }
 }

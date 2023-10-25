@@ -47,9 +47,10 @@ class ContinentsViewModel @Inject constructor(
             }
 
             // Getting continents
+            val continents = continentsUseCase.getContinents()
             _continentsState.update { continentsState ->
                 continentsState.copy(
-                    continents = continentsUseCase.getContinents(),
+                    continents = continents,
                     isLoading = false
                 )
             }
@@ -57,7 +58,7 @@ class ContinentsViewModel @Inject constructor(
     }
 
     fun onEvent(event: ContinentsEvent) {
-        when(event) {
+        when (event) {
             is ContinentsEvent.RequestContinents -> getContinents()
         }
     }
