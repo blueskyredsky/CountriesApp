@@ -6,6 +6,8 @@ import com.google.common.truth.Truth
 import com.reza.countriesapp.domain.model.Continent
 import com.reza.countriesapp.domain.usecase.ContinentsUseCase
 import com.reza.countriesapp.domain.usecase.CountriesUseCase
+import com.reza.countriesapp.domain.usecase.FakeContinentsUseCase
+import com.reza.countriesapp.util.Util
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -33,9 +35,6 @@ class ContinentsViewModelTest {
 
     @Mock
     private lateinit var countriesUseCase: CountriesUseCase
-
-    @Mock
-    private lateinit var continentsUseCase: ContinentsUseCase
 
     private val testDispatcher = StandardTestDispatcher()
     private val savedStateHandle = SavedStateHandle()
@@ -70,8 +69,7 @@ class ContinentsViewModelTest {
     @Test
     fun `should return list of continents if successful`() = runTest(testDispatcher.scheduler) {
         // Given
-        val listOfContinents = listOf(Continent("Africa", "AF"), Continent("Asia", "AS"))
-        whenever(continentsUseCase.getContinents()).thenReturn(listOfContinents)
+        val listOfContinents = Util.listOfContinents
 
         // When
         viewModel.onEvent(ContinentsEvent.RequestContinents)
@@ -98,17 +96,5 @@ class ContinentsViewModelTest {
             ).isEqualTo(awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
-    }
-}
-
-
-class FakeContinentsUseCase : ContinentsUseCase {
-
-    private val scope = CoroutineScope(Dispatchers.IO + CoroutineName("A name") + SupervisorJob())
-    override suspend fun getContinents(): List<Continent> {
-        return scope.async {
-            delay(1000)
-            listOf(Continent("Africa", "AF"), Continent("Asia", "AS"))
-        }.await()
     }
 }

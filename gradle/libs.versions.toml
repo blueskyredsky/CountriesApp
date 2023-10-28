@@ -29,6 +29,7 @@ uiautomator = "2.2.0"
 benchmark-macro-junit4 = "1.1.1"
 appcompat = "1.6.1"
 material = "1.10.0"
+timber-version = "5.0.1"
 
 
 [libraries]
@@ -73,6 +74,7 @@ uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", versi
 benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmark-macro-junit4" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber-version" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "com-android-application" }

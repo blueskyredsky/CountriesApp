@@ -120,6 +120,9 @@ dependencies {
     // OkHttpLogging
     implementation(libs.okhttp.logging)
 
+    // Timber
+    implementation(libs.timber)
+
     // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

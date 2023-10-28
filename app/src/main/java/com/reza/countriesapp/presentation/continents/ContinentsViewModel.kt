@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.reza.countriesapp.data.di.MainDispatcher
 import com.reza.countriesapp.domain.model.Continent
+import com.reza.countriesapp.domain.model.ResultState
 import com.reza.countriesapp.domain.usecase.ContinentsUseCase
 import com.reza.countriesapp.domain.usecase.CountriesUseCase
 import com.reza.countriesapp.presentation.continents.ContinentsState
@@ -47,12 +48,24 @@ class ContinentsViewModel @Inject constructor(
             }
 
             // Getting continents
-            val continents = continentsUseCase.getContinents()
-            _continentsState.update { continentsState ->
-                continentsState.copy(
-                    continents = continents,
-                    isLoading = false
-                )
+            when (val result = continentsUseCase.getContinents()) {
+                is ResultState.Success -> {
+                    _continentsState.update { continentsState ->
+                        continentsState.copy(
+                            continents = result.data,
+                            isLoading = false
+                        )
+                    }
+                }
+
+                is ResultState.Failure -> {
+                    _continentsState.update { continentsState ->
+                        continentsState.copy(
+                            isLoading = false,
+                            errorMessage = result.error
+                        )
+                    }
+                }
             }
         }
     }
