@@ -14,7 +14,7 @@ class DefaultCountryRepository @Inject constructor(
     override suspend fun getCountries(code: String): ResultState<List<Country?>?> {
         try {
             val response = continentDataSource.getContinent(code = code)
-            return if (response.errors == null) {
+            return if (!response.hasErrors()) {
                 ResultState.Success(
                     response.data?.continent?.toCountry()
                 )

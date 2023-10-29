@@ -42,12 +42,6 @@ class ContinentsViewModelTest {
 
     @Before
     fun setup() {
-        viewModel = ContinentsViewModel(
-            savedStateHandle = savedStateHandle,
-            continentsUseCase = FakeContinentsUseCase(),
-            countriesUseCase = countriesUseCase,
-            mainDispatcher = testDispatcher
-        )
     }
 
     @After
@@ -57,6 +51,14 @@ class ContinentsViewModelTest {
 
     @Test
     fun `testing default values of ui state`() {
+        // Given
+        viewModel = ContinentsViewModel(
+            savedStateHandle = savedStateHandle,
+            continentsUseCase = FakeContinentsUseCase(),
+            countriesUseCase = countriesUseCase,
+            mainDispatcher = testDispatcher
+        )
+
         // Then
         Truth.assertThat(viewModel.continentsState.value.continents)
             .isEqualTo(emptyList<Continent>())
@@ -69,6 +71,12 @@ class ContinentsViewModelTest {
     @Test
     fun `should return list of continents if successful`() = runTest(testDispatcher.scheduler) {
         // Given
+        viewModel = ContinentsViewModel(
+            savedStateHandle = savedStateHandle,
+            continentsUseCase = FakeContinentsUseCase(),
+            countriesUseCase = countriesUseCase,
+            mainDispatcher = testDispatcher
+        )
         val listOfContinents = Util.listOfContinents
 
         // When
@@ -91,6 +99,44 @@ class ContinentsViewModelTest {
                     isLoading = false,
                     continents = listOfContinents,
                     errorMessage = null,
+                    selectedContinent = null
+                )
+            ).isEqualTo(awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `should return error if not successful`() = runTest(testDispatcher.scheduler) {
+        // Given
+        viewModel = ContinentsViewModel(
+            savedStateHandle = savedStateHandle,
+            continentsUseCase = FakeContinentsUseCase(isSuccessful = false),
+            countriesUseCase = countriesUseCase,
+            mainDispatcher = testDispatcher
+        )
+
+        // When
+        viewModel.onEvent(ContinentsEvent.RequestContinents)
+        advanceUntilIdle()
+
+        // Then
+        viewModel.continentsState.test {
+            Truth.assertThat(
+                ContinentsState(
+                    isLoading = true,
+                    continents = emptyList(),
+                    errorMessage = null,
+                    selectedContinent = null
+                )
+            ).isEqualTo(awaitItem())
+
+            Truth.assertThat(
+                ContinentsState(
+                    isLoading = false,
+                    continents = emptyList(),
+                    errorMessage = "",
                     selectedContinent = null
                 )
             ).isEqualTo(awaitItem())

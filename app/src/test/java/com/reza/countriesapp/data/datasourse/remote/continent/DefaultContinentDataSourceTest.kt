@@ -9,12 +9,11 @@ import com.reza.ContinentQuery
 import com.reza.ContinentsQuery
 import com.reza.test.ContinentQuery_TestBuilder.Data
 import com.reza.test.ContinentsQuery_TestBuilder.Data
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
+// TODO: should add error scenarios
 class DefaultContinentDataSourceTest {
 
     private lateinit var apolloClient: ApolloClient
@@ -22,7 +21,10 @@ class DefaultContinentDataSourceTest {
     @OptIn(ApolloExperimental::class)
     @Before
     fun setUp() {
-        apolloClient = ApolloClient.Builder().networkTransport(QueueTestNetworkTransport()).build()
+        apolloClient = ApolloClient
+            .Builder()
+            .networkTransport(QueueTestNetworkTransport())
+            .build()
     }
 
     @OptIn(ApolloExperimental::class)
@@ -31,13 +33,15 @@ class DefaultContinentDataSourceTest {
         // Given
         val query = ContinentsQuery()
         val data = ContinentsQuery.Data {
-            continents = listOf(continent {
-                name = "Africa"
-                code = "AF"
-            }, continent {
-                name = "Antarctica"
-                code = "AN"
-            })
+            continents = listOf(
+                continent {
+                    name = "Africa"
+                    code = "AF"
+                }, continent {
+                    name = "Antarctica"
+                    code = "AN"
+                }
+            )
         }
         apolloClient.enqueueTestResponse(query, data)
 

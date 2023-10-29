@@ -3,11 +3,13 @@ package com.reza.countriesapp.domain.usecase
 import com.google.common.truth.Truth.assertThat
 import com.reza.countriesapp.data.repository.DefaultContinentRepository
 import com.reza.countriesapp.domain.model.Continent
+import com.reza.countriesapp.domain.model.ResultState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.whenever
@@ -25,29 +27,29 @@ class DefaultContinentsUseCaseTest {
         useCase = DefaultContinentsUseCase(continentRepository = repository)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `should return empty list if there is no continent`() = runTest {
+    fun `should return success with data when calling get countries`() = runTest {
         // Given
-        whenever(repository.getContinents()).thenReturn(emptyList())
+        val sampleContinents = listOf(Continent(name = "", code = ""))
+        whenever(repository.getContinents()).thenReturn(ResultState.Success(sampleContinents))
 
         // When
         val continents = useCase.getContinents()
 
         // Then
-        assertThat(continents).isEmpty()
+        assertThat(continents).isInstanceOf(ResultState.Success::class.java)
+        assertThat(continents).isEqualTo(ResultState.Success(sampleContinents))
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `should return list of continents`() = runTest {
+    fun `should return failure when calling get countries`() = runTest {
         // Given
-        whenever(repository.getContinents()).thenReturn(listOf(Continent(name = "name1", code = "code1")))
+        whenever(repository.getContinents()).thenReturn(ResultState.Failure(error = ""))
 
         // When
         val continents = useCase.getContinents()
 
         // Then
-        assertThat(continents.size).isEqualTo(1)
+        assertThat(continents).isInstanceOf(ResultState.Failure::class.java)
     }
 }

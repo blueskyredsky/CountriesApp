@@ -3,7 +3,7 @@ package com.reza.countriesapp.domain.usecase
 import com.google.common.truth.Truth.assertThat
 import com.reza.countriesapp.data.repository.DefaultCountryRepository
 import com.reza.countriesapp.domain.model.Country
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import com.reza.countriesapp.domain.model.ResultState
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -26,41 +26,52 @@ class DefaultCountriesUseCaseTest {
         useCase = DefaultCountriesUseCase(countryRepository = repository)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `should return empty list if there is no continent`() = runTest {
+    fun `should return success with null when calling get countries`() = runTest {
         // Given
-        whenever(repository.getCountries(anyString())).thenReturn(emptyList())
+        whenever(repository.getCountries(anyString())).thenReturn(ResultState.Success(null))
 
         // When
         val countries = useCase.getCountries("test")
 
         // Then
-        assertThat(countries).isEmpty()
+        assertThat(countries).isInstanceOf(ResultState.Success::class.java)
+        assertThat(countries).isEqualTo(ResultState.Success(null))
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `should return list of countries`() = runTest {
+    fun `should return success with some data when calling get countries`() = runTest {
         // Given
-        whenever(repository.getCountries(anyString())).thenReturn(
-            listOf(
-                Country(
-                    name = "name1",
-                    emoji = "",
-                    currency = "currency1",
-                    capital = "capital1",
-                    phone = "phone1",
-                    states = listOf("state1"),
-                    languages = listOf("language1")
-                )
+        val sampleCountries = listOf(
+            Country(
+                name = "testName",
+                emoji = "",
+                currency = "",
+                capital = "",
+                phone = "",
+                states = listOf(""),
+                languages = listOf("")
             )
         )
+        whenever(repository.getCountries(anyString())).thenReturn(ResultState.Success(sampleCountries))
 
         // When
-        val counties = useCase.getCountries("test")
+        val countries = useCase.getCountries("test")
 
         // Then
-        assertThat(counties?.size).isEqualTo(1)
+        assertThat(countries).isInstanceOf(ResultState.Success::class.java)
+        assertThat(countries).isEqualTo(ResultState.Success(sampleCountries))
+    }
+
+    @Test
+    fun `should return failure when calling get countries`() = runTest {
+        // Given
+        whenever(repository.getCountries(anyString())).thenReturn(ResultState.Failure(error = ""))
+
+        // When
+        val countries = useCase.getCountries("test")
+
+        // Then
+        assertThat(countries).isInstanceOf(ResultState.Failure::class.java)
     }
 }

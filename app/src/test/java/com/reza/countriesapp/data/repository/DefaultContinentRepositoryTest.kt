@@ -1,9 +1,10 @@
 package com.reza.countriesapp.data.repository
 
+import com.apollographql.apollo3.api.ApolloResponse
 import com.google.common.truth.Truth.assertThat
 import com.reza.ContinentsQuery
 import com.reza.countriesapp.data.datasourse.remote.continent.DefaultContinentDataSource
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import com.reza.countriesapp.domain.model.ResultState
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -18,6 +19,9 @@ class DefaultContinentRepositoryTest {
     @Mock
     private lateinit var dataSource: DefaultContinentDataSource
 
+    @Mock
+    private lateinit var apolloResponse:  ApolloResponse<ContinentsQuery.Data>
+
     private lateinit var repository: DefaultContinentRepository
 
     @Before
@@ -27,33 +31,30 @@ class DefaultContinentRepositoryTest {
         )
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `should return empty list when there is no continent`() = runTest {
+    fun `should return success when calling get continents`() = runTest {
         // Given
-        whenever(dataSource.getContinents()).thenReturn(emptyList())
+        whenever(apolloResponse.hasErrors()).thenReturn(false)
+        whenever(dataSource.getContinents()).thenReturn(apolloResponse)
 
         // When
         val continents = repository.getContinents()
 
         // Then
-        assertThat(continents.isEmpty())
+        assertThat(continents).isInstanceOf(ResultState.Success::class.java)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
+
     @Test
-    fun `should return a list of continent when calling continents`() = runTest {
+    fun `should return failure when calling get continents`() = runTest {
         // Given
-        val continentList = listOf(
-            ContinentsQuery.Continent(name = "Africa", code = "AF")
-        )
-        whenever(dataSource.getContinents()).thenReturn(continentList)
+        whenever(apolloResponse.hasErrors()).thenReturn(true)
+        whenever(dataSource.getContinents()).thenReturn(apolloResponse)
 
         // When
         val continents = repository.getContinents()
 
         // Then
-        assertThat(continents.isNotEmpty()).isEqualTo(true)
-        assertThat(continents[0].name).isEqualTo("Africa")
+        assertThat(continents).isInstanceOf(ResultState.Failure::class.java)
     }
 }

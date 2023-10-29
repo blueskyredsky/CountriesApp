@@ -1,9 +1,10 @@
 package com.reza.countriesapp.data.repository
 
+import com.apollographql.apollo3.api.ApolloResponse
 import com.google.common.truth.Truth.assertThat
 import com.reza.ContinentQuery
 import com.reza.countriesapp.data.datasourse.remote.continent.ContinentDataSource
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import com.reza.countriesapp.domain.model.ResultState
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -19,6 +20,9 @@ class DefaultCountryRepositoryTest {
     @Mock
     private lateinit var dataSource: ContinentDataSource
 
+    @Mock
+    private lateinit var apolloResponse: ApolloResponse<ContinentQuery.Data>
+
     private lateinit var repository: DefaultCountryRepository
 
     @Before
@@ -28,43 +32,29 @@ class DefaultCountryRepositoryTest {
         )
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `should return null when there is no continent`() = runTest {
+    fun `should return success when calling get countries`() = runTest {
         // Given
-        whenever(dataSource.getContinent(code = anyString())).thenReturn(null)
+        whenever(dataSource.getContinent(code = anyString())).thenReturn(apolloResponse)
+        whenever(apolloResponse.hasErrors()).thenReturn(false)
 
         // When
         val continents = repository.getCountries(code = "AA")
 
         // Then
-        assertThat(continents).isNull()
+        assertThat(continents).isInstanceOf(ResultState.Success::class.java)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `should return list of countries when there is a continent`() = runTest {
+    fun `should return failure when calling get countries`() = runTest {
         // Given
-        whenever(dataSource.getContinent(code = anyString())).thenReturn(
-            ContinentQuery.Continent(
-                countries = listOf(
-                    ContinentQuery.Country(
-                        name = "name1",
-                        emoji = "",
-                        currency = "currency1",
-                        capital = "capital1",
-                        phone = "phone1",
-                        languages = listOf(ContinentQuery.Language("language1")),
-                        states = listOf(ContinentQuery.State("state1"))
-                    )
-                )
-            )
-        )
+        whenever(dataSource.getContinent(code = anyString())).thenReturn(apolloResponse)
+        whenever(apolloResponse.hasErrors()).thenReturn(true)
 
         // When
-        val countries = repository.getCountries("TEST")
+        val continents = repository.getCountries(code = "AA")
 
         // Then
-        assertThat(countries?.size).isEqualTo(1)
+        assertThat(continents).isInstanceOf(ResultState.Failure::class.java)
     }
 }

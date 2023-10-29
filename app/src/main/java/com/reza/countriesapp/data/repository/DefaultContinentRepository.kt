@@ -19,7 +19,7 @@ class DefaultContinentRepository @Inject constructor(
     override suspend fun getContinents(): ResultState<List<Continent>> {
         try {
             val response = continentDataSource.getContinents()
-            return if (response.errors == null) {
+            return if (!response.hasErrors()) {
                 val continents = response.data?.continents
                     ?.map {
                         it.toContinent()
