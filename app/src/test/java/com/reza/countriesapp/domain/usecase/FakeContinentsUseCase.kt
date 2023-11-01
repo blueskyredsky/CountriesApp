@@ -7,7 +7,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
-class FakeContinentsUseCase(private val isSuccessful: Boolean = true) : ContinentsUseCase {
+class FakeContinentsUseCase : ContinentsUseCase {
+
+    private var isSuccessful: Boolean = true
+
+    fun setSuccessful(isSuccessful: Boolean) {
+        this.isSuccessful = isSuccessful
+    }
+
     override suspend fun getContinents(): ResultState<List<Continent>> =
         withContext(Dispatchers.Default) {
             delay(1000L)

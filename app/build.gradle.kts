@@ -101,6 +101,7 @@ dependencies {
     androidTestImplementation(composeBom)
     implementation(libs.activity.compose)
     implementation(libs.material3)
+    implementation(libs.material)
     debugImplementation(libs.ui.tooling)
 
     // ViewModel

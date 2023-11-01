@@ -4,22 +4,13 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.google.common.truth.Truth
 import com.reza.countriesapp.domain.model.Continent
-import com.reza.countriesapp.domain.usecase.ContinentsUseCase
 import com.reza.countriesapp.domain.usecase.CountriesUseCase
 import com.reza.countriesapp.domain.usecase.FakeContinentsUseCase
 import com.reza.countriesapp.util.Util
-import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.withContext
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
@@ -27,8 +18,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
-import org.mockito.kotlin.whenever
-import kotlin.coroutines.CoroutineContext
 
 @RunWith(MockitoJUnitRunner::class)
 class ContinentsViewModelTest {
@@ -38,10 +27,19 @@ class ContinentsViewModelTest {
 
     private val testDispatcher = StandardTestDispatcher()
     private val savedStateHandle = SavedStateHandle()
+    private lateinit var useCase: FakeContinentsUseCase
     private lateinit var viewModel: ContinentsViewModel
+
 
     @Before
     fun setup() {
+        useCase = FakeContinentsUseCase()
+        viewModel = ContinentsViewModel(
+            savedStateHandle = savedStateHandle,
+            continentsUseCase = useCase,
+            countriesUseCase = countriesUseCase,
+            mainDispatcher = testDispatcher
+        )
     }
 
     @After
@@ -52,12 +50,6 @@ class ContinentsViewModelTest {
     @Test
     fun `testing default values of ui state`() {
         // Given
-        viewModel = ContinentsViewModel(
-            savedStateHandle = savedStateHandle,
-            continentsUseCase = FakeContinentsUseCase(),
-            countriesUseCase = countriesUseCase,
-            mainDispatcher = testDispatcher
-        )
 
         // Then
         Truth.assertThat(viewModel.continentsState.value.continents)
@@ -71,12 +63,7 @@ class ContinentsViewModelTest {
     @Test
     fun `should return list of continents if successful`() = runTest(testDispatcher.scheduler) {
         // Given
-        viewModel = ContinentsViewModel(
-            savedStateHandle = savedStateHandle,
-            continentsUseCase = FakeContinentsUseCase(),
-            countriesUseCase = countriesUseCase,
-            mainDispatcher = testDispatcher
-        )
+        useCase.setSuccessful(isSuccessful = true)
         val listOfContinents = Util.listOfContinents
 
         // When
@@ -110,12 +97,7 @@ class ContinentsViewModelTest {
     @Test
     fun `should return error if not successful`() = runTest(testDispatcher.scheduler) {
         // Given
-        viewModel = ContinentsViewModel(
-            savedStateHandle = savedStateHandle,
-            continentsUseCase = FakeContinentsUseCase(isSuccessful = false),
-            countriesUseCase = countriesUseCase,
-            mainDispatcher = testDispatcher
-        )
+        useCase.setSuccessful(isSuccessful = false)
 
         // When
         viewModel.onEvent(ContinentsEvent.RequestContinents)

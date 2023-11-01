@@ -9,6 +9,7 @@ import androidx.test.filters.LargeTest
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
 
 /**
  * This is an example startup benchmark.
@@ -22,9 +23,14 @@ import org.junit.runner.RunWith
  * Run this benchmark from Studio to see startup measurements, and captured system traces
  * for investigating your app's performance.
  */
+
+private const val LIST_ITEMS = 5
+
 @LargeTest
-@RunWith(AndroidJUnit4::class)
-class ExampleStartupBenchmark {
+@RunWith(Parameterized::class)
+class ExampleStartupBenchmark(
+    private val startupMode: StartupMode
+) {
     @get:Rule
     val benchmarkRule = MacrobenchmarkRule()
 
@@ -33,9 +39,24 @@ class ExampleStartupBenchmark {
         packageName = "com.reza.countriesapp.production",
         metrics = listOf(StartupTimingMetric()),
         iterations = 5,
-        startupMode = StartupMode.COLD
+        startupMode = startupMode,
+        setupBlock = {
+            // Press home button before each run to ensure the starting activity isn't visible.
+            pressHome()
+        }
     ) {
-        pressHome()
+
         startActivityAndWait()
+    }
+
+    companion object {
+        @Parameterized.Parameters(name = "mode={0}")
+        @JvmStatic
+        fun parameters(): List<Array<Any>> {
+            return listOf(
+                StartupMode.COLD,
+                StartupMode.WARM
+            ).map { arrayOf(it) }
+        }
     }
 }
