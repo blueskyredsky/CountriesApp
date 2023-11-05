@@ -103,6 +103,7 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.material)
     debugImplementation(libs.ui.tooling)
+    implementation(libs.ui.tooling.preview)
 
     // ViewModel
     implementation(libs.viewmodel.compose)

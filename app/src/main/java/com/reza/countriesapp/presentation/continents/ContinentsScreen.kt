@@ -1,6 +1,7 @@
 package com.reza.countriesapp.presentation.continents
 
 //import androidx.compose.ui.tooling.preview.Preview
+import android.content.res.Configuration
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -16,6 +17,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.PullRefreshState
+import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -28,21 +32,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.reza.countriesapp.domain.model.Continent
 import com.reza.countriesapp.presentation.common.LoadingItem
 import com.reza.countriesapp.ui.theme.CountriesAppTheme
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ContinentsScreen(
-    modifier: Modifier = Modifier, onSelectContinent: (Continent) -> Unit
+    modifier: Modifier = Modifier,
+    onSelectContinent: (Continent) -> Unit
 ) {
     val viewModel = hiltViewModel<ContinentsViewModel>()
     val state by viewModel.continentsState.collectAsState()
-
-    val pullRefreshState = rememberPullRefreshState(state.isLoading, { viewModel.onEvent(ContinentsEvent.RequestContinents) })
 
     LaunchedEffect(key1 = Unit) {
         viewModel.onEvent(ContinentsEvent.RequestContinents)
@@ -65,31 +68,66 @@ fun ContinentsScreen(
                 if (targetState.isLoading) {
                     LoadingItem()
                 } else {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        items(
-                            key = { item -> item.code ?: "" }, items = state.continents
-                        ) { continent ->
-                            ContinentItem(
-                                modifier = Modifier
-                                    .padding(horizontal = 16.dp)
-                                    .padding(top = 16.dp)
-                                    .fillMaxWidth(),
-                                item = continent,
-                                onSelectContinent = onSelectContinent
-                            )
+                    ContinentList(
+                        isRefreshing = state.isLoading,
+                        continents = state.continents,
+                        onSelectContinent = onSelectContinent,
+                        onRefresh = {
+                            viewModel.onEvent(ContinentsEvent.RequestContinents)
                         }
-                    }
+                    )
                 }
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+private fun ContinentList(
+    modifier: Modifier = Modifier,
+    isRefreshing: Boolean,
+    continents: List<Continent>,
+    onSelectContinent: (Continent) -> Unit,
+    onRefresh: () -> Unit
+) {
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = isRefreshing,
+        onRefresh = { onRefresh() })
+
+    Box(modifier = modifier.fillMaxSize()) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .pullRefresh(pullRefreshState)
+        ) {
+            items(
+                key = { item -> item.code ?: "" },
+                items = continents
+            ) { continent ->
+                ContinentItem(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 16.dp)
+                        .fillMaxWidth(),
+                    item = continent,
+                    onSelectContinent = onSelectContinent
+                )
+            }
+        }
+        PullRefreshIndicator(
+            refreshing = isRefreshing,
+            state = pullRefreshState,
+            modifier = Modifier.align(Alignment.TopCenter)
+        )
+    }
+}
+
 @Composable
 private fun ContinentItem(
-    modifier: Modifier = Modifier, item: Continent, onSelectContinent: (Continent) -> Unit
+    modifier: Modifier = Modifier,
+    item: Continent,
+    onSelectContinent: (Continent) -> Unit
 ) {
     Card(
         modifier = modifier
@@ -108,11 +146,11 @@ private fun ContinentItem(
     }
 }
 
-//@Preview(name = "Light")
-//@Preview(
-//    name = "Dark",
-//    uiMode = Configuration.UI_MODE_NIGHT_YES,
-//)
+@Preview(name = "Light")
+@Preview(
+    name = "Dark",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+)
 @Composable
 fun ContinentItemPreview() {
     CountriesAppTheme {
