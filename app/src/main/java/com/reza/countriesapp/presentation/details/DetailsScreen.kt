@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 
 @Composable
-fun DetailsScreen() {
+fun DetailsScreen(onBackClick: () -> Unit) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center

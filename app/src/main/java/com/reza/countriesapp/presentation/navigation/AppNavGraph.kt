@@ -17,18 +17,22 @@ fun AppNavGraph(
     navController: NavHostController,
 ) {
     NavHost(
-        modifier = modifier,
-        navController = navController,
-        startDestination = HOME
+        modifier = modifier, navController = navController, startDestination = HOME
     ) {
         composable(HOME) {
             ContinentsScreen(
                 onSelectContinent = { continent ->
-                    // TODO: navigate to details
+                    navController.navigate(route = DETAIL)
                 }
             )
         }
 
-        composable(DETAIL) { DetailsScreen() }
+        composable(DETAIL) {
+            DetailsScreen(
+                onBackClick = {
+                    // TODO: handle on back clicked
+                }
+            )
+        }
     }
 }
