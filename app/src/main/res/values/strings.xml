@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CountriesApp</string>
+    <string name="continents">Continents</string>
+    <string name="retry">retry</string>
 </resources>

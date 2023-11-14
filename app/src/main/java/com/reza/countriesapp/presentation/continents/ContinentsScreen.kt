@@ -1,6 +1,7 @@
 package com.reza.countriesapp.presentation.continents
 
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -20,58 +21,100 @@ import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.reza.countriesapp.R
 import com.reza.countriesapp.domain.model.Continent
 import com.reza.countriesapp.presentation.common.LoadingItem
 import com.reza.countriesapp.ui.theme.CountriesAppTheme
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ContinentsScreen(
     modifier: Modifier = Modifier,
     onSelectContinent: (Continent) -> Unit
 ) {
+
     val viewModel = hiltViewModel<ContinentsViewModel>()
     val state by viewModel.continentsState.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
 
-    LaunchedEffect(key1 = Unit) {
-        viewModel.onEvent(ContinentsEvent.RequestContinents)
-    }
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.primary,
+                ),
+                title = {
+                    Text(stringResource(R.string.continents))
+                }
+            )
+        },
+        content = { innerPaddingModifier ->
+            AnimatedContent(
+                modifier = modifier.padding(innerPaddingModifier),
+                targetState = state,
+                transitionSpec = {
+                    fadeIn() togetherWith fadeOut()
+                },
+                label = "Animated Content"
+            ) { targetState ->
+                if (targetState.isLoading) {
+                    LoadingItem()
+                } else {
+                    if (targetState.errorMessage != null) {
+                        val actionLabel = stringResource(id = R.string.retry)
+                        LaunchedEffect(key1 = Unit) {
+                            val result = snackbarHostState.showSnackbar(
+                                message = "targetState.errorMessage",
+                                actionLabel = actionLabel
+                            )
+                            when (result) {
+                                SnackbarResult.ActionPerformed ->
+                                    viewModel.onEvent(ContinentsEvent.RequestContinents)
 
-    Scaffold(modifier = modifier) { paddingValues ->
-        AnimatedContent(
-            modifier = modifier.padding(paddingValues),
-            targetState = state,
-            transitionSpec = {
-                fadeIn() togetherWith fadeOut()
-            },
-            label = "Animated Content"
-        ) { targetState ->
-            if (targetState.isLoading) {
-                LoadingItem()
-            } else {
-                ContinentList(
-                    isRefreshing = state.isLoading,
-                    continents = state.continents,
-                    onSelectContinent = onSelectContinent,
-                    onRefresh = {
-                        viewModel.onEvent(ContinentsEvent.RequestContinents)
+                                SnackbarResult.Dismissed -> Unit
+                            }
+                        }
+                    } else {
+                        ContinentList(
+                            isRefreshing = state.isLoading,
+                            continents = state.continents,
+                            onSelectContinent = onSelectContinent,
+                            onRefresh = {
+                                viewModel.onEvent(ContinentsEvent.RequestContinents)
+                            }
+                        )
                     }
-                )
+                }
             }
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
         }
-    }
+    )
 }
 
 @OptIn(ExperimentalMaterialApi::class)

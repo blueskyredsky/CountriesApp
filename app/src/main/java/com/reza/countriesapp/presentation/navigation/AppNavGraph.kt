@@ -17,7 +17,9 @@ fun AppNavGraph(
     navController: NavHostController,
 ) {
     NavHost(
-        modifier = modifier, navController = navController, startDestination = HOME
+        modifier = modifier,
+        navController = navController,
+        startDestination = HOME
     ) {
         composable(HOME) {
             ContinentsScreen(

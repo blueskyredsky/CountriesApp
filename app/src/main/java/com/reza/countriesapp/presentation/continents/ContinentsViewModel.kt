@@ -38,6 +38,10 @@ class ContinentsViewModel @Inject constructor(
         }
     }
 
+    init {
+        getContinents()
+    }
+
     private fun getContinents() {
         viewModelScope.launch(mainDispatcher + exceptionHandler) {
             // Loading state
@@ -52,8 +56,7 @@ class ContinentsViewModel @Inject constructor(
                 is ResultState.Success -> {
                     _continentsState.update { continentsState ->
                         continentsState.copy(
-                            continents = result.data,
-                            isLoading = false
+                            continents = result.data, isLoading = false, errorMessage = null
                         )
                     }
                 }
@@ -61,8 +64,7 @@ class ContinentsViewModel @Inject constructor(
                 is ResultState.Failure -> {
                     _continentsState.update { continentsState ->
                         continentsState.copy(
-                            isLoading = false,
-                            errorMessage = result.error
+                            isLoading = false, errorMessage = result.error
                         )
                     }
                 }
