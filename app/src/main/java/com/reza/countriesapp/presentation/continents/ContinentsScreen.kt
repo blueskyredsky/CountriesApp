@@ -3,6 +3,8 @@ package com.reza.countriesapp.presentation.continents
 import android.content.res.Configuration
 import android.util.Log
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
@@ -73,13 +75,11 @@ fun ContinentsScreen(
             )
         },
         content = { innerPaddingModifier ->
-            AnimatedContent(
+            Crossfade(
                 modifier = modifier.padding(innerPaddingModifier),
                 targetState = state,
-                transitionSpec = {
-                    fadeIn() togetherWith fadeOut()
-                },
-                label = "Animated Content"
+                animationSpec = tween(500),
+                label = "cross fade"
             ) { targetState ->
                 if (targetState.isLoading) {
                     LoadingItem()
@@ -88,7 +88,7 @@ fun ContinentsScreen(
                         val actionLabel = stringResource(id = R.string.retry)
                         LaunchedEffect(key1 = Unit) {
                             val result = snackbarHostState.showSnackbar(
-                                message = "targetState.errorMessage",
+                                message = targetState.errorMessage,
                                 actionLabel = actionLabel
                             )
                             when (result) {
