@@ -51,7 +51,6 @@ class ContinentsViewModelTest {
         Truth.assertThat(viewModel.continentsState.value.isLoading).isFalse()
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `should return list of continents if successful`() = runTest(testDispatcher.scheduler) {
         // Given
@@ -80,7 +79,6 @@ class ContinentsViewModelTest {
         }
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `should return error if not successful`() = runTest(testDispatcher.scheduler) {
         // Given

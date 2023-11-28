@@ -9,11 +9,14 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 
 @Composable
-fun DetailsScreen(onBackClick: () -> Unit) {
+fun DetailsScreen(
+    continentCode: String?,
+    onBackClick: () -> Unit
+) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = "Details")
+        Text(text = continentCode ?: "null")
     }
 }
