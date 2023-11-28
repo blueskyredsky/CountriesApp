@@ -33,7 +33,7 @@ class ContinentsViewModelTest {
 
     @Before
     fun setup() {
-        fakeContinentsUseCase = FakeContinentsUseCase()
+        fakeContinentsUseCase = FakeContinentsUseCase(testDispatcher)
         viewModel = ContinentsViewModel(
             savedStateHandle = savedStateHandle,
             continentsUseCase = fakeContinentsUseCase,
@@ -42,15 +42,8 @@ class ContinentsViewModelTest {
         )
     }
 
-    @After
-    fun teardown() {
-    }
-
     @Test
     fun `testing default values of ui state`() {
-        // Given N/A
-        // When N/A
-        // Then
         Truth.assertThat(viewModel.continentsState.value.continents)
             .isEqualTo(emptyList<Continent>())
         Truth.assertThat(viewModel.continentsState.value.selectedContinent).isNull()
@@ -62,11 +55,7 @@ class ContinentsViewModelTest {
     @Test
     fun `should return list of continents if successful`() = runTest(testDispatcher.scheduler) {
         // Given
-        fakeContinentsUseCase.setSuccessful(true)
         val listOfContinents = Util.listOfContinents
-
-        // When
-        advanceUntilIdle()
 
         // Then
         viewModel.continentsState.test {
@@ -96,9 +85,6 @@ class ContinentsViewModelTest {
     fun `should return error if not successful`() = runTest(testDispatcher.scheduler) {
         // Given
         fakeContinentsUseCase.setSuccessful(false)
-
-        // When
-        advanceUntilIdle()
 
         // Then
         viewModel.continentsState.test {
