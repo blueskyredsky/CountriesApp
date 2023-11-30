@@ -7,4 +7,8 @@ import kotlinx.parcelize.Parcelize
 data class Continent(
     val name: String?,
     val code: String?,
-) : Parcelable
+) : Parcelable {
+    companion object {
+        val DEFAULT_CONTINENT = Continent(name = "default_name", code = "default_code")
+    }
+}
