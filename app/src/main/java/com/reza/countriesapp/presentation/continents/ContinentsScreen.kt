@@ -57,10 +57,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun ContinentsScreen(
     modifier: Modifier = Modifier,
+    viewModel: ContinentsViewModel = hiltViewModel(),
     onSelectContinent: (Continent) -> Unit
 ) {
-
-    val viewModel = hiltViewModel<ContinentsViewModel>()
     val state by viewModel.continentsState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -137,6 +136,7 @@ fun ContinentList(
             modifier = Modifier
                 .fillMaxSize()
                 .pullRefresh(pullRefreshState)
+                .testTag(Constants.UiTags.LazyColumn.customName)
         ) {
             items(
                 key = { item -> item.code ?: "" },

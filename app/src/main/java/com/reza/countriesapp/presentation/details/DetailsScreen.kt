@@ -17,6 +17,6 @@ fun DetailsScreen(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = continentCode ?: "null")
+        Text(text = "code1" ?: "code1")
     }
 }
