@@ -5,6 +5,7 @@ object Constants {
     enum class UiTags(val customName: String) {
         LazyColumn("lazy_column"),
         ProgressIndicator("progress_indicator"),
-        ContinentItem("continent_item")
+        ContinentItem("continent_item"),
+        REZA("reza")
     }
 }

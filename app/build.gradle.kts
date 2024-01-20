@@ -127,19 +127,21 @@ dependencies {
 
     // Test
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
     testImplementation(libs.coroutines.test)
     testImplementation(libs.turbine)
-    androidTestImplementation(libs.ui.test.junit4)
-    debugImplementation(libs.ui.test.manifest)
     testImplementation(libs.mockito.nhaarman)
     testImplementation(libs.mockito)
     testImplementation(libs.truth)
     testImplementation(libs.apollo.test)
     testImplementation(libs.apollo.mock.server)
+    debugImplementation(libs.ui.test.manifest)
+
+    androidTestImplementation(libs.ui.test.junit4)
     androidTestImplementation(libs.truth)
     androidTestImplementation(libs.hilt.test)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.navigation.test)
     kaptAndroidTest(libs.hilt.kapt.test)
 }
 
