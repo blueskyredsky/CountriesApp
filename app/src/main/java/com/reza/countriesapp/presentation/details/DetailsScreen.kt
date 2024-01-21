@@ -20,7 +20,7 @@ fun DetailsScreen(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            modifier = Modifier.testTag(Constants.UiTags.REZA.customName),
-            text = "code1" ?: "code1")
+            modifier = Modifier.testTag("naghi"),
+            text = continentCode ?: "")
     }
 }

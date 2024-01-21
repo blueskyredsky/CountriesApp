@@ -136,7 +136,6 @@ fun ContinentList(
             modifier = Modifier
                 .fillMaxSize()
                 .pullRefresh(pullRefreshState)
-                .testTag(Constants.UiTags.LazyColumn.customName)
         ) {
             items(
                 key = { item -> item.code ?: "" },
