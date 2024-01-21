@@ -66,7 +66,8 @@ class ContinentsScreenTest {
     fun appNavHost_verifyStartDestination() {
         if (this::navController.isInitialized) {
             val route = navController.currentDestination?.route
-            Truth.assertThat(route).isEqualTo("home")
+            val expectedRoute = composeTestRule.activity.getString(R.string.home_screen_route)
+            Truth.assertThat(route).isEqualTo(expectedRoute)
         }
     }
 
@@ -81,7 +82,8 @@ class ContinentsScreenTest {
         ).onFirst().performClick()
 
         val route = navController.currentDestination?.route
-        Truth.assertThat(route).isEqualTo("detail/{continentCode}")
+        val expectedRoute = composeTestRule.activity.getString(R.string.details_screen_route)
+        Truth.assertThat(route).isEqualTo(expectedRoute)
     }
 
     // continue testing details screen
