@@ -10,13 +10,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import com.reza.countriesapp.util.Constants
 
 @Composable
 fun DetailsScreen(
     continentCode: String?,
-    viewModel: DetailsViewModel = hiltViewModel(),
+    viewModel: CountriesViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
     val text by viewModel.filteredData.collectAsState()

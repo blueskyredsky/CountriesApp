@@ -22,9 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ContinentsViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
     private val continentsUseCase: ContinentsUseCase,
-    private val countriesUseCase: CountriesUseCase,
     @MainDispatcher private val mainDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 

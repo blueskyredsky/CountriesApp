@@ -11,7 +11,7 @@ import com.reza.countriesapp.presentation.details.DetailsScreen
 import com.reza.countriesapp.presentation.continents.ContinentsScreen
 
 private const val HOME = "home"
-private const val CONTINENT_CODE = "continentCode"
+const val CONTINENT_CODE = "continentCode"
 private const val DETAIL = "detail"
 
 @Composable

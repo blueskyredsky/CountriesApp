@@ -6,5 +6,5 @@ import com.reza.ContinentsQuery
 
 interface ContinentDataSource {
     suspend fun getContinents(): ApolloResponse<ContinentsQuery.Data>
-    suspend fun getContinent(code: String): ApolloResponse<ContinentQuery.Data>
+    suspend fun getCountries(code: String): ApolloResponse<ContinentQuery.Data>
 }
