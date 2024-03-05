@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.reza.countriesapp.data.di.MainDispatcher
+import com.reza.countriesapp.domain.model.ResultState
 import com.reza.countriesapp.domain.usecase.CountriesUseCase
 import com.reza.countriesapp.presentation.navigation.CONTINENT_CODE
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CountriesViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val useCase: CountriesUseCase,
+    private val countriesUseCase: CountriesUseCase,
     @MainDispatcher private val mainDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
@@ -38,16 +39,46 @@ class CountriesViewModel @Inject constructor(
         savedStateHandle.getStateFlow<String>("continentCode", "")
 
     init {
-        // TODO: calling api
         savedStateHandle.get<String>(CONTINENT_CODE)?.let { code ->
             viewModelScope.launch(mainDispatcher + exceptionHandler) {
+                // Loading state
+                _countriesState.update { state ->
+                    state.copy(
+                        isLoading = true
+                    )
+                }
 
+                when (val result = countriesUseCase.getCountries(code)) {
+                    is ResultState.Success -> {
+                        _countriesState.update { state ->
+                            state.copy(
+                                countries = result.data,
+                                isLoading = false,
+                                errorMessage = null
+                            )
+                        }
+                    }
+
+                    is ResultState.Failure -> {
+                        _countriesState.update { state ->
+                            state.copy(
+                                countries = null,
+                                isLoading = false,
+                                errorMessage = result.error
+                            )
+                        }
+                    }
+                }
             }
         }
-
-
     }
 
+    fun consumeErrorMessage() {
+        _countriesState.update { state ->
+            state.copy(errorMessage = null)
+
+        }
+    }
 
 
     // TODO: getting args from saveStateHandle

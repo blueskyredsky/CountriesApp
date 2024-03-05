@@ -7,6 +7,5 @@ import javax.annotation.concurrent.Immutable
 data class ContinentsState(
     val continents: List<Continent> = emptyList(),
     val isLoading: Boolean = false,
-    val errorMessage: String? = null,
-    val selectedContinent: Continent? = null
+    val errorMessage: String? = null
 )

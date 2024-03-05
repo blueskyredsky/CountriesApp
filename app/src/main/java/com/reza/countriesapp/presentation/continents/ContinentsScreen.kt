@@ -96,7 +96,9 @@ fun ContinentsScreen(
                                 SnackbarResult.ActionPerformed ->
                                     viewModel.onEvent(ContinentsEvent.RequestContinents)
 
-                                SnackbarResult.Dismissed -> Unit
+                                SnackbarResult.Dismissed -> {
+                                    viewModel.consumeErrorMessage()
+                                }
                             }
                         }
                     } else {
