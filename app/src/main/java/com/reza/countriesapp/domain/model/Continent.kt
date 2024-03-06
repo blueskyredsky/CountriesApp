@@ -10,5 +10,7 @@ data class Continent(
 ) : Parcelable {
     companion object {
         val DEFAULT_CONTINENT = Continent(name = "default_name", code = "default_code")
+
+        val LIST_OF_CONTINENTS = listOf(Continent("Africa", "AF"), Continent("Asia", "AS"))
     }
 }

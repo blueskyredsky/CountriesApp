@@ -35,7 +35,7 @@ class DefaultCountryRepositoryTest {
     @Test
     fun `should return success when calling get countries`() = runTest {
         // Given
-        whenever(dataSource.getContinent(code = anyString())).thenReturn(apolloResponse)
+        whenever(dataSource.getCountries(code = anyString())).thenReturn(apolloResponse)
         whenever(apolloResponse.hasErrors()).thenReturn(false)
 
         // When
@@ -48,7 +48,7 @@ class DefaultCountryRepositoryTest {
     @Test
     fun `should return failure when calling get countries`() = runTest {
         // Given
-        whenever(dataSource.getContinent(code = anyString())).thenReturn(apolloResponse)
+        whenever(dataSource.getCountries(code = anyString())).thenReturn(apolloResponse)
         whenever(apolloResponse.hasErrors()).thenReturn(true)
 
         // When
