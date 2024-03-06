@@ -3,12 +3,10 @@ package com.reza.countriesapp.presentation.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import com.reza.countriesapp.presentation.details.DetailsScreen
-import com.reza.countriesapp.presentation.continents.ContinentsScreen
+import com.reza.countriesapp.presentation.home.ContinentsScreen
 
 private const val HOME = "home"
 const val CONTINENT_CODE = "continentCode"

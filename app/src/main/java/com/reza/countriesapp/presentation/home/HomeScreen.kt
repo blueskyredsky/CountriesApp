@@ -1,13 +1,8 @@
-package com.reza.countriesapp.presentation.continents
+package com.reza.countriesapp.presentation.home
 
 import android.content.res.Configuration
-import android.util.Log
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -37,7 +32,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -51,13 +45,12 @@ import com.reza.countriesapp.domain.model.Continent
 import com.reza.countriesapp.presentation.common.LoadingItem
 import com.reza.countriesapp.ui.theme.CountriesAppTheme
 import com.reza.countriesapp.util.Constants
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ContinentsScreen(
     modifier: Modifier = Modifier,
-    viewModel: ContinentsViewModel = hiltViewModel(),
+    viewModel: HomeViewModel = hiltViewModel(),
     onSelectContinent: (Continent) -> Unit
 ) {
     val state by viewModel.continentsState.collectAsState()
@@ -94,7 +87,7 @@ fun ContinentsScreen(
                             )
                             when (result) {
                                 SnackbarResult.ActionPerformed ->
-                                    viewModel.onEvent(ContinentsEvent.RequestContinents)
+                                    viewModel.onEvent(HomeEvent.RequestHome)
 
                                 SnackbarResult.Dismissed -> {
                                     viewModel.consumeErrorMessage()
@@ -107,7 +100,7 @@ fun ContinentsScreen(
                             continents = state.continents,
                             onSelectContinent = onSelectContinent,
                             onRefresh = {
-                                viewModel.onEvent(ContinentsEvent.RequestContinents)
+                                viewModel.onEvent(HomeEvent.RequestHome)
                             }
                         )
                     }

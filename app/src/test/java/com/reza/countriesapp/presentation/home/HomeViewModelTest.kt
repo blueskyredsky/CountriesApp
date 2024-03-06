@@ -1,4 +1,4 @@
-package com.reza.countriesapp.presentation.continents
+package com.reza.countriesapp.presentation.home
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth
@@ -13,17 +13,17 @@ import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class ContinentsViewModelTest {
+class HomeViewModelTest {
 
     private val testDispatcher = StandardTestDispatcher()
     private lateinit var fakeContinentsUseCase: FakeContinentsUseCase
-    private lateinit var viewModel: ContinentsViewModel
+    private lateinit var viewModel: HomeViewModel
 
 
     @Before
     fun setup() {
         fakeContinentsUseCase = FakeContinentsUseCase(testDispatcher)
-        viewModel = ContinentsViewModel(
+        viewModel = HomeViewModel(
             continentsUseCase = fakeContinentsUseCase,
             mainDispatcher = testDispatcher
         )
@@ -42,7 +42,7 @@ class ContinentsViewModelTest {
         // Then
         viewModel.continentsState.test {
             Truth.assertThat(
-                ContinentsState(
+                HomeState(
                     isLoading = true,
                     continents = emptyList(),
                     errorMessage = null
@@ -50,7 +50,7 @@ class ContinentsViewModelTest {
             ).isEqualTo(awaitItem())
 
             Truth.assertThat(
-                ContinentsState(
+                HomeState(
                     isLoading = false,
                     continents = Continent.LIST_OF_CONTINENTS,
                     errorMessage = null
@@ -68,7 +68,7 @@ class ContinentsViewModelTest {
         // Then
         viewModel.continentsState.test {
             Truth.assertThat(
-                ContinentsState(
+                HomeState(
                     isLoading = true,
                     continents = emptyList(),
                     errorMessage = null
@@ -76,7 +76,7 @@ class ContinentsViewModelTest {
             ).isEqualTo(awaitItem())
 
             Truth.assertThat(
-                ContinentsState(
+                HomeState(
                     isLoading = false,
                     continents = emptyList(),
                     errorMessage = ""

@@ -14,7 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 @Composable
 fun DetailsScreen(
     continentCode: String?,
-    viewModel: CountriesViewModel = hiltViewModel(),
+    viewModel: DetailsViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
     val text by viewModel.filteredData.collectAsState()

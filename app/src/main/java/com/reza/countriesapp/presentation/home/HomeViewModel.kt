@@ -1,4 +1,4 @@
-package com.reza.countriesapp.presentation.continents
+package com.reza.countriesapp.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,16 +15,16 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ContinentsViewModel @Inject constructor(
+class HomeViewModel @Inject constructor(
     private val continentsUseCase: ContinentsUseCase,
     @MainDispatcher private val mainDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private val _continentsState = MutableStateFlow(ContinentsState())
-    val continentsState = _continentsState.asStateFlow()
+    private val _homeState = MutableStateFlow(HomeState())
+    val continentsState = _homeState.asStateFlow()
 
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
-        _continentsState.update { state ->
+        _homeState.update { state ->
             state.copy(
                 errorMessage = exception.message ?: "Something went wrong, please try again!"
             )
@@ -38,7 +38,7 @@ class ContinentsViewModel @Inject constructor(
     private fun getContinents() {
         viewModelScope.launch(mainDispatcher + exceptionHandler) {
             // Loading state
-            _continentsState.update { state ->
+            _homeState.update { state ->
                 state.copy(
                     isLoading = true
                 )
@@ -47,7 +47,7 @@ class ContinentsViewModel @Inject constructor(
             // Getting continents
             when (val result = continentsUseCase.getContinents()) {
                 is ResultState.Success -> {
-                    _continentsState.update { state ->
+                    _homeState.update { state ->
                         state.copy(
                             continents = result.data, isLoading = false, errorMessage = null
                         )
@@ -55,7 +55,7 @@ class ContinentsViewModel @Inject constructor(
                 }
 
                 is ResultState.Failure -> {
-                    _continentsState.update { state ->
+                    _homeState.update { state ->
                         state.copy(
                             isLoading = false, errorMessage = result.error
                         )
@@ -66,14 +66,14 @@ class ContinentsViewModel @Inject constructor(
     }
 
     fun consumeErrorMessage() {
-        _continentsState.update { state ->
+        _homeState.update { state ->
             state.copy(errorMessage = null)
         }
     }
 
-    fun onEvent(event: ContinentsEvent) {
+    fun onEvent(event: HomeEvent) {
         when (event) {
-            is ContinentsEvent.RequestContinents -> getContinents()
+            is HomeEvent.RequestHome -> getContinents()
         }
     }
 }

@@ -18,17 +18,17 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CountriesViewModel @Inject constructor(
+class DetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val countriesUseCase: CountriesUseCase,
     @MainDispatcher private val mainDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private val _countriesState = MutableStateFlow(CountriesState())
-    val countriesState = _countriesState.asStateFlow()
+    private val _detailsState = MutableStateFlow(DetailsState())
+    val countriesState = _detailsState.asStateFlow()
 
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
-        _countriesState.update { continentsState ->
+        _detailsState.update { continentsState ->
             continentsState.copy(
                 errorMessage = exception.message ?: "Something went wrong, please try again!"
             )
@@ -42,7 +42,7 @@ class CountriesViewModel @Inject constructor(
         savedStateHandle.get<String>(CONTINENT_CODE)?.let { code ->
             viewModelScope.launch(mainDispatcher + exceptionHandler) {
                 // Loading state
-                _countriesState.update { state ->
+                _detailsState.update { state ->
                     state.copy(
                         isLoading = true
                     )
@@ -50,7 +50,7 @@ class CountriesViewModel @Inject constructor(
 
                 when (val result = countriesUseCase.getCountries(code)) {
                     is ResultState.Success -> {
-                        _countriesState.update { state ->
+                        _detailsState.update { state ->
                             state.copy(
                                 countries = result.data,
                                 isLoading = false,
@@ -60,7 +60,7 @@ class CountriesViewModel @Inject constructor(
                     }
 
                     is ResultState.Failure -> {
-                        _countriesState.update { state ->
+                        _detailsState.update { state ->
                             state.copy(
                                 countries = null,
                                 isLoading = false,
@@ -74,7 +74,7 @@ class CountriesViewModel @Inject constructor(
     }
 
     fun consumeErrorMessage() {
-        _countriesState.update { state ->
+        _detailsState.update { state ->
             state.copy(errorMessage = null)
 
         }
