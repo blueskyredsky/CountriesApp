@@ -1,57 +1,57 @@
-package com.reza.countriesapp.presentation.home
+package com.reza.countriesapp.presentation.details
 
+import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.google.common.truth.Truth
-import com.reza.countriesapp.domain.model.Continent
-import com.reza.countriesapp.domain.usecase.FakeContinentsUseCase
+import com.reza.countriesapp.domain.model.Country
+import com.reza.countriesapp.domain.usecase.FakeCountriesUseCase
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class HomeViewModelTest {
+class DetailsViewModelTest {
 
     private val testDispatcher = StandardTestDispatcher()
-    private lateinit var fakeContinentsUseCase: FakeContinentsUseCase
-    private lateinit var viewModel: HomeViewModel
+    private lateinit var fakeCountriesUseCase: FakeCountriesUseCase
+    private lateinit var viewModel: DetailsViewModel
 
     @Before
     fun setup() {
-        fakeContinentsUseCase = FakeContinentsUseCase(testDispatcher)
-        viewModel = HomeViewModel(
-            continentsUseCase = fakeContinentsUseCase,
-            mainDispatcher = testDispatcher
+        fakeCountriesUseCase = FakeCountriesUseCase(testDispatcher)
+        viewModel = DetailsViewModel(
+            countriesUseCase = fakeCountriesUseCase,
+            mainDispatcher = testDispatcher,
+            savedStateHandle = SavedStateHandle()
         )
     }
 
     @Test
     fun `testing default values of ui state`() {
-        Truth.assertThat(viewModel.continentsState.value.continents)
-            .isEqualTo(emptyList<Continent>())
-        Truth.assertThat(viewModel.continentsState.value.errorMessage).isNull()
-        Truth.assertThat(viewModel.continentsState.value.isLoading).isFalse()
+        Truth.assertThat(viewModel.countriesState.value.countries).isNull()
+        Truth.assertThat(viewModel.countriesState.value.errorMessage).isNull()
+        Truth.assertThat(viewModel.countriesState.value.isLoading).isFalse()
     }
 
     @Test
-    fun `should return list of continents if successful`() = runTest(testDispatcher.scheduler) {
+    fun `should return list of countries if successful`() = runTest(testDispatcher.scheduler) {
         // Then
-        viewModel.continentsState.test {
+        viewModel.countriesState.test {
             Truth.assertThat(
-                HomeState(
+                DetailsState(
                     isLoading = true,
-                    continents = emptyList(),
+                    countries = null,
                     errorMessage = null
                 )
             ).isEqualTo(awaitItem())
 
             Truth.assertThat(
-                HomeState(
+                DetailsState(
                     isLoading = false,
-                    continents = Continent.LIST_OF_CONTINENTS,
+                    countries = Country.LIST_OF_COUNTRIES,
                     errorMessage = null
                 )
             ).isEqualTo(awaitItem())
@@ -62,22 +62,22 @@ class HomeViewModelTest {
     @Test
     fun `should return error if not successful`() = runTest(testDispatcher.scheduler) {
         // Given
-        fakeContinentsUseCase.setSuccessful(false)
+        fakeCountriesUseCase.setSuccessful(false)
 
         // Then
-        viewModel.continentsState.test {
+        viewModel.countriesState.test {
             Truth.assertThat(
-                HomeState(
+                DetailsState(
                     isLoading = true,
-                    continents = emptyList(),
+                    countries = null,
                     errorMessage = null
                 )
             ).isEqualTo(awaitItem())
 
             Truth.assertThat(
-                HomeState(
+                DetailsState(
                     isLoading = false,
-                    continents = emptyList(),
+                    countries = null,
                     errorMessage = ""
                 )
             ).isEqualTo(awaitItem())

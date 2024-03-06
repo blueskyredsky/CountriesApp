@@ -12,4 +12,18 @@ data class Country(
     val phone: String?,
     val states: List<String?>?,
     val languages: List<String?>?
-) : Parcelable
+) : Parcelable {
+    companion object {
+        val LIST_OF_COUNTRIES = listOf<Country>(
+            Country(
+                name = "",
+                emoji = "",
+                currency = "",
+                capital = "",
+                phone = "",
+                states = emptyList(),
+                languages = emptyList()
+            )
+        )
+    }
+}
