@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.reza.countriesapp.data.di.MainDispatcher
 import com.reza.countriesapp.domain.model.ResultState
-import com.reza.countriesapp.domain.usecase.CountriesUseCase
+import com.reza.countriesapp.domain.usecase.countries.CountriesUseCase
 import com.reza.countriesapp.presentation.navigation.CONTINENT_CODE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher

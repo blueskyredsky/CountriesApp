@@ -14,10 +14,4 @@ class DefaultContinentDataSource @Inject constructor(
             .query(ContinentsQuery())
             .execute()
     }
-
-    override suspend fun getCountries(code: String): ApolloResponse<ContinentQuery.Data> {
-        return apolloClient
-            .query(ContinentQuery(continent_code = code))
-            .execute()
-    }
 }

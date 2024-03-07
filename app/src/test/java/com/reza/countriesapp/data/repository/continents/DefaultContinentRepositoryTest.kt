@@ -1,4 +1,4 @@
-package com.reza.countriesapp.data.repository
+package com.reza.countriesapp.data.repository.continents
 
 import com.apollographql.apollo3.api.ApolloResponse
 import com.google.common.truth.Truth.assertThat

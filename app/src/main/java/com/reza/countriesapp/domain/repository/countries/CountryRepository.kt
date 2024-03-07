@@ -1,4 +1,4 @@
-package com.reza.countriesapp.domain.repository
+package com.reza.countriesapp.domain.repository.countries
 
 import com.reza.countriesapp.domain.model.Country
 import com.reza.countriesapp.domain.model.ResultState

@@ -2,14 +2,16 @@ package com.reza.countriesapp.data.di
 
 import com.reza.countriesapp.data.datasourse.remote.continent.ContinentDataSource
 import com.reza.countriesapp.data.datasourse.remote.continent.DefaultContinentDataSource
-import com.reza.countriesapp.data.repository.DefaultContinentRepository
-import com.reza.countriesapp.data.repository.DefaultCountryRepository
-import com.reza.countriesapp.domain.repository.ContinentRepository
-import com.reza.countriesapp.domain.repository.CountryRepository
-import com.reza.countriesapp.domain.usecase.ContinentsUseCase
-import com.reza.countriesapp.domain.usecase.CountriesUseCase
-import com.reza.countriesapp.domain.usecase.DefaultContinentsUseCase
-import com.reza.countriesapp.domain.usecase.DefaultCountriesUseCase
+import com.reza.countriesapp.data.datasourse.remote.countries.CountriesDataSource
+import com.reza.countriesapp.data.datasourse.remote.countries.DefaultCountriesDateSource
+import com.reza.countriesapp.data.repository.continents.DefaultContinentRepository
+import com.reza.countriesapp.data.repository.countries.DefaultCountryRepository
+import com.reza.countriesapp.domain.repository.continent.ContinentRepository
+import com.reza.countriesapp.domain.repository.countries.CountryRepository
+import com.reza.countriesapp.domain.usecase.continents.ContinentsUseCase
+import com.reza.countriesapp.domain.usecase.countries.CountriesUseCase
+import com.reza.countriesapp.domain.usecase.continents.DefaultContinentsUseCase
+import com.reza.countriesapp.domain.usecase.countries.DefaultCountriesUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -26,6 +28,11 @@ abstract class ActivityRetainedModule {
         defaultContinentDataSource: DefaultContinentDataSource
     ): ContinentDataSource
 
+    @Binds
+    abstract fun bindCountriesDataSource(
+        defaultCountriesDateSource: DefaultCountriesDateSource
+    ): CountriesDataSource
+
     // Repositories
     @ActivityRetainedScoped
     @Binds
@@ -39,7 +46,7 @@ abstract class ActivityRetainedModule {
         defaultCountryRepository: DefaultCountryRepository
     ): CountryRepository
 
-    // Usecases
+    // UseCases
     @Binds
     abstract fun bindContinentsUseCase(
         defaultContinentsUseCase: DefaultContinentsUseCase

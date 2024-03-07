@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.google.common.truth.Truth
 import com.reza.countriesapp.domain.model.Country
-import com.reza.countriesapp.domain.usecase.FakeCountriesUseCase
+import com.reza.countriesapp.domain.usecase.countries.FakeCountriesUseCase
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Before

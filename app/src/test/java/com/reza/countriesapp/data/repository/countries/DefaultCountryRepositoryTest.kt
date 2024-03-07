@@ -1,9 +1,9 @@
-package com.reza.countriesapp.data.repository
+package com.reza.countriesapp.data.repository.countries
 
 import com.apollographql.apollo3.api.ApolloResponse
 import com.google.common.truth.Truth.assertThat
 import com.reza.ContinentQuery
-import com.reza.countriesapp.data.datasourse.remote.continent.ContinentDataSource
+import com.reza.countriesapp.data.datasourse.remote.countries.CountriesDataSource
 import com.reza.countriesapp.domain.model.ResultState
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -18,7 +18,7 @@ import org.mockito.kotlin.whenever
 class DefaultCountryRepositoryTest {
 
     @Mock
-    private lateinit var dataSource: ContinentDataSource
+    private lateinit var dataSource: CountriesDataSource
 
     @Mock
     private lateinit var apolloResponse: ApolloResponse<ContinentQuery.Data>
@@ -28,7 +28,7 @@ class DefaultCountryRepositoryTest {
     @Before
     fun setup() {
         repository = DefaultCountryRepository(
-            continentDataSource = dataSource
+            countriesDataSource = dataSource
         )
     }
 

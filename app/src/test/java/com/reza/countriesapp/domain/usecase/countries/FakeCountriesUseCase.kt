@@ -1,12 +1,13 @@
-package com.reza.countriesapp.domain.usecase
+package com.reza.countriesapp.domain.usecase.countries
 
-import com.reza.countriesapp.domain.model.Continent
+import com.reza.countriesapp.domain.model.Country
 import com.reza.countriesapp.domain.model.ResultState
+import com.reza.countriesapp.domain.usecase.countries.CountriesUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
-class FakeContinentsUseCase(private val dispatcher: CoroutineDispatcher) : ContinentsUseCase {
+class FakeCountriesUseCase(private val dispatcher: CoroutineDispatcher) : CountriesUseCase {
 
     private var isSuccessful: Boolean = true
 
@@ -14,11 +15,11 @@ class FakeContinentsUseCase(private val dispatcher: CoroutineDispatcher) : Conti
         this.isSuccessful = isSuccessful
     }
 
-    override suspend fun getContinents(): ResultState<List<Continent>> =
+    override suspend fun getCountries(code: String): ResultState<List<Country?>?> =
         withContext(dispatcher) {
             delay(100L)
             if (isSuccessful) {
-                ResultState.Success(Continent.LIST_OF_CONTINENTS)
+                ResultState.Success(Country.LIST_OF_COUNTRIES)
             } else {
                 ResultState.Failure(error = "")
             }

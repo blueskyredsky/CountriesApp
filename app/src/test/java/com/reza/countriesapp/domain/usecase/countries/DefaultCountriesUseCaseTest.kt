@@ -1,7 +1,7 @@
-package com.reza.countriesapp.domain.usecase
+package com.reza.countriesapp.domain.usecase.countries
 
 import com.google.common.truth.Truth.assertThat
-import com.reza.countriesapp.data.repository.DefaultCountryRepository
+import com.reza.countriesapp.data.repository.countries.DefaultCountryRepository
 import com.reza.countriesapp.domain.model.Country
 import com.reza.countriesapp.domain.model.ResultState
 import kotlinx.coroutines.test.runTest

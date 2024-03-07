@@ -3,7 +3,7 @@ package com.reza.countriesapp.presentation.home
 import app.cash.turbine.test
 import com.google.common.truth.Truth
 import com.reza.countriesapp.domain.model.Continent
-import com.reza.countriesapp.domain.usecase.FakeContinentsUseCase
+import com.reza.countriesapp.domain.usecase.continents.FakeContinentsUseCase
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*

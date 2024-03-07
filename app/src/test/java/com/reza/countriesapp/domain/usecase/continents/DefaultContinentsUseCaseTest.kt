@@ -1,15 +1,13 @@
-package com.reza.countriesapp.domain.usecase
+package com.reza.countriesapp.domain.usecase.continents
 
 import com.google.common.truth.Truth.assertThat
-import com.reza.countriesapp.data.repository.DefaultContinentRepository
+import com.reza.countriesapp.data.repository.continents.DefaultContinentRepository
 import com.reza.countriesapp.domain.model.Continent
 import com.reza.countriesapp.domain.model.ResultState
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.whenever
