@@ -14,7 +14,7 @@ data class Country(
     val languages: List<String?>?
 ) : Parcelable {
     companion object {
-        val LIST_OF_COUNTRIES = listOf<Country>(
+        val LIST_OF_COUNTRIES = listOf(
             Country(
                 name = "",
                 emoji = "",

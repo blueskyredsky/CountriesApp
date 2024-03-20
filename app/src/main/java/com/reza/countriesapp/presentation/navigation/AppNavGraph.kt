@@ -35,7 +35,7 @@ fun AppNavGraph(
             DetailsScreen(
                 continentCode = backStackEntry.arguments?.getString(CONTINENT_CODE),
                 onBackClick = {
-                    // TODO: handle on back clicked
+                    navController.navigateUp()
                 }
             )
         }

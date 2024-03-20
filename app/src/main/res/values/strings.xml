@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">CountriesApp</string>
     <string name="continents">Continents</string>
+    <string name="countries">Countries</string>
     <string name="retry">retry</string>
     <string name="details_screen_route">detail/{continentCode}</string>
     <string name="home_screen_route">home</string>

@@ -76,7 +76,6 @@ class DetailsViewModel @Inject constructor(
     fun consumeErrorMessage() {
         _detailsState.update { state ->
             state.copy(errorMessage = null)
-
         }
     }
 
