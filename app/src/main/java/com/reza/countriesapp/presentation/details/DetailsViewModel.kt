@@ -6,12 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.reza.countriesapp.data.di.MainDispatcher
 import com.reza.countriesapp.domain.model.ResultState
 import com.reza.countriesapp.domain.usecase.countries.CountriesUseCase
+import com.reza.countriesapp.presentation.home.HomeEvent
 import com.reza.countriesapp.presentation.navigation.CONTINENT_CODE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: SavedStateHandle,
     private val countriesUseCase: CountriesUseCase,
     @MainDispatcher private val mainDispatcher: CoroutineDispatcher
 ) : ViewModel() {
@@ -35,10 +35,17 @@ class DetailsViewModel @Inject constructor(
         }
     }
 
-    val filteredData: StateFlow<String> =
-        savedStateHandle.getStateFlow<String>("continentCode", "")
-
     init {
+        getCountries()
+    }
+
+    fun onEvent(event: HomeEvent) {
+        when (event) {
+            is HomeEvent.GetContinents -> getCountries()
+        }
+    }
+
+    private fun getCountries() {
         savedStateHandle.get<String>(CONTINENT_CODE)?.let { code ->
             viewModelScope.launch(mainDispatcher + exceptionHandler) {
                 // Loading state
@@ -78,7 +85,4 @@ class DetailsViewModel @Inject constructor(
             state.copy(errorMessage = null)
         }
     }
-
-
-    // TODO: getting args from saveStateHandle
 }

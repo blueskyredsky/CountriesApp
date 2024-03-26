@@ -49,13 +49,11 @@ import com.reza.countriesapp.util.Constants
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ContinentsScreen(
-    modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
     onSelectContinent: (Continent) -> Unit
 ) {
     val state by viewModel.continentsState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -70,7 +68,7 @@ fun ContinentsScreen(
         },
         content = { innerPaddingModifier ->
             Crossfade(
-                modifier = modifier.padding(innerPaddingModifier),
+                modifier = Modifier.padding(innerPaddingModifier),
                 targetState = state,
                 animationSpec = tween(500),
                 label = "cross fade"
@@ -87,7 +85,7 @@ fun ContinentsScreen(
                             )
                             when (result) {
                                 SnackbarResult.ActionPerformed ->
-                                    viewModel.onEvent(HomeEvent.RequestHome)
+                                    viewModel.onEvent(HomeEvent.GetContinents)
 
                                 SnackbarResult.Dismissed -> {
                                     viewModel.consumeErrorMessage()
@@ -100,7 +98,7 @@ fun ContinentsScreen(
                             continents = state.continents,
                             onSelectContinent = onSelectContinent,
                             onRefresh = {
-                                viewModel.onEvent(HomeEvent.RequestHome)
+                                viewModel.onEvent(HomeEvent.GetContinents)
                             }
                         )
                     }
@@ -141,7 +139,7 @@ fun ContinentList(
                         .padding(horizontal = 16.dp)
                         .padding(top = 16.dp)
                         .fillMaxWidth(),
-                    item = continent,
+                    continent = continent,
                     onSelectContinent = onSelectContinent
                 )
             }
@@ -157,13 +155,13 @@ fun ContinentList(
 @Composable
 fun ContinentItem(
     modifier: Modifier = Modifier,
-    item: Continent,
+    continent: Continent,
     onSelectContinent: (Continent) -> Unit
 ) {
     Card(
         modifier = modifier
             .clip(MaterialTheme.shapes.small)
-            .clickable { onSelectContinent(item) }
+            .clickable { onSelectContinent(continent) }
             .testTag(Constants.UiTags.ContinentItem.customName),
         shape = MaterialTheme.shapes.small,
         elevation = CardDefaults.cardElevation(
@@ -173,7 +171,7 @@ fun ContinentItem(
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp), text = item.name ?: ""
+                .padding(16.dp), text = continent.name ?: ""
         )
     }
 }
@@ -189,7 +187,7 @@ fun ContinentItemPreview() {
         ContinentItem(modifier = Modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Min),
-            item = Continent(name = "name", code = "code"),
+            continent = Continent(name = "name", code = "code"),
             onSelectContinent = {})
     }
 }

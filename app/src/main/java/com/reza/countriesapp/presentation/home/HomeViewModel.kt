@@ -73,7 +73,7 @@ class HomeViewModel @Inject constructor(
 
     fun onEvent(event: HomeEvent) {
         when (event) {
-            is HomeEvent.RequestHome -> getContinents()
+            is HomeEvent.GetContinents -> getContinents()
         }
     }
 }
