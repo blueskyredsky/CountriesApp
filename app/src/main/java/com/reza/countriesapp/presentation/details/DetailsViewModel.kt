@@ -77,6 +77,8 @@ class DetailsViewModel @Inject constructor(
                     }
                 }
             }
+        } ?: let {
+            val a = ""
         }
     }
 
