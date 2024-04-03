@@ -183,11 +183,10 @@ fun ContinentItem(
             )
             Image(
                 modifier = Modifier.padding(16.dp),
-                painter = painterResource(id = R.drawable.ic_africa),
+                painter = painterResource(id = continent.imageResource),
                 contentDescription = null
             )
         }
-
     }
 }
 
@@ -202,7 +201,11 @@ fun ContinentItemPreview() {
         ContinentItem(modifier = Modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Min),
-            continent = Continent(name = "name", code = "code"),
+            continent = Continent(
+                name = "name",
+                code = "code",
+                imageResource = R.drawable.ic_africa
+            ),
             onSelectContinent = {})
     }
 }

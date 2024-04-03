@@ -2,8 +2,10 @@ package com.reza.countriesapp.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.reza.countriesapp.R
 import com.reza.countriesapp.data.di.MainDispatcher
 import com.reza.countriesapp.domain.model.ResultState
+import com.reza.countriesapp.domain.usecase.continents.ContinentImageUseCase
 import com.reza.countriesapp.domain.usecase.continents.ContinentsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -17,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val continentsUseCase: ContinentsUseCase,
+    private val continentsImageUseCase: ContinentImageUseCase,
     @MainDispatcher private val mainDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
@@ -49,7 +52,14 @@ class HomeViewModel @Inject constructor(
                 is ResultState.Success -> {
                     _homeState.update { state ->
                         state.copy(
-                            continents = result.data, isLoading = false, errorMessage = null
+                            continents = result.data.map {
+                                ContinentView(
+                                    continent = it,
+                                    imageResource = continentsImageUseCase.findContinentImage(
+                                        it.name ?: ""
+                                    )
+                                )
+                            }, isLoading = false, errorMessage = null
                         )
                     }
                 }

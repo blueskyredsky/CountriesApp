@@ -8,7 +8,9 @@ import com.reza.countriesapp.data.repository.continents.DefaultContinentReposito
 import com.reza.countriesapp.data.repository.countries.DefaultCountryRepository
 import com.reza.countriesapp.domain.repository.continent.ContinentRepository
 import com.reza.countriesapp.domain.repository.countries.CountryRepository
+import com.reza.countriesapp.domain.usecase.continents.ContinentImageUseCase
 import com.reza.countriesapp.domain.usecase.continents.ContinentsUseCase
+import com.reza.countriesapp.domain.usecase.continents.DefaultContinentImageUseCase
 import com.reza.countriesapp.domain.usecase.countries.CountriesUseCase
 import com.reza.countriesapp.domain.usecase.continents.DefaultContinentsUseCase
 import com.reza.countriesapp.domain.usecase.countries.DefaultCountriesUseCase
@@ -51,6 +53,11 @@ abstract class ActivityRetainedModule {
     abstract fun bindContinentsUseCase(
         defaultContinentsUseCase: DefaultContinentsUseCase
     ): ContinentsUseCase
+
+    @Binds
+    abstract fun bindContinentImageUseCase(
+        defaultContinentImageUseCase: DefaultContinentImageUseCase
+    ): ContinentImageUseCase
 
     @Binds
     abstract fun bindCountriesUseCase(

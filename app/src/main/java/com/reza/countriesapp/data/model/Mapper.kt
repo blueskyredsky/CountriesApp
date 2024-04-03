@@ -2,6 +2,7 @@ package com.reza.countriesapp.data.model
 
 import com.reza.ContinentQuery
 import com.reza.ContinentsQuery
+import com.reza.countriesapp.R
 import com.reza.countriesapp.domain.model.Continent
 import com.reza.countriesapp.domain.model.Country
 
