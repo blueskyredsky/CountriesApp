@@ -1,8 +1,9 @@
 package com.reza.countriesapp.domain.usecase.continents
 
 import com.reza.countriesapp.R
+import javax.inject.Inject
 
-class DefaultContinentImageUseCase : ContinentImageUseCase {
+class DefaultContinentImageUseCase @Inject constructor() : ContinentImageUseCase {
     override fun findContinentImage(name: String): Int {
         return when (name) {
             "Africa" -> R.drawable.ic_africa

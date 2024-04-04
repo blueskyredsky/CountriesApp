@@ -120,7 +120,7 @@ fun ContinentsScreen(
 fun ContinentList(
     modifier: Modifier = Modifier,
     isRefreshing: Boolean,
-    continents: List<Continent>,
+    continents: List<ContinentView>,
     onSelectContinent: (Continent) -> Unit,
     onRefresh: () -> Unit
 ) {
@@ -135,15 +135,15 @@ fun ContinentList(
                 .pullRefresh(pullRefreshState)
         ) {
             items(
-                key = { item -> item.code ?: "" },
+                key = { item -> item.continent.code ?: "" },
                 items = continents
-            ) { continent ->
+            ) { continentView ->
                 ContinentItem(
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
                         .padding(top = 16.dp)
                         .fillMaxWidth(),
-                    continent = continent,
+                    continentView = continentView,
                     onSelectContinent = onSelectContinent
                 )
             }
@@ -159,13 +159,13 @@ fun ContinentList(
 @Composable
 fun ContinentItem(
     modifier: Modifier = Modifier,
-    continent: Continent,
+    continentView: ContinentView,
     onSelectContinent: (Continent) -> Unit
 ) {
     Card(
         modifier = modifier
             .clip(MaterialTheme.shapes.small)
-            .clickable { onSelectContinent(continent) }
+            .clickable { onSelectContinent(continentView.continent) }
             .testTag(Constants.UiTags.ContinentItem.customName),
         shape = MaterialTheme.shapes.small,
         elevation = CardDefaults.cardElevation(
@@ -179,11 +179,11 @@ fun ContinentItem(
         ) {
             Text(
                 modifier = Modifier
-                    .padding(16.dp), text = continent.name ?: ""
+                    .padding(16.dp), text = continentView.continent.name ?: ""
             )
             Image(
                 modifier = Modifier.padding(16.dp),
-                painter = painterResource(id = continent.imageResource),
+                painter = painterResource(id = continentView.imageResource),
                 contentDescription = null
             )
         }
@@ -201,9 +201,11 @@ fun ContinentItemPreview() {
         ContinentItem(modifier = Modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Min),
-            continent = Continent(
-                name = "name",
-                code = "code",
+            continentView = ContinentView(
+                continent = Continent(
+                    name = "name",
+                    code = "code"
+                ),
                 imageResource = R.drawable.ic_africa
             ),
             onSelectContinent = {})
