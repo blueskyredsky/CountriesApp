@@ -1,19 +1,20 @@
 package com.reza.countriesapp.domain.usecase.continents
 
 import com.reza.countriesapp.R
+import com.reza.countriesapp.domain.model.Continent
 import javax.inject.Inject
 
 class DefaultContinentImageUseCase @Inject constructor() : ContinentImageUseCase {
     override fun findContinentImage(name: String): Int {
         return when (name) {
-            "Africa" -> R.drawable.ic_africa
-            "Antarctica" -> R.drawable.ic_antarctica
-            "Asia" -> R.drawable.ic_asia
-            "Europe" -> R.drawable.ic_europe
-            "North America" -> R.drawable.ic_north_america
-            "Oceania" -> R.drawable.ic_australia
-            "South America" -> R.drawable.ic_south_america
-            // TODO: a default icon should be added here
+            Continent.AFRICA -> R.drawable.ic_africa
+            Continent.ANTARCTICA -> R.drawable.ic_antarctica
+            Continent.ASIA -> R.drawable.ic_asia
+            Continent.EUROPE -> R.drawable.ic_europe
+            Continent.NORTH_AMERICA -> R.drawable.ic_north_america
+            Continent.OCEANIA -> R.drawable.ic_australia
+            Continent.SOUTH_AMERICA -> R.drawable.ic_south_america
+            // TODO: a default icon should be replaced here
             else -> R.drawable.ic_africa
         }
     }

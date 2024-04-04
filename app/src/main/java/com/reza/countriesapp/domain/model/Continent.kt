@@ -9,9 +9,17 @@ data class Continent(
     val code: String?
 ) : Parcelable {
     companion object {
+        val AFRICA = "Africa"
+        val ASIA = "Asia"
+        val ANTARCTICA = "Antarctica"
+        val EUROPE = "Europe"
+        val NORTH_AMERICA = "North America"
+        val SOUTH_AMERICA = "South America"
+        val OCEANIA = "Oceania"
+
         val LIST_OF_CONTINENTS = listOf(
-            Continent("Africa", "AF"),
-            Continent("Asia", "AS")
+            Continent(AFRICA, "AF"),
+            Continent(ASIA, "AS")
         )
     }
 }
