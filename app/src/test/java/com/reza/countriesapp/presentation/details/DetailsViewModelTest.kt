@@ -3,7 +3,6 @@ package com.reza.countriesapp.presentation.details
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.google.common.truth.Truth
-import com.nhaarman.mockitokotlin2.whenever
 import com.reza.countriesapp.domain.model.Country
 import com.reza.countriesapp.domain.usecase.countries.FakeCountriesUseCase
 import com.reza.countriesapp.presentation.navigation.CONTINENT_CODE
@@ -12,7 +11,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -28,7 +26,7 @@ class DetailsViewModelTest {
 
     @Before
     fun setup() {
-        fakeCountriesUseCase = FakeCountriesUseCase(testDispatcher)
+        fakeCountriesUseCase = FakeCountriesUseCase()
         viewModel = DetailsViewModel(
             countriesUseCase = fakeCountriesUseCase,
             mainDispatcher = testDispatcher,

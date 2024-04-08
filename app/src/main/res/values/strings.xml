@@ -5,4 +5,7 @@
     <string name="retry">retry</string>
     <string name="details_screen_route">detail/{continentCode}</string>
     <string name="home_screen_route">home</string>
+    <string name="currency">Currency</string>
+    <string name="capital">Capital</string>
+    <string name="phone">Phone</string>
 </resources>

@@ -5,9 +5,10 @@ import com.reza.countriesapp.domain.model.ResultState
 import com.reza.countriesapp.domain.usecase.continents.ContinentsUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
 
-class FakeContinentsUseCase(private val dispatcher: CoroutineDispatcher) : ContinentsUseCase {
+class FakeContinentsUseCase : ContinentsUseCase {
 
     private var isSuccessful: Boolean = true
 
@@ -16,8 +17,8 @@ class FakeContinentsUseCase(private val dispatcher: CoroutineDispatcher) : Conti
     }
 
     override suspend fun getContinents(): ResultState<List<Continent>> =
-        withContext(dispatcher) {
-            delay(100L)
+        supervisorScope {
+            delay(1L)
             if (isSuccessful) {
                 ResultState.Success(Continent.LIST_OF_CONTINENTS)
             } else {

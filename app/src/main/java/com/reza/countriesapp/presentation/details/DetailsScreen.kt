@@ -2,7 +2,10 @@ package com.reza.countriesapp.presentation.details
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -36,6 +39,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.EmojiSupportMatch
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.reza.countriesapp.R
@@ -128,6 +134,7 @@ fun CountriesList(
     Box(modifier = modifier.fillMaxSize()) {
         LazyColumn(
             modifier = Modifier
+                .padding(vertical = 8.dp)
                 .fillMaxSize()
                 .pullRefresh(pullRefreshState)
         ) {
@@ -162,16 +169,52 @@ fun CountryItem(
     Card(
         modifier = modifier
             .clip(MaterialTheme.shapes.small)
-            .testTag(Constants.UiTags.ContinentItem.customName),
+            .testTag(Constants.UiTags.CountryItem.customName),
         shape = MaterialTheme.shapes.small,
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
         )
     ) {
+        Column {
+            ItemRow(
+                key = country.name ?: "",
+                value = country.emoji ?: ""
+            )
+            ItemRow(
+                key = stringResource(R.string.currency),
+                value = country.currency ?: "-"
+            )
+            ItemRow(
+                key = stringResource(R.string.capital),
+                value = country.capital ?: "-"
+            )
+            ItemRow(
+                key = stringResource(R.string.phone),
+                value = country.phone ?: "-"
+            )
+        }
+    }
+}
+
+@Composable
+fun ItemRow(
+    modifier: Modifier = Modifier,
+    key: String,
+    value: String
+) {
+    Row(
+        modifier = modifier
+            .padding(vertical = 8.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
         Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp), text = country.name ?: ""
+            modifier = Modifier.padding(horizontal = 16.dp),
+            text = key
+        )
+        Text(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            text = value,
         )
     }
 }
