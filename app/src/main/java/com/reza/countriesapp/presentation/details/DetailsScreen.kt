@@ -1,13 +1,17 @@
 package com.reza.countriesapp.presentation.details
 
+import android.content.res.Configuration
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -42,12 +46,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.EmojiSupportMatch
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.reza.countriesapp.R
+import com.reza.countriesapp.domain.model.Continent
 import com.reza.countriesapp.domain.model.Country
 import com.reza.countriesapp.presentation.common.LoadingItem
+import com.reza.countriesapp.presentation.home.ContinentItem
+import com.reza.countriesapp.presentation.home.ContinentView
 import com.reza.countriesapp.presentation.home.HomeEvent
+import com.reza.countriesapp.ui.theme.CountriesAppTheme
 import com.reza.countriesapp.util.Constants
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -167,6 +176,10 @@ fun CountryItem(
     country: Country
 ) {
     Card(
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.background,
+            contentColor = MaterialTheme.colorScheme.onBackground
+        ),
         modifier = modifier
             .clip(MaterialTheme.shapes.small)
             .testTag(Constants.UiTags.CountryItem.customName),
@@ -215,6 +228,44 @@ fun ItemRow(
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
             text = value,
+        )
+    }
+}
+
+
+@Preview(
+    showBackground = true
+)
+@Composable
+fun ItemRowPreview() {
+    CountriesAppTheme {
+        ItemRow(
+            modifier = Modifier,
+            key = "key",
+            value = "value"
+        )
+    }
+}
+
+@Preview(name = "Light")
+@Preview(
+    name = "Dark",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+)
+@Composable
+fun CountryItemPreview() {
+    CountriesAppTheme {
+        CountryItem(
+            modifier = Modifier.fillMaxWidth(),
+            country = Country(
+                name = "Iran",
+                emoji = "\uD83C\uDDEE\uD83C\uDDF7",
+                currency = "IRR",
+                capital = "Tehran",
+                phone = "+98",
+                states = emptyList(),
+                languages = listOf("Persian")
+            )
         )
     }
 }

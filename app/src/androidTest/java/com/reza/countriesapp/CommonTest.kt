@@ -34,11 +34,4 @@ class CommonTest {
             .onNodeWithTag(testTag = Constants.UiTags.ProgressIndicator.customName)
             .assertIsDisplayed()
     }
-
-    /*@Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.reza.countriesapp", appContext.packageName)
-    }*/
 }

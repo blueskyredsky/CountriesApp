@@ -198,9 +198,7 @@ fun ContinentItem(
 @Composable
 fun ContinentItemPreview() {
     CountriesAppTheme {
-        ContinentItem(modifier = Modifier
-            .fillMaxWidth()
-            .height(IntrinsicSize.Min),
+        ContinentItem(modifier = Modifier.fillMaxWidth(),
             continentView = ContinentView(
                 continent = Continent(
                     name = "name",
