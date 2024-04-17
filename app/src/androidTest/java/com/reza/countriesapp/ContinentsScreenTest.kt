@@ -82,4 +82,21 @@ class ContinentsScreenTest {
     }
 
     // continue testing details screen
+    @OptIn(ExperimentalTestApi::class)
+    @Test
+    fun verify_itemsOnDetailsScreenAreDisplayed() {
+        // the waitUntil APIs
+        composeTestRule.waitUntilDoesNotExist(hasTestTag(Constants.UiTags.ProgressIndicator.customName))
+
+        composeTestRule.onAllNodes(
+            hasTestTag(Constants.UiTags.ContinentItem.customName)
+        ).onFirst().performClick()
+
+        // the waitUntil APIs
+        composeTestRule.waitUntilDoesNotExist(hasTestTag(Constants.UiTags.ProgressIndicator.customName))
+
+        composeTestRule.onAllNodes(
+            hasTestTag(Constants.UiTags.CountryItem.customName)
+        ).onFirst().assertIsDisplayed()
+    }
 }
