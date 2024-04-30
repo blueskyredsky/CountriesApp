@@ -27,18 +27,17 @@ android {
         }
     }
 
-
     signingConfigs {
-        //if (rootProject.file("../signing/release.props").exists()) {
-        val signingRelease = Properties()
-        signingRelease.load(FileInputStream(rootProject.file("../signing/release.props")))
-        create("release") {
-            storeFile = rootProject.file("../signing/release.keystore")
-            storePassword = signingRelease.getProperty("storePass")
-            keyAlias = signingRelease.getProperty("keyAlias")
-            keyPassword = signingRelease.getProperty("keyPass")
+        if (rootProject.file("../CountriesApp/signing/release.props").exists()) {
+            val signingRelease = Properties()
+            signingRelease.load(FileInputStream(rootProject.file("../CountriesApp/signing/release.props")))
+            create("release") {
+                storeFile = rootProject.file("../CountriesApp/signing/release.keystore")
+                storePassword = signingRelease.getProperty("storePass")
+                keyAlias = signingRelease.getProperty("keyAlias")
+                keyPassword = signingRelease.getProperty("keyPass")
+            }
         }
-        //}
     }
 
     buildTypes {
@@ -46,14 +45,20 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             signingConfig = signingConfigs.getByName("release")
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
             buildConfigField("String", "BASE_URL", "\"https://countries.trevorblades.com/graphql\"")
         }
         getByName("debug") {
             isMinifyEnabled = false
             isShrinkResources = false
             signingConfig = signingConfigs.getByName("debug")
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
             buildConfigField("String", "BASE_URL", "\"https://countries.trevorblades.com/graphql\"")
         }
         create("benchmark") {
