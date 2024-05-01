@@ -37,6 +37,13 @@ android {
                 keyAlias = signingRelease.getProperty("keyAlias")
                 keyPassword = signingRelease.getProperty("keyPass")
             }
+        } else {
+            create("release") {
+                keyAlias = System.getenv("BITRISEIO_ANDROID_KEYSTORE_ALIAS")
+                keyPassword = System.getenv("BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD")
+                storeFile = file(System.getenv("HOME") + "/keystores/project_release.keystore")
+                storePassword = System.getenv("BITRISEIO_ANDROID_KEYSTORE_PASSWORD")
+            }
         }
     }
 
