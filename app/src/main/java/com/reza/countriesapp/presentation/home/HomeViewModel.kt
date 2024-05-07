@@ -2,7 +2,6 @@ package com.reza.countriesapp.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.reza.countriesapp.R
 import com.reza.countriesapp.data.di.MainDispatcher
 import com.reza.countriesapp.domain.model.ResultState
 import com.reza.countriesapp.domain.usecase.continents.ContinentImageUseCase
@@ -24,7 +23,7 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _homeState = MutableStateFlow(HomeState())
-    val continentsState = _homeState.asStateFlow()
+    val homeState = _homeState.asStateFlow()
 
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
         _homeState.update { state ->

@@ -23,16 +23,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -54,9 +51,7 @@ fun ContinentsScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     onSelectContinent: (Continent) -> Unit
 ) {
-    val state by viewModel.continentsState.collectAsState()
-    val snackbarHostState = remember { SnackbarHostState() }
-    // todo working on removing ui related logic states
+    val state by viewModel.homeState.collectAsState()
     val screenState = rememberHomeScreenState()
     Scaffold(
         topBar = {
@@ -81,21 +76,20 @@ fun ContinentsScreen(
                     LoadingItem()
                 } else {
                     if (targetState.errorMessage != null) {
-                        val actionLabel = stringResource(id = R.string.retry)
-                        LaunchedEffect(key1 = Unit) {
-                            val result = snackbarHostState.showSnackbar(
-                                message = targetState.errorMessage,
-                                actionLabel = actionLabel
-                            )
-                            when (result) {
-                                SnackbarResult.ActionPerformed ->
-                                    viewModel.onEvent(HomeEvent.GetContinents)
+                        screenState.showSnackBar(
+                            message = targetState.errorMessage ?: "RREZA",
+                            actionLabel = stringResource(id = R.string.retry),
+                            resultCallback = { result ->
+                                when (result) {
+                                    SnackbarResult.ActionPerformed ->
+                                        viewModel.onEvent(HomeEvent.GetContinents)
 
-                                SnackbarResult.Dismissed -> {
-                                    viewModel.consumeErrorMessage()
+                                    SnackbarResult.Dismissed -> {
+                                        viewModel.consumeErrorMessage()
+                                    }
                                 }
                             }
-                        }
+                        )
                     } else {
                         ContinentList(
                             isRefreshing = state.isLoading,
@@ -110,14 +104,14 @@ fun ContinentsScreen(
             }
         },
         snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
+            SnackbarHost(hostState = screenState.snackBarHostState)
         }
     )
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ContinentList(
+private fun ContinentList(
     modifier: Modifier = Modifier,
     isRefreshing: Boolean,
     continents: List<ContinentView>,
@@ -157,7 +151,7 @@ fun ContinentList(
 }
 
 @Composable
-fun ContinentItem(
+private fun ContinentItem(
     modifier: Modifier = Modifier,
     continentView: ContinentView,
     onSelectContinent: (Continent) -> Unit

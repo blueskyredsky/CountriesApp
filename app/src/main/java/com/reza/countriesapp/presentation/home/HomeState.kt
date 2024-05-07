@@ -2,6 +2,7 @@ package com.reza.countriesapp.presentation.home
 
 import androidx.annotation.DrawableRes
 import androidx.compose.material.ScaffoldState
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
@@ -27,7 +28,7 @@ data class ContinentView(
 
 @Stable
 class HomeStateHolder(
-    private val snackBarHostState: SnackbarHostState,
+    val snackBarHostState: SnackbarHostState,
     private val scope: CoroutineScope
 ) {
     fun showSnackBar(
@@ -37,7 +38,11 @@ class HomeStateHolder(
     ) {
         scope.launch {
             val result =
-                snackBarHostState.showSnackbar(message = message, actionLabel = actionLabel)
+                snackBarHostState.showSnackbar(
+                    message = message,
+                    actionLabel = actionLabel,
+                    duration = SnackbarDuration.Short
+                )
             resultCallback(result)
         }
     }

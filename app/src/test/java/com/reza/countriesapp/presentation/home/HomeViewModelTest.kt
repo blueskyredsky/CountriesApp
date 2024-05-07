@@ -9,7 +9,6 @@ import com.reza.countriesapp.domain.usecase.continents.ContinentImageUseCase
 import com.reza.countriesapp.domain.usecase.continents.FakeContinentsUseCase
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -38,10 +37,10 @@ class HomeViewModelTest {
 
     @Test
     fun `testing default values of ui state`() {
-        Truth.assertThat(viewModel.continentsState.value.continents)
+        Truth.assertThat(viewModel.homeState.value.continents)
             .isEqualTo(emptyList<Continent>())
-        Truth.assertThat(viewModel.continentsState.value.errorMessage).isNull()
-        Truth.assertThat(viewModel.continentsState.value.isLoading).isFalse()
+        Truth.assertThat(viewModel.homeState.value.errorMessage).isNull()
+        Truth.assertThat(viewModel.homeState.value.isLoading).isFalse()
     }
 
     @Test
@@ -50,7 +49,7 @@ class HomeViewModelTest {
         whenever(continentImageUseCase.findContinentImage(any())).thenReturn(1)
 
         // Then
-        viewModel.continentsState.test {
+        viewModel.homeState.test {
             Truth.assertThat(
                 HomeState(
                     isLoading = true,
@@ -83,7 +82,7 @@ class HomeViewModelTest {
         fakeContinentsUseCase.setSuccessful(false)
 
         // Then
-        viewModel.continentsState.test {
+        viewModel.homeState.test {
             Truth.assertThat(
                 HomeState(
                     isLoading = true,
