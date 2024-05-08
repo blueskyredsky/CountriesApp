@@ -15,19 +15,19 @@ import kotlinx.coroutines.launch
 import javax.annotation.concurrent.Immutable
 
 @Immutable
-data class HomeState(
+internal data class HomeState(
     val continents: List<ContinentView> = emptyList(),
     val isLoading: Boolean = false,
     val errorMessage: String? = null
 )
 
-data class ContinentView(
+internal data class ContinentView(
     val continent: Continent,
     @DrawableRes val imageResource: Int
 )
 
 @Stable
-class HomeStateHolder(
+internal class HomeStateHolder(
     val snackBarHostState: SnackbarHostState,
     private val scope: CoroutineScope
 ) {
@@ -49,7 +49,7 @@ class HomeStateHolder(
 }
 
 @Composable
-fun rememberHomeScreenState(
+internal fun rememberHomeScreenState(
     snackBarHostState: SnackbarHostState = remember { SnackbarHostState() },
     scope: CoroutineScope = rememberCoroutineScope(),
 ) = remember {

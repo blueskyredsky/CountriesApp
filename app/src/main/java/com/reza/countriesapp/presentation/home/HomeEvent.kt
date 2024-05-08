@@ -1,5 +1,5 @@
 package com.reza.countriesapp.presentation.home
 
-sealed interface HomeEvent {
+internal sealed interface HomeEvent {
     object GetContinents: HomeEvent
 }

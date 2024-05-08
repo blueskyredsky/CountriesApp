@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailsViewModel @Inject constructor(
+internal class DetailsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val countriesUseCase: CountriesUseCase,
     @MainDispatcher private val mainDispatcher: CoroutineDispatcher
@@ -77,8 +77,6 @@ class DetailsViewModel @Inject constructor(
                     }
                 }
             }
-        } ?: let {
-            val a = ""
         }
     }
 

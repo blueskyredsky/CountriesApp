@@ -1,5 +1,5 @@
 package com.reza.countriesapp.presentation.details
 
-sealed interface DetailsEvent {
+internal sealed interface DetailsEvent {
     object GetCountries: DetailsEvent
 }

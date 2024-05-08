@@ -13,7 +13,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
@@ -27,16 +29,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -54,13 +54,14 @@ import com.reza.countriesapp.util.Constants
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailsScreen(
+internal fun DetailsScreen(
     continentCode: String?,
     viewModel: DetailsViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
     val state by viewModel.countriesState.collectAsState()
-    val snackbarHostState = remember { SnackbarHostState() }
+    val screenState = rememberDetailsScreenState()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -69,7 +70,10 @@ fun DetailsScreen(
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 title = {
-                    Text(stringResource(R.string.countries))
+                    TextField(modifier = Modifier.fillMaxWidth(), value = "search...", onValueChange = {
+
+                    })
+                    //Text(stringResource(R.string.countries))
                 },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
@@ -77,9 +81,11 @@ fun DetailsScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = {  }) {
-                        Icon(Icons.Default.Search, contentDescription = "back")
-                    }
+//                    IconButton(onClick = {
+//
+//                    }) {
+//                        Icon(Icons.Default.Search, contentDescription = "search")
+//                    }
                 }
             )
         },
@@ -94,21 +100,19 @@ fun DetailsScreen(
                     LoadingItem()
                 } else {
                     if (targetState.errorMessage != null) {
-                        val actionLabel = stringResource(id = R.string.retry)
-                        LaunchedEffect(key1 = Unit) {
-                            val result = snackbarHostState.showSnackbar(
-                                message = targetState.errorMessage,
-                                actionLabel = actionLabel
-                            )
-                            when (result) {
-                                SnackbarResult.ActionPerformed ->
-                                    viewModel.onEvent(HomeEvent.GetContinents)
+                        screenState.showSnackBar(
+                            message = targetState.errorMessage,
+                            actionLabel = stringResource(id = R.string.retry),
+                            resultCallback = { result ->
+                                when (result) {
+                                    SnackbarResult.ActionPerformed ->
+                                        viewModel.onEvent(HomeEvent.GetContinents)
 
-                                SnackbarResult.Dismissed -> {
-                                    viewModel.consumeErrorMessage()
+                                    SnackbarResult.Dismissed -> {
+                                        viewModel.consumeErrorMessage()
+                                    }
                                 }
-                            }
-                        }
+                            })
                     } else {
                         state.countries?.let {
                             CountriesList(
@@ -122,13 +126,15 @@ fun DetailsScreen(
                     }
                 }
             }
+        }, snackbarHost = {
+            SnackbarHost(hostState = screenState.snackBarHostState)
         }
     )
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun CountriesList(
+private fun CountriesList(
     modifier: Modifier = Modifier,
     isRefreshing: Boolean,
     countries: List<Country?>,
@@ -169,7 +175,7 @@ fun CountriesList(
 }
 
 @Composable
-fun CountryItem(
+private fun CountryItem(
     modifier: Modifier = Modifier,
     country: Country
 ) {
@@ -208,7 +214,7 @@ fun CountryItem(
 }
 
 @Composable
-fun ItemRow(
+private fun ItemRow(
     modifier: Modifier = Modifier,
     key: String,
     value: String
@@ -235,7 +241,7 @@ fun ItemRow(
     showBackground = true
 )
 @Composable
-fun ItemRowPreview() {
+private fun ItemRowPreview() {
     CountriesAppTheme {
         ItemRow(
             modifier = Modifier,
@@ -251,7 +257,7 @@ fun ItemRowPreview() {
     uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
-fun CountryItemPreview() {
+private fun CountryItemPreview() {
     CountriesAppTheme {
         CountryItem(
             modifier = Modifier.fillMaxWidth(),

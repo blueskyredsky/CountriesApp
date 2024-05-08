@@ -47,12 +47,13 @@ import com.reza.countriesapp.util.Constants
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ContinentsScreen(
+internal fun ContinentsScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     onSelectContinent: (Continent) -> Unit
 ) {
     val state by viewModel.homeState.collectAsState()
     val screenState = rememberHomeScreenState()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -77,7 +78,7 @@ fun ContinentsScreen(
                 } else {
                     if (targetState.errorMessage != null) {
                         screenState.showSnackBar(
-                            message = targetState.errorMessage ?: "RREZA",
+                            message = targetState.errorMessage,
                             actionLabel = stringResource(id = R.string.retry),
                             resultCallback = { result ->
                                 when (result) {
@@ -190,7 +191,7 @@ private fun ContinentItem(
     uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
-fun ContinentItemPreview() {
+private fun ContinentItemPreview() {
     CountriesAppTheme {
         ContinentItem(modifier = Modifier.fillMaxWidth(),
             continentView = ContinentView(
