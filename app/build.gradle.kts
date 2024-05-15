@@ -2,10 +2,11 @@ import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
-    id("com.android.application")
+    alias(libs.plugins.com.android.application)
+
     kotlin("android")
     kotlin("kapt")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.hilt.android)
     id("com.apollographql.apollo3") version "3.8.2"
     id("kotlin-parcelize")
 }
@@ -122,7 +123,6 @@ android {
 dependencies {
 
     // Projects
-    implementation(project(":base"))
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)

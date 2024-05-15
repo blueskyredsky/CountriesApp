@@ -15,4 +15,7 @@ dependencyResolutionManagement {
 rootProject.name = "CountriesApp"
 include(":app")
 include(":benchmark")
-include(":base")
+include("feature:home")
+include(":feature:details")
+include("core:threading")
+include(":core:networking")
