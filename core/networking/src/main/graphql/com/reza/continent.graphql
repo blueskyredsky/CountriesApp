@@ -1,0 +1,17 @@
+query Continent($continent_code: ID!) {
+    continent(code: $continent_code) {
+        countries {
+            name
+            emoji
+            currency
+            capital
+            phone
+            languages {
+                name
+            }
+            states {
+                name
+            }
+        }
+    }
+}

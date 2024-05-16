@@ -13,9 +13,14 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "CountriesApp"
-include(":app")
+include(":app:mobile")
+include(":app:wear")
 include(":benchmark")
-include("feature:home")
+include(":feature:home")
 include(":feature:details")
-include("core:threading")
+include(":feature:search")
+include(":feature:widget")
+include(":core:threading")
 include(":core:networking")
+include(":core:common")
+include(":core:logging")

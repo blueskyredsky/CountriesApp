@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.reza.feature.home"
+    namespace = "com.reza.common"
     compileSdk = 34
 
     defaultConfig {
@@ -33,10 +33,6 @@ android {
 }
 
 dependencies {
-
-    // projects
-    implementation(project(":core:threading"))
-    implementation(project(":core:networking"))
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)

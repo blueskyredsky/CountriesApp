@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.reza.feature.home"
+    namespace = "com.reza.logging"
     compileSdk = 34
 
     defaultConfig {
@@ -24,19 +24,15 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "1.8"
     }
 }
 
 dependencies {
-
-    // projects
-    implementation(project(":core:threading"))
-    implementation(project(":core:networking"))
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
