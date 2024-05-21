@@ -39,11 +39,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.reza.countriesapp.R
 import com.reza.countriesapp.domain.model.Continent
 import com.reza.countriesapp.presentation.common.LoadingItem
 import com.reza.countriesapp.ui.theme.CountriesAppTheme
 import com.reza.countriesapp.util.Constants
+import com.reza.mobile.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -124,6 +124,8 @@ dependencies {
     // Projects
     implementation(project(":feature:home"))
     implementation(project(":feature:details"))
+    implementation(project(":core:networking"))
+    implementation(project(":core:threading"))
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)

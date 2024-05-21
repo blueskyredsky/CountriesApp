@@ -1,7 +1,7 @@
 package com.reza.countriesapp.domain.usecase.continents
 
-import com.reza.countriesapp.R
 import com.reza.countriesapp.domain.model.Continent
+import com.reza.mobile.R
 import javax.inject.Inject
 
 class DefaultContinentImageUseCase @Inject constructor() : ContinentImageUseCase {

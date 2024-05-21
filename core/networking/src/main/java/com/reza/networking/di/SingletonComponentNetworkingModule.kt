@@ -1,24 +1,20 @@
-package com.reza.countriesapp.data.di
+package com.reza.networking.di
 
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.network.okHttpClient
-import com.reza.mobile.BuildConfig
+import com.reza.networking.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
-import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object SingletonComponentModule {
-
+object SingletonComponentNetworkModule {
     // Networking
     @Singleton
     @Provides
@@ -51,44 +47,4 @@ object SingletonComponentModule {
             .okHttpClient(okHttpClient)
             .build()
     }
-
-    // TODO: remove following lines of code after threading module is ready
-    // Dispatchers
-    @DefaultDispatcher
-    @Provides
-    @Singleton
-    fun providesDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
-
-    @IoDispatcher
-    @Provides
-    @Singleton
-    fun providesIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
-
-    @MainDispatcher
-    @Provides
-    @Singleton
-    fun providesMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
-
-    @MainImmediateDispatcher
-    @Provides
-    @Singleton
-    fun providesMainImmediateDispatcher(): CoroutineDispatcher = Dispatchers.Main.immediate
 }
-
-// TODO: remove following lines of code after threading module is ready
-// Qualifiers
-@Retention(AnnotationRetention.RUNTIME)
-@Qualifier
-annotation class DefaultDispatcher
-
-@Retention(AnnotationRetention.RUNTIME)
-@Qualifier
-annotation class IoDispatcher
-
-@Retention(AnnotationRetention.RUNTIME)
-@Qualifier
-annotation class MainDispatcher
-
-@Retention(AnnotationRetention.BINARY)
-@Qualifier
-annotation class MainImmediateDispatcher
