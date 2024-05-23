@@ -1,5 +1,6 @@
 [versions]
 com-android-application = "8.4.0"
+firebase-bom = "33.0.0"
 org-jetbrains-kotlin-android = "1.8.22"
 core-ktx = "1.12.0"
 junit = "4.13.2"
@@ -43,6 +44,8 @@ horologist-tiles = "0.4.8"
 watchface-complications-data-source-ktx = "1.1.1"
 
 [libraries]
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 navigation-test = { group = "androidx.navigation", name = "navigation-testing", version.ref = "navigation"}
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

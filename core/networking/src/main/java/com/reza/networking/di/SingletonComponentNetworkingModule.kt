@@ -12,6 +12,8 @@ import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+private const val TIME_OUT = 10L
+
 @Module
 @InstallIn(SingletonComponent::class)
 object SingletonComponentNetworkModule {
@@ -25,9 +27,9 @@ object SingletonComponentNetworkModule {
     @Singleton
     fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         val builder = OkHttpClient.Builder()
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .readTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(10, TimeUnit.SECONDS)
+            .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
+            .readTimeout(TIME_OUT, TimeUnit.SECONDS)
+            .writeTimeout(TIME_OUT, TimeUnit.SECONDS)
             .followRedirects(true)
             .followSslRedirects(true)
         return if (BuildConfig.DEBUG) {

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "762648949518",
+    "project_id": "countriesapp-3f654",
+    "storage_bucket": "countriesapp-3f654.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762648949518:android:f89a8185641035570e9d5f",
+        "android_client_info": {
+          "package_name": "com.reza.countriesapp.production"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUlQYRZk7AluOEHnjiqropAzitMbxY4kk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
