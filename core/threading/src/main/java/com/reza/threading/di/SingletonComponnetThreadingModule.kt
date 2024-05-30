@@ -1,12 +1,15 @@
 package com.reza.threading.di
 
+import com.reza.threading.common.DefaultDispatcher
+import com.reza.threading.common.IoDispatcher
+import com.reza.threading.common.MainDispatcher
+import com.reza.threading.common.MainImmediateDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
@@ -33,20 +36,3 @@ object SingletonComponentThreadingModule {
     @Singleton
     fun providesMainImmediateDispatcher(): CoroutineDispatcher = Dispatchers.Main.immediate // this is preferred compared to MainDispatcher
 }
-
-// Qualifiers
-@Retention(AnnotationRetention.RUNTIME)
-@Qualifier
-annotation class DefaultDispatcher
-
-@Retention(AnnotationRetention.RUNTIME)
-@Qualifier
-annotation class IoDispatcher
-
-@Retention(AnnotationRetention.RUNTIME)
-@Qualifier
-annotation class MainDispatcher
-
-@Retention(AnnotationRetention.BINARY)
-@Qualifier
-annotation class MainImmediateDispatcher

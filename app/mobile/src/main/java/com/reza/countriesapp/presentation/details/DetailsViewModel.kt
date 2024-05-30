@@ -7,7 +7,7 @@ import com.reza.countriesapp.domain.model.ResultState
 import com.reza.countriesapp.domain.usecase.countries.CountriesUseCase
 import com.reza.countriesapp.presentation.home.HomeEvent
 import com.reza.countriesapp.presentation.navigation.CONTINENT_CODE
-import com.reza.threading.di.MainDispatcher
+import com.reza.threading.common.MainDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler

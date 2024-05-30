@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.reza.countriesapp.domain.model.ResultState
 import com.reza.countriesapp.domain.usecase.continents.ContinentImageUseCase
 import com.reza.countriesapp.domain.usecase.continents.ContinentsUseCase
-import com.reza.threading.di.MainDispatcher
+import com.reza.threading.common.MainDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
