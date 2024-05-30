@@ -8,9 +8,6 @@ plugins {
     alias(libs.plugins.hilt.android)
     //id("com.apollographql.apollo3") version "3.8.2"
     id("kotlin-parcelize")
-    // Add the Google services Gradle plugin
-    id("com.google.gms.google-services")
-
 }
 
 android {
@@ -163,17 +160,6 @@ dependencies {
 
     // Timber
     implementation(libs.timber)
-
-    // Firebase
-    // Import the Firebase BoM
-    implementation(platform(libs.firebase.bom))
-
-
-    // TODO: Add the dependencies for Firebase products you want to use
-    // When using the BoM, don't specify versions in Firebase dependencies
-    implementation(libs.firebase.analytics)
-
-
 
     // Test
     testImplementation(libs.junit)
