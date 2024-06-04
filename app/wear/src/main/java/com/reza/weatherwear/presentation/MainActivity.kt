@@ -24,7 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
-import com.reza.weatherwear.R
+import com.reza.wear.R
 import com.reza.weatherwear.presentation.theme.CountriesAppTheme
 
 class MainActivity : ComponentActivity() {

@@ -126,6 +126,7 @@ dependencies {
     implementation(project(":feature:details"))
     implementation(project(":core:networking"))
     implementation(project(":core:threading"))
+    testImplementation(project(":core:testing:unit"))
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
@@ -160,17 +161,6 @@ dependencies {
 
     // Timber
     implementation(libs.timber)
-
-    // Test
-    testImplementation(libs.junit)
-    testImplementation(libs.coroutines.test)
-    testImplementation(libs.turbine)
-    testImplementation(libs.mockito.nhaarman)
-    testImplementation(libs.mockito)
-    testImplementation(libs.truth)
-    testImplementation(libs.apollo.test)
-    testImplementation(libs.apollo.mock.server)
-    debugImplementation(libs.ui.test.manifest)
 
     androidTestImplementation(libs.ui.test.junit4)
     androidTestImplementation(libs.truth)

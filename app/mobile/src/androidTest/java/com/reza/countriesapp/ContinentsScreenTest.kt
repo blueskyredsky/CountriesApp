@@ -15,6 +15,7 @@ import com.google.common.truth.Truth
 import com.reza.countriesapp.presentation.MainActivity
 import com.reza.countriesapp.presentation.MainScreen
 import com.reza.countriesapp.util.Constants
+import com.reza.mobile.R
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before
