@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
-    id("com.apollographql.apollo3") version "3.8.2" // todo: put it in version catalog
     alias(libs.plugins.hilt.android)
     kotlin("kapt") // todo change that to alias
 }
@@ -37,7 +36,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.google.material)
@@ -54,13 +52,4 @@ dependencies {
     // hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.kapt)
-}
-
-apollo {
-    service("service") {
-        packageName.set("com.reza")
-
-        // Enable test builder generation
-        generateTestBuilders.set(true)
-    }
 }

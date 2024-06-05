@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
-    id("com.apollographql.apollo3") version "3.8.2"
 }
 
 android {
@@ -34,10 +33,6 @@ android {
 }
 
 dependencies {
-
-    // Apollo
-    implementation(libs.apollo)
-
     val composeBom = platform(libs.compose.bom)
     implementation(composeBom)
 
@@ -51,13 +46,4 @@ dependencies {
     api(libs.apollo.test)
     api(libs.apollo.mock.server)
     debugApi(libs.ui.test.manifest)
-}
-
-apollo {
-    service("service") {
-        packageName.set("com.reza")
-
-        // Enable test builder generation
-        generateTestBuilders.set(true)
-    }
 }

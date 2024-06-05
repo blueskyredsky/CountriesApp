@@ -6,7 +6,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     alias(libs.plugins.hilt.android)
-    //id("com.apollographql.apollo3") version "3.8.2"
+    id("com.apollographql.apollo3") version "3.8.2"
     id("kotlin-parcelize")
 }
 
@@ -130,7 +130,6 @@ dependencies {
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
-    testImplementation("junit:junit:4.12")
 
     // Compose
     val composeBom = platform(libs.compose.bom)
@@ -176,11 +175,11 @@ kapt {
     correctErrorTypes = true
 }
 
-//apollo {
-//    service("service") {
-//        packageName.set("com.reza")
-//
-//        // Enable test builder generation
-//        generateTestBuilders.set(true)
-//    }
-//}
+apollo {
+    service("service") {
+        packageName.set("com.reza")
+
+        // Enable test builder generation
+        generateTestBuilders.set(true)
+    }
+}
