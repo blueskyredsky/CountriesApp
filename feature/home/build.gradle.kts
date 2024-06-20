@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
+    alias(libs.plugins.hilt.android)
+    kotlin("kapt") // todo change that to alias
+
 }
 
 android {
@@ -37,11 +40,20 @@ dependencies {
     // projects
     implementation(project(":core:threading"))
     implementation(project(":core:networking"))
+    implementation(project(":core:common"))
+    testImplementation(project(":core:testing:unit"))
+
+    implementation(libs.javax.inject)
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.google.material)
-    testImplementation(libs.junit)
+
+    // hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.kapt)
+
+    // ui test
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }

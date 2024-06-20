@@ -3,9 +3,9 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.com.android.application)
-    kotlin("android")
-    kotlin("kapt")
+    alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.hilt.android)
+    kotlin("kapt")
     id("com.apollographql.apollo3") version "3.8.2"
     id("kotlin-parcelize")
 }

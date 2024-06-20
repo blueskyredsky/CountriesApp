@@ -36,6 +36,9 @@ android {
 }
 
 dependencies {
+
+    implementation(libs.lifecycle.runtime.ktx)
+
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.google.material)
@@ -44,7 +47,7 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     // Apollo
-    implementation(libs.apollo)
+    api(libs.apollo)
 
     // OkHttpLogging
     implementation(libs.okhttp.logging)
