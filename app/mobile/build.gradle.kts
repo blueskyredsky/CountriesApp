@@ -124,8 +124,8 @@ dependencies {
     // Projects
     implementation(project(":feature:home"))
     implementation(project(":feature:details"))
-    implementation(project(":core:networking"))
-    implementation(project(":core:threading"))
+    implementation(project(":core:networking")) // fixme no need to add this dependency in this layer
+    implementation(project(":core:threading")) // fixme no need to add this dependency in this layer
     testImplementation(project(":core:testing:unit"))
 
     implementation(libs.core.ktx)

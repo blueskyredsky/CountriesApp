@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.hilt.android)
     kotlin("kapt") // todo change that to alias
+    id("kotlin-parcelize") // todo change that to alias
 
 }
 
