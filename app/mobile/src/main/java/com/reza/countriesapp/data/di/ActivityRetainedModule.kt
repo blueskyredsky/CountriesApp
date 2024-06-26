@@ -36,13 +36,11 @@ abstract class ActivityRetainedModule {
     ): CountriesDataSource
 
     // Repositories
-    @ActivityRetainedScoped
     @Binds
     abstract fun bindContinentRepository(
         defaultContinentRepository: DefaultContinentRepository
     ): ContinentRepository
 
-    @ActivityRetainedScoped
     @Binds
     abstract fun bindCountryRepository(
         defaultCountryRepository: DefaultCountryRepository

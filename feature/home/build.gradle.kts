@@ -1,3 +1,7 @@
+apply {
+    from("$rootProject.projectDir/android-lib.gradle.kts")
+}
+
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
