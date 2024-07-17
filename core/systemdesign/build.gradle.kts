@@ -1,14 +1,10 @@
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
-    alias(libs.plugins.hilt.android)
-    kotlin("kapt") // todo change that to alias
-    id("kotlin-parcelize") // todo change that to alias
-
 }
 
 android {
-    namespace = "com.reza.feature.home"
+    namespace = "com.reza.systemdesign"
     compileSdk = 34
 
     defaultConfig {
@@ -28,11 +24,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "1.8"
     }
     buildFeatures {
         compose = true
@@ -44,18 +40,12 @@ android {
 
 dependencies {
 
-    // projects
-    implementation(project(":core:threading"))
-    implementation(project(":core:networking"))
-    implementation(project(":core:common"))
-    implementation(project(":core:systemdesign"))
-    testImplementation(project(":core:testing:unit"))
-
-    implementation(libs.javax.inject)
-
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.google.material)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.espresso.core)
 
     // Compose
     val composeBom = platform(libs.compose.bom)
@@ -66,13 +56,4 @@ dependencies {
     implementation(libs.material)
     debugImplementation(libs.ui.tooling)
     implementation(libs.ui.tooling.preview)
-
-    // hilt
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.kapt)
-    implementation(libs.hilt.navigation.compose)
-
-    // ui test
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
 }
