@@ -5,7 +5,7 @@ import com.reza.feature.home.domain.model.Continent
 import com.reza.feature.home.domain.repository.ContinentRepository
 import javax.inject.Inject
 
-class DefaultContinentsUseCase @Inject constructor(
+internal class DefaultContinentsUseCase @Inject constructor(
     private val continentRepository: ContinentRepository
 ) : ContinentsUseCase {
     override suspend fun getContinents(): ResultState<List<Continent>> {

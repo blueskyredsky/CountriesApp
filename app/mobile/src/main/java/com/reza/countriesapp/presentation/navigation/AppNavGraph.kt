@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.reza.countriesapp.presentation.details.DetailsScreen
-import com.reza.feature.home.presentation.ContinentsScreen
+import com.reza.feature.home.presentation.navigation.home
 
 private const val HOME = "home"
 const val CONTINENT_CODE = "continentCode"
@@ -22,13 +22,9 @@ fun AppNavGraph(
         navController = navController,
         startDestination = HOME
     ) {
-        composable(HOME) {
-            ContinentsScreen(
-                onSelectContinent = { continent ->
-                    val route = "$DETAIL/${continent.code}"
-                    navController.navigate(route = route)
-                }
-            )
+        home {
+            val route = "$DETAIL/${it.code}"
+            navController.navigate(route = route)
         }
 
         composable("$DETAIL/{$CONTINENT_CODE}") { backStackEntry ->

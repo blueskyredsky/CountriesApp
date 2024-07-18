@@ -1,5 +1,5 @@
 package com.reza.feature.home.domain.usecase
 
-interface ContinentImageUseCase {
+internal interface ContinentImageUseCase {
     fun findContinentImage(name: String): Int
 }

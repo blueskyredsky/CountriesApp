@@ -16,23 +16,24 @@ import dagger.hilt.android.components.ActivityRetainedComponent
 @Module
 @InstallIn(ActivityRetainedComponent::class)
 abstract class ActivityRetainedModule {
+
     @Binds
-    abstract fun bindContinentsDataSource(
+    internal abstract fun bindContinentsDataSource(
         defaultContinentDataSource: DefaultContinentDataSource
     ): ContinentDataSource
 
     @Binds
-    abstract fun bindContinentRepository(
+    internal abstract fun bindContinentRepository(
         defaultContinentRepository: DefaultContinentRepository
     ): ContinentRepository
 
     @Binds
-    abstract fun bindContinentsUseCase(
+    internal abstract fun bindContinentsUseCase(
         defaultContinentsUseCase: DefaultContinentsUseCase
     ): ContinentsUseCase
 
     @Binds
-    abstract fun bindContinentImageUseCase(
+    internal abstract fun bindContinentImageUseCase(
         defaultContinentImageUseCase: DefaultContinentImageUseCase
     ): ContinentImageUseCase
 }

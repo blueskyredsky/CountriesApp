@@ -47,8 +47,8 @@ import com.reza.systemdesign.ui.util.Constants
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ContinentsScreen(
-    viewModel: HomeViewModel = hiltViewModel(),
+internal fun ContinentsScreen(
+    viewModel: HomeViewModel,
     onSelectContinent: (Continent) -> Unit
 ) {
     val state by viewModel.homeState.collectAsState()

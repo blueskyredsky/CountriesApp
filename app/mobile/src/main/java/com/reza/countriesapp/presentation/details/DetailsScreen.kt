@@ -44,9 +44,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.reza.countriesapp.domain.model.Country
 import com.reza.countriesapp.presentation.common.LoadingItem
-import com.reza.countriesapp.presentation.home.HomeEvent
 import com.reza.countriesapp.ui.theme.CountriesAppTheme
 import com.reza.countriesapp.util.Constants
+import com.reza.feature.home.presentation.HomeEvent
 import com.reza.mobile.R
 
 @OptIn(ExperimentalMaterial3Api::class)
