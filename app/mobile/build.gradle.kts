@@ -168,6 +168,7 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.navigation.test)
     kaptAndroidTest(libs.hilt.kapt.test)
+    testImplementation(libs.apollo.test)
 }
 
 // Allow references to generated code

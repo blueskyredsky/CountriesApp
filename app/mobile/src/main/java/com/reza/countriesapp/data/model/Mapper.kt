@@ -18,10 +18,3 @@ fun ContinentQuery.Continent.toCountry(): List<Country?> {
         )
     }
 }
-
-fun ContinentsQuery.Continent.toContinent(): Continent {
-    return Continent(
-        name = this.name,
-        code = this.code
-    )
-}

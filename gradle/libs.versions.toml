@@ -43,6 +43,7 @@ tiles-material = "1.1.0"
 horologist-compose-tools = "0.4.8"
 horologist-tiles = "0.4.8"
 watchface-complications-data-source-ktx = "1.1.1"
+runner = "1.6.1"
 
 [libraries]
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
@@ -101,6 +102,7 @@ androidx-tiles-material = { group = "androidx.wear.tiles", name = "tiles-materia
 horologist-compose-tools = { group = "com.google.android.horologist", name = "horologist-compose-tools", version.ref = "horologist-compose-tools" }
 horologist-tiles = { group = "com.google.android.horologist", name = "horologist-tiles", version.ref = "horologist-tiles" }
 androidx-watchface-complications-data-source-ktx = { group = "androidx.wear.watchface", name = "watchface-complications-data-source-ktx", version.ref = "watchface-complications-data-source-ktx" }
+androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "com-android-application" }

@@ -56,4 +56,6 @@ dependencies {
     implementation(libs.material)
     debugImplementation(libs.ui.tooling)
     implementation(libs.ui.tooling.preview)
+
+    androidTestImplementation(libs.ui.test.junit4)
 }

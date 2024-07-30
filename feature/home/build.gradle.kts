@@ -50,6 +50,7 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:systemdesign"))
     testImplementation(project(":core:testing:unit"))
+    testImplementation(libs.apollo.test)
 
     implementation(libs.javax.inject)
 
@@ -73,6 +74,12 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
 
     // ui test
+    androidTestImplementation(libs.ui.test.junit4)
+    androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.hilt.test)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.navigation.test)
+    androidTestImplementation(libs.androidx.runner)
+    kaptAndroidTest(libs.hilt.kapt.test)
 }

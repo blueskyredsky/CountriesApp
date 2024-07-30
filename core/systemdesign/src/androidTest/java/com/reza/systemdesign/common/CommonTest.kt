@@ -1,18 +1,12 @@
-package com.reza.countriesapp
+package com.reza.systemdesign.common
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
-import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.reza.countriesapp.presentation.common.LoadingItem
-import com.reza.countriesapp.util.Constants
-
-import org.junit.Test
-import org.junit.runner.RunWith
-
-import org.junit.Assert.*
+import com.reza.systemdesign.ui.common.LoadingItem
+import com.reza.systemdesign.ui.util.Constants
 import org.junit.Rule
+import org.junit.Test
 
 /**
  * Instrumented test, which will execute on an Android device.

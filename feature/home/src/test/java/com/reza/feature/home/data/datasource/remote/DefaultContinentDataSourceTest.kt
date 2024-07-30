@@ -1,4 +1,4 @@
-package com.reza.countriesapp.data.datasourse.remote.continent
+package com.reza.feature.home.data.datasource.remote
 
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.annotations.ApolloExperimental
@@ -6,13 +6,12 @@ import com.apollographql.apollo3.testing.QueueTestNetworkTransport
 import com.apollographql.apollo3.testing.enqueueTestResponse
 import com.google.common.truth.Truth.assertThat
 import com.reza.ContinentsQuery
+
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 
-// TODO: should add error scenarios
 class DefaultContinentDataSourceTest {
-
     private lateinit var apolloClient: ApolloClient
 
     @OptIn(ApolloExperimental::class)
