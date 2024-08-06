@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.hilt.android)
     kotlin("kapt")
-    id("com.apollographql.apollo3") version "3.8.2"
+    id("com.apollographql.apollo") version "4.0.0"
     id("kotlin-parcelize")
 }
 
@@ -181,6 +181,6 @@ apollo {
         packageName.set("com.reza")
 
         // Enable test builder generation
-        generateTestBuilders.set(true)
+//        generateTestBuilders.set(true)
     }
 }

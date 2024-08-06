@@ -1,6 +1,6 @@
 package com.reza.countriesapp.data.repository.countries
 
-import com.apollographql.apollo3.exception.ApolloException
+import com.apollographql.apollo.exception.ApolloException
 import com.reza.countriesapp.data.datasourse.remote.countries.CountriesDataSource
 import com.reza.countriesapp.data.model.toCountry
 import com.reza.countriesapp.domain.model.Country

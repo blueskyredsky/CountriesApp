@@ -1,6 +1,6 @@
 package com.reza.feature.home.data.repository
 
-import com.apollographql.apollo3.exception.ApolloException
+import com.apollographql.apollo.exception.ApolloException
 import com.reza.common.domain.model.ResultState
 import com.reza.feature.home.data.datasource.remote.ContinentDataSource
 import com.reza.feature.home.data.extension.toContinent
