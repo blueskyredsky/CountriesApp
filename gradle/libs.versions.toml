@@ -21,6 +21,7 @@ coroutines-test = "1.7.3"
 turbine = "1.0.0"
 datastore = "1.0.0"
 apollo = "4.0.0"
+apollo-mock-server-version = "0.0.1"
 viewmodel-compose = "2.7.0"
 hilt-kapt = "2.44"
 mockito = "5.1.0"
@@ -85,8 +86,8 @@ hilt-kapt = { group = "com.google.dagger", name = "hilt-android-compiler", versi
 mockito = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito"}
 mockito-nhaarman = { group = "com.nhaarman.mockitokotlin2", name = "mockito-kotlin", version.ref = "nhaarman"}
 truth = { group = "com.google.truth", name = "truth", version.ref = "truth"}
-apollo-test = { group = "com.apollographql.apollo3", name = "apollo-testing-support", version.ref = "apollo"}
-apollo-mock-server = { group = "com.apollographql.apollo3", name = "apollo-mockserver", version.ref = "apollo"}
+apollo-test = { group = "com.apollographql.apollo", name = "apollo-testing-support", version.ref = "apollo"}
+apollo-mock-server = { group = "com.apollographql.mockserver", name = "apollo-mockserver", version.ref = "apollo-mock-server-version"}
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp3-loging"}
 uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
 benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmark-macro-junit4" }

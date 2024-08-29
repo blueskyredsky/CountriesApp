@@ -1,12 +1,13 @@
-package com.reza.feature.home.data.datasource.remote
+package com.reza.feature.home.data.datasource.remote.continent
 
-import com.apollographql.apollo3.ApolloClient
-import com.apollographql.apollo3.annotations.ApolloExperimental
-import com.apollographql.apollo3.testing.QueueTestNetworkTransport
-import com.apollographql.apollo3.testing.enqueueTestResponse
+import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.annotations.ApolloExperimental
+import com.apollographql.apollo.testing.QueueTestNetworkTransport
+import com.apollographql.apollo.testing.enqueueTestResponse
 import com.google.common.truth.Truth.assertThat
 import com.reza.ContinentsQuery
-
+import com.reza.type.ContinentMap
+import com.reza.type.buildCountry
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -30,13 +31,9 @@ class DefaultContinentDataSourceTest {
         val query = ContinentsQuery()
         val data = ContinentsQuery.Data {
             continents = listOf(
-                continent {
-                    name = "Africa"
-                    code = "AF"
-                }, continent {
-                    name = "Antarctica"
-                    code = "AN"
-                }
+                ContinentMap(
+                    mapOf(("Antarctica" to "AN"), ("Africa" to "AF"))
+                )
             )
         }
         apolloClient.enqueueTestResponse(query, data)

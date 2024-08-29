@@ -6,7 +6,6 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.hilt.android)
     kotlin("kapt")
-    id("com.apollographql.apollo") version "4.0.0"
     id("kotlin-parcelize")
 }
 
@@ -77,11 +76,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "1.8"
     }
     buildFeatures {
         compose = true
@@ -124,6 +123,7 @@ dependencies {
     // Projects
     implementation(project(":feature:home"))
     implementation(project(":feature:details"))
+    implementation(project(":core:common"))
     implementation(project(":core:networking")) // fixme no need to add this dependency in this layer
     implementation(project(":core:threading")) // fixme no need to add this dependency in this layer
     testImplementation(project(":core:testing:unit"))
@@ -152,9 +152,6 @@ dependencies {
     kapt(libs.hilt.kapt)
     implementation(libs.hilt.navigation.compose)
 
-    // Apollo
-    implementation(libs.apollo)
-
     // OkHttpLogging
     implementation(libs.okhttp.logging)
 
@@ -176,11 +173,8 @@ kapt {
     correctErrorTypes = true
 }
 
-apollo {
-    service("service") {
-        packageName.set("com.reza")
-
-        // Enable test builder generation
-//        generateTestBuilders.set(true)
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KaptGenerateStubs> {
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }

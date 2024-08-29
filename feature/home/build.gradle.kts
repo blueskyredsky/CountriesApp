@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.hilt.android)
     kotlin("kapt") // todo change that to alias
     id("kotlin-parcelize") // todo change that to alias
-
 }
 
 android {
@@ -28,11 +27,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "1.8"
     }
     buildFeatures {
         compose = true
@@ -50,8 +49,6 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:systemdesign"))
     testImplementation(project(":core:testing:unit"))
-
-    testImplementation(libs.apollo.test)
 
     implementation(libs.javax.inject)
 
@@ -74,6 +71,9 @@ dependencies {
     kapt(libs.hilt.kapt)
     implementation(libs.hilt.navigation.compose)
 
+    // test
+    testImplementation(libs.apollo.test)
+
     // ui test
     androidTestImplementation(libs.ui.test.junit4)
     androidTestImplementation(libs.truth)
@@ -83,4 +83,10 @@ dependencies {
     androidTestImplementation(libs.navigation.test)
     androidTestImplementation(libs.androidx.runner)
     kaptAndroidTest(libs.hilt.kapt.test)
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KaptGenerateStubs> {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
