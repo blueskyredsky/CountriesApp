@@ -112,5 +112,6 @@ hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt-andr
 com-android-test = { id = "com.android.test", version.ref = "com-android-application" }
 com-android-library = { id = "com.android.library", version.ref = "com-android-application" }
 org-jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "org-jetbrains-kotlin-android" }
+apollo = { id = "com.apollographql.apollo", version.ref = "apollo" }
 
 [bundles]

@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
-    id("com.apollographql.apollo") version "4.0.0"
+    alias(libs.plugins.apollo)
     kotlin("kapt")
 }
 

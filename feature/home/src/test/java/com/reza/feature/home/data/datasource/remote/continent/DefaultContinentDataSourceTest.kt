@@ -6,8 +6,6 @@ import com.apollographql.apollo.testing.QueueTestNetworkTransport
 import com.apollographql.apollo.testing.enqueueTestResponse
 import com.google.common.truth.Truth.assertThat
 import com.reza.ContinentsQuery
-import com.reza.type.ContinentMap
-import com.reza.type.buildCountry
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -30,11 +28,7 @@ class DefaultContinentDataSourceTest {
         // Given
         val query = ContinentsQuery()
         val data = ContinentsQuery.Data {
-            continents = listOf(
-                ContinentMap(
-                    mapOf(("Antarctica" to "AN"), ("Africa" to "AF"))
-                )
-            )
+            continents = listOf()
         }
         apolloClient.enqueueTestResponse(query, data)
 
