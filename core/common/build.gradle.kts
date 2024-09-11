@@ -51,6 +51,11 @@ apollo {
     service("service") {
         packageName.set("com.reza")
 
+        introspection {
+            endpointUrl.set("https://countries.trevorblades.com/graphql")
+            schemaFile.set(file("src/main/graphql/com/reza/schema.graphqls"))
+        }
+
         // Enable data builder generation
         generateDataBuilders.set(true)
     }
