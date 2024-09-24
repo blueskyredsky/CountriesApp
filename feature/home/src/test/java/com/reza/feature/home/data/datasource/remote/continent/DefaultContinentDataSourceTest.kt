@@ -6,18 +6,20 @@ import com.apollographql.apollo.testing.QueueTestNetworkTransport
 import com.apollographql.apollo.testing.enqueueTestResponse
 import com.google.common.truth.Truth.assertThat
 import com.reza.ContinentsQuery
+import com.reza.type.ContinentMap
+import com.reza.type.buildContinent
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 
 class DefaultContinentDataSourceTest {
+
     private lateinit var apolloClient: ApolloClient
 
     @OptIn(ApolloExperimental::class)
     @Before
     fun setUp() {
-        apolloClient = ApolloClient
-            .Builder()
+        apolloClient = ApolloClient.Builder()
             .networkTransport(QueueTestNetworkTransport())
             .build()
     }
@@ -26,15 +28,21 @@ class DefaultContinentDataSourceTest {
     @Test
     fun `testing getContinents`() = runTest {
         // Given
-        val query = ContinentsQuery()
+        val testQuery = ContinentsQuery()
         val data = ContinentsQuery.Data {
-            continents = listOf()
+            continents = listOf(
+                buildContinent {
+                    name = "Africa"
+                    code = "AF"
+                }
+
+
+            )
         }
-        apolloClient.enqueueTestResponse(query, data)
+        apolloClient.enqueueTestResponse(testQuery, data)
 
         // When
-        val actual = apolloClient
-            .query(query)
+        val actual = apolloClient.query(testQuery)
             .execute()
             .data
 
