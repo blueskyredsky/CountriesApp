@@ -1,4 +1,4 @@
-package com.reza.feature.home.data.extension
+package com.reza.feature.home.data.model
 
 import com.reza.ContinentsQuery
 import com.reza.feature.home.domain.model.Continent

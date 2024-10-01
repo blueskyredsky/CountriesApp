@@ -130,7 +130,7 @@ private fun ContinentList(
                 .pullRefresh(pullRefreshState)
         ) {
             items(
-                key = { item -> item.continent.code ?: "" },
+                key = { item -> item.continent.code },
                 items = continents
             ) { continentView ->
                 ContinentItem(
@@ -174,7 +174,7 @@ private fun ContinentItem(
         ) {
             Text(
                 modifier = Modifier
-                    .padding(16.dp), text = continentView.continent.name ?: ""
+                    .padding(16.dp), text = continentView.continent.name
             )
             Image(
                 modifier = Modifier.padding(16.dp),

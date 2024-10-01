@@ -6,13 +6,13 @@ import com.apollographql.apollo.testing.QueueTestNetworkTransport
 import com.apollographql.apollo.testing.enqueueTestResponse
 import com.google.common.truth.Truth.assertThat
 import com.reza.ContinentsQuery
-import com.reza.type.ContinentMap
+import com.reza.feature.home.domain.model.Continent
 import com.reza.type.buildContinent
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 
-class DefaultContinentDataSourceTest {
+class DefaultContinentRemoteDataSourceTest {
 
     private lateinit var apolloClient: ApolloClient
 
@@ -32,10 +32,13 @@ class DefaultContinentDataSourceTest {
         val data = ContinentsQuery.Data {
             continents = listOf(
                 buildContinent {
-                    name = "Africa"
-                    code = "AF"
+                    name = Continent.AFRICA
+                    code = Continent.AFRICA_CODE
+                },
+                buildContinent {
+                    name = Continent.ANTARCTICA
+                    code = Continent.ANTARCTICA_CODE
                 }
-
 
             )
         }
@@ -49,5 +52,7 @@ class DefaultContinentDataSourceTest {
         // Then
         assertThat(actual?.continents?.first()?.name).isEqualTo(data.continents.first().name)
         assertThat(actual?.continents?.first()?.code).isEqualTo(data.continents.first().code)
+        assertThat(actual?.continents?.last()?.code).isEqualTo(data.continents.last().code)
+        assertThat(actual?.continents?.last()?.code).isEqualTo(data.continents.last().code)
     }
 }

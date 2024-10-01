@@ -1,7 +1,7 @@
 package com.reza.feature.home.data.di
 
-import com.reza.feature.home.data.datasource.remote.ContinentDataSource
-import com.reza.feature.home.data.datasource.remote.DefaultContinentDataSource
+import com.reza.feature.home.data.datasource.remote.ContinentRemoteDataSource
+import com.reza.feature.home.data.datasource.remote.DefaultContinentRemoteDataSource
 import com.reza.feature.home.data.repository.DefaultContinentRepository
 import com.reza.feature.home.domain.repository.ContinentRepository
 import com.reza.feature.home.domain.usecase.ContinentImageUseCase
@@ -19,8 +19,8 @@ abstract class ActivityRetainedModule {
 
     @Binds
     internal abstract fun bindContinentsDataSource(
-        defaultContinentDataSource: DefaultContinentDataSource
-    ): ContinentDataSource
+        defaultContinentDataSource: DefaultContinentRemoteDataSource
+    ): ContinentRemoteDataSource
 
     @Binds
     internal abstract fun bindContinentRepository(
