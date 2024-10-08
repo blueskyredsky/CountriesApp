@@ -54,7 +54,7 @@ class HomeViewModelTest {
         Mockito.`when`(continentsUseCase.getContinents()).thenReturn(ResultState.Success(Continent.LIST_OF_CONTINENTS))
 
         // Then
-        /*viewModel.homeState.test {
+        viewModel.homeState.test {
             val item1 = awaitItem()
             Truth.assertThat(
                 HomeState(
@@ -78,7 +78,7 @@ class HomeViewModelTest {
                 )
             ).isEqualTo(item2)
             //cancelAndIgnoreRemainingEvents()
-        }*/
+        }
     }
 
     @Test
