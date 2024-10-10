@@ -73,6 +73,9 @@ dependencies {
 
     // test
     testImplementation(libs.apollo.test)
+    testImplementation("io.mockk:mockk:1.13.13")
+    testImplementation("org.slf4j:slf4j-nop:1.7.21")
+
 
     // ui test
     androidTestImplementation(libs.ui.test.junit4)

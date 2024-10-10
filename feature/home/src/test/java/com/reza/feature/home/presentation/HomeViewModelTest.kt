@@ -4,19 +4,24 @@ package com.reza.feature.home.presentation
 import app.cash.turbine.test
 import com.google.common.truth.Truth
 import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.whenever
 import com.reza.common.domain.model.ResultState
 import com.reza.feature.home.domain.model.Continent
 import com.reza.feature.home.domain.usecase.ContinentImageUseCase
 import com.reza.feature.home.domain.usecase.ContinentsUseCase
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.mockk
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.stub
 
 @RunWith(MockitoJUnitRunner::class)
 class HomeViewModelTest {
@@ -46,12 +51,17 @@ class HomeViewModelTest {
         Truth.assertThat(viewModel.homeState.value.isLoading).isFalse()
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `should return list of continents if successful`() = runTest(testDispatcher.scheduler) {
         // Given
-        Mockito.`when`(continentImageUseCase.findContinentImage(any())).thenReturn(1)
-        Mockito.`when`(continentsUseCase.getContinents()).thenReturn(ResultState.Success(Continent.LIST_OF_CONTINENTS))
+
+//        coEvery { continentsUseCase.getContinents() } returns ResultState.Success(Continent.LIST_OF_CONTINENTS)
+        //every { continentImageUseCase.findContinentImage(any()) } returns 1
+
+        whenever(continentImageUseCase.findContinentImage(any())).thenReturn(1)
+        continentsUseCase.stub {
+            onBlocking { getContinents() } doReturn ResultState.Success(Continent.LIST_OF_CONTINENTS)
+        }
 
         // Then
         viewModel.homeState.test {
@@ -77,7 +87,7 @@ class HomeViewModelTest {
                     errorMessage = null
                 )
             ).isEqualTo(item2)
-            //cancelAndIgnoreRemainingEvents()
+            cancelAndIgnoreRemainingEvents()
         }
     }
 

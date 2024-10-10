@@ -55,9 +55,7 @@ internal class HomeViewModel @Inject constructor(
                             continents = result.data.map {
                                 ContinentView(
                                     continent = it,
-                                    imageResource = continentsImageUseCase.findContinentImage(
-                                        it.name ?: ""
-                                    )
+                                    imageResource = continentsImageUseCase.findContinentImage(it.name)
                                 )
                             }, isLoading = false, errorMessage = null
                         )
