@@ -43,7 +43,6 @@ dependencies {
     api(libs.mockito.nhaarman)
     api(libs.mockito)
     api(libs.truth)
-    // todo check these two libs
     api(libs.apollo.test)
     api(libs.apollo.mock.server)
     debugApi(libs.ui.test.manifest)

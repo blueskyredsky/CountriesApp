@@ -47,7 +47,7 @@ dependencies {
     implementation(project(":core:threading"))
     implementation(project(":core:networking"))
     implementation(project(":core:common"))
-    implementation(project(":core:systemdesign"))
+    implementation(project(":core:designsystem"))
     testImplementation(project(":core:testing:unit"))
 
     implementation(libs.javax.inject)
@@ -70,12 +70,6 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.kapt)
     implementation(libs.hilt.navigation.compose)
-
-    // test
-    testImplementation(libs.apollo.test)
-    testImplementation("io.mockk:mockk:1.13.13")
-    testImplementation("org.slf4j:slf4j-nop:1.7.21")
-
 
     // ui test
     androidTestImplementation(libs.ui.test.junit4)

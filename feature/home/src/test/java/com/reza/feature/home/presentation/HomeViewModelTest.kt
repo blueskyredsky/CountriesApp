@@ -9,13 +9,11 @@ import com.reza.common.domain.model.ResultState
 import com.reza.feature.home.domain.model.Continent
 import com.reza.feature.home.domain.usecase.ContinentImageUseCase
 import com.reza.feature.home.domain.usecase.ContinentsUseCase
-import io.mockk.coEvery
-import io.mockk.every
-import io.mockk.mockk
+import com.reza.unit.util.MainDispatcherRule
 import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -25,6 +23,9 @@ import org.mockito.kotlin.stub
 
 @RunWith(MockitoJUnitRunner::class)
 class HomeViewModelTest {
+
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
 
     @Mock
     private lateinit var continentImageUseCase: ContinentImageUseCase
@@ -39,7 +40,6 @@ class HomeViewModelTest {
     fun setup() {
         viewModel = HomeViewModel(
             continentsUseCase = continentsUseCase,
-            mainDispatcher = testDispatcher,
             continentsImageUseCase = continentImageUseCase
         )
     }

@@ -19,8 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
     private val continentsUseCase: ContinentsUseCase,
-    private val continentsImageUseCase: ContinentImageUseCase,
-    @MainDispatcher private val mainDispatcher: CoroutineDispatcher
+    private val continentsImageUseCase: ContinentImageUseCase
 ) : ViewModel() {
 
     private val _homeState = MutableStateFlow(HomeState())
@@ -39,7 +38,7 @@ internal class HomeViewModel @Inject constructor(
     }
 
     private fun getContinents() {
-        viewModelScope.launch(mainDispatcher + exceptionHandler) {
+        viewModelScope.launch(exceptionHandler) {
             // Loading state
             _homeState.update { state ->
                 state.copy(
