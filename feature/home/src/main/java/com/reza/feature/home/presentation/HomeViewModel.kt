@@ -1,8 +1,10 @@
 package com.reza.feature.home.presentation
 
+import androidx.annotation.DrawableRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.reza.common.domain.model.ResultState
+import com.reza.feature.home.domain.model.Continent
 import com.reza.feature.home.domain.usecase.ContinentImageUseCase
 import com.reza.feature.home.domain.usecase.ContinentsUseCase
 import com.reza.threading.common.MainDispatcher
@@ -22,50 +24,35 @@ internal class HomeViewModel @Inject constructor(
     private val continentsImageUseCase: ContinentImageUseCase
 ) : ViewModel() {
 
-    private val _homeState = MutableStateFlow(HomeState())
+    private val _homeState = MutableStateFlow<HomeUiState>(HomeUiState.Empty)
     val homeState = _homeState.asStateFlow()
 
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
-        _homeState.update { state ->
-            state.copy(
-                errorMessage = exception.message ?: "Something went wrong, please try again!"
-            )
+        _homeState.update {
+            HomeUiState.Error(exception.message ?: "Something went wrong, please try again!")
         }
-    }
-
-    init {
-        getContinents()
     }
 
     private fun getContinents() {
         viewModelScope.launch(exceptionHandler) {
             // Loading state
-            _homeState.update { state ->
-                state.copy(
-                    isLoading = true
-                )
+            _homeState.update {
+                HomeUiState.Loading
             }
 
             // Getting continents
             when (val result = continentsUseCase.getContinents()) {
                 is ResultState.Success -> {
-                    _homeState.update { state ->
-                        state.copy(
-                            continents = result.data.map {
-                                ContinentView(
-                                    continent = it,
-                                    imageResource = continentsImageUseCase.findContinentImage(it.name)
-                                )
-                            }, isLoading = false, errorMessage = null
-                        )
+                    _homeState.update {
+                        HomeUiState.Success(result.data.transformToContinentViews {
+                            continentsImageUseCase.findContinentImage(it)
+                        })
                     }
                 }
 
                 is ResultState.Failure -> {
-                    _homeState.update { state ->
-                        state.copy(
-                            isLoading = false, errorMessage = result.error
-                        )
+                    _homeState.update {
+                        HomeUiState.Error(result.error)
                     }
                 }
             }
@@ -73,9 +60,9 @@ internal class HomeViewModel @Inject constructor(
     }
 
     fun consumeErrorMessage() {
-        _homeState.update { state ->
-            state.copy(errorMessage = null)
-        }
+//        _homeState.update { state ->
+//            state.copy(errorMessage = null)
+//        }
     }
 
     fun onEvent(event: HomeEvent) {
@@ -84,3 +71,22 @@ internal class HomeViewModel @Inject constructor(
         }
     }
 }
+
+/**
+ * Transforms a list of [Continent] objects into a list of [ContinentView] objects.
+ *
+ * This extension function iterates through the list of continents and creates a corresponding
+ * [ContinentView] for each continent. It uses the provided `imageResource` function to
+ * retrieve the image resource ID for each continent based on its name.
+ *
+ * @param imageResource A function that takes a continent name as input and returns the
+ * corresponding image resource ID.
+ * @return A list of [ContinentView] objects.
+ */
+fun List<Continent>.transformToContinentViews(imageResource: (String) -> Int): List<ContinentView> =
+    this.map { continent ->
+        ContinentView(
+            continent = continent,
+            imageResource = imageResource(continent.name)
+        )
+    }

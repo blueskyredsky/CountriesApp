@@ -28,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -53,6 +54,10 @@ internal fun ContinentsScreen(
 ) {
     val state by viewModel.homeState.collectAsState()
     val screenState = rememberHomeScreenState()
+
+    LaunchedEffect(Unit) { // Key is Unit, so it runs only once
+        viewModel.onEvent(HomeEvent.GetContinents)
+    }
 
     Scaffold(
         topBar = {
