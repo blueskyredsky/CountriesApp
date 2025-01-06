@@ -61,6 +61,7 @@ dependencies {
     implementation(composeBom)
     androidTestImplementation(composeBom)
     implementation(libs.activity.compose)
+    implementation(libs.compose.lifecycle)
     implementation(libs.material3)
     implementation(libs.material)
     debugImplementation(libs.ui.tooling)

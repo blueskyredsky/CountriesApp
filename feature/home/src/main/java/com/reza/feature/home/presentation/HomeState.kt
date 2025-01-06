@@ -25,11 +25,6 @@ import javax.annotation.concurrent.Immutable
 sealed interface HomeUiState {
 
     /**
-     * Represents the loading state.
-     */
-    data object Loading : HomeUiState
-
-    /**
      * Represents the success state. This state is immutable, meaning its properties cannot be changed after it is created.
      *
      * @property continents The list of [ContinentView]s to display.
@@ -48,6 +43,32 @@ sealed interface HomeUiState {
      * Represents the empty state.
      */
     data object Empty : HomeUiState
+}
+
+/**
+ * Represents the loading state of the Home screen.
+ *
+ * This sealed interface defines the different loading states that the Home screen can be in:
+ * - **Idle:** Indicates that the screen is not currently loading any data.
+ * - **Loading:** Indicates that the screen is loading data for the first time.
+ * - **Refreshing:** Indicates that the screen is refreshing existing data.
+ */
+sealed interface HomeLoadingState {
+
+    /**
+     * Represents the idle state, where the screen is not loading any data.
+     */
+    data object Idle : HomeLoadingState
+
+    /**
+     * Represents the loading state, where the screen is loading data for the first time.
+     */
+    data object Loading : HomeLoadingState
+
+    /**
+     * Represents the refreshing state, where the screen is refreshing existing data.
+     */
+    data object Refreshing : HomeLoadingState
 }
 
 /**

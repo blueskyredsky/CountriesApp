@@ -1,17 +1,13 @@
 package com.reza.feature.home.presentation
 
-import androidx.annotation.DrawableRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.reza.common.domain.model.ResultState
 import com.reza.feature.home.domain.model.Continent
 import com.reza.feature.home.domain.usecase.ContinentImageUseCase
 import com.reza.feature.home.domain.usecase.ContinentsUseCase
-import com.reza.threading.common.MainDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -24,26 +20,35 @@ internal class HomeViewModel @Inject constructor(
     private val continentsImageUseCase: ContinentImageUseCase
 ) : ViewModel() {
 
-    private val _homeState = MutableStateFlow<HomeUiState>(HomeUiState.Empty)
-    val homeState = _homeState.asStateFlow()
+    private val _homeUiState = MutableStateFlow<HomeUiState>(HomeUiState.Empty)
+    val homeUiState = _homeUiState.asStateFlow()
+
+    private val _homeLoadingState = MutableStateFlow<HomeLoadingState>(HomeLoadingState.Idle)
+    val homeLoadingState = _homeLoadingState.asStateFlow()
 
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
-        _homeState.update {
+        _homeUiState.update {
             HomeUiState.Error(exception.message ?: "Something went wrong, please try again!")
         }
     }
 
-    private fun getContinents() {
+    private fun getContinents(isRefreshing: Boolean = false) {
         viewModelScope.launch(exceptionHandler) {
             // Loading state
-            _homeState.update {
-                HomeUiState.Loading
+            if (isRefreshing) {
+                _homeLoadingState.update {
+                    HomeLoadingState.Refreshing
+                }
+            } else {
+                _homeLoadingState.update {
+                    HomeLoadingState.Loading
+                }
             }
 
             // Getting continents
             when (val result = continentsUseCase.getContinents()) {
                 is ResultState.Success -> {
-                    _homeState.update {
+                    _homeUiState.update {
                         HomeUiState.Success(result.data.transformToContinentViews {
                             continentsImageUseCase.findContinentImage(it)
                         })
@@ -51,7 +56,7 @@ internal class HomeViewModel @Inject constructor(
                 }
 
                 is ResultState.Failure -> {
-                    _homeState.update {
+                    _homeUiState.update {
                         HomeUiState.Error(result.error)
                     }
                 }
@@ -67,7 +72,7 @@ internal class HomeViewModel @Inject constructor(
 
     fun onEvent(event: HomeEvent) {
         when (event) {
-            is HomeEvent.GetContinents -> getContinents()
+            is HomeEvent.GetContinents -> getContinents(event.isRefreshing)
         }
     }
 }

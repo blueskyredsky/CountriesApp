@@ -29,7 +29,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,7 +38,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.reza.countriesapp.ui.theme.CountriesAppTheme
 import com.reza.feature.home.R
 import com.reza.feature.home.domain.model.Continent
@@ -52,11 +51,12 @@ internal fun ContinentsScreen(
     viewModel: HomeViewModel,
     onSelectContinent: (Continent) -> Unit
 ) {
-    val state by viewModel.homeState.collectAsState()
+    val homeUiState by viewModel.homeUiState.collectAsStateWithLifecycle()
+    val homeLoadingState by viewModel.homeLoadingState.collectAsStateWithLifecycle()
     val screenState = rememberHomeScreenState()
 
-    LaunchedEffect(Unit) { // Key is Unit, so it runs only once
-        viewModel.onEvent(HomeEvent.GetContinents)
+    LaunchedEffect(Unit) {
+        viewModel.onEvent(HomeEvent.GetContinents())
     }
 
     Scaffold(
@@ -74,21 +74,23 @@ internal fun ContinentsScreen(
         content = { innerPaddingModifier ->
             Crossfade(
                 modifier = Modifier.padding(innerPaddingModifier),
-                targetState = state,
+                targetState = homeUiState,
                 animationSpec = tween(500),
                 label = "cross fade"
             ) { targetState ->
-                if (targetState.isLoading) {
-                    LoadingItem()
-                } else {
-                    if (targetState.errorMessage != null) {
+                when (targetState) {
+                    HomeUiState.Empty -> {
+                        Unit
+                    }
+
+                    is HomeUiState.Error -> {
                         screenState.showSnackBar(
                             message = targetState.errorMessage,
                             actionLabel = stringResource(R.string.retry),
                             resultCallback = { result ->
                                 when (result) {
                                     SnackbarResult.ActionPerformed ->
-                                        viewModel.onEvent(HomeEvent.GetContinents)
+                                        viewModel.onEvent(HomeEvent.GetContinents(true))
 
                                     SnackbarResult.Dismissed -> {
                                         viewModel.consumeErrorMessage()
@@ -96,13 +98,15 @@ internal fun ContinentsScreen(
                                 }
                             }
                         )
-                    } else {
+                    }
+
+                    is HomeUiState.Success -> {
                         ContinentList(
-                            isRefreshing = state.isLoading,
-                            continents = state.continents,
+                            isRefreshing = homeLoadingState == HomeLoadingState.Refreshing,
+                            continents = targetState.continents,
                             onSelectContinent = onSelectContinent,
                             onRefresh = {
-                                viewModel.onEvent(HomeEvent.GetContinents)
+                                viewModel.onEvent(HomeEvent.GetContinents(true))
                             }
                         )
                     }
@@ -118,9 +122,9 @@ internal fun ContinentsScreen(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun ContinentList(
-    modifier: Modifier = Modifier,
     isRefreshing: Boolean,
     continents: List<ContinentView>,
+    modifier: Modifier = Modifier,
     onSelectContinent: (Continent) -> Unit,
     onRefresh: () -> Unit
 ) {

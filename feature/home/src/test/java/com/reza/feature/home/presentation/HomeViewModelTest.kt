@@ -47,16 +47,16 @@ class HomeViewModelTest {
 
     @Test
     fun `testing default values of ui state`() = runTest {
-        backgroundScope.launch(UnconfinedTestDispatcher()) { viewModel.homeState.collect() }
+        backgroundScope.launch(UnconfinedTestDispatcher()) { viewModel.homeUiState.collect() }
 
-        Truth.assertThat(viewModel.homeState.value.continents).isEqualTo(emptyList<Continent>())
-        Truth.assertThat(viewModel.homeState.value.errorMessage).isNull()
-        Truth.assertThat(viewModel.homeState.value.isLoading).isTrue() // the default valur for loading is false, but as the getContinents() is called in init block, it will be change to true
+        Truth.assertThat(viewModel.homeUiState.value.continents).isEqualTo(emptyList<Continent>())
+        Truth.assertThat(viewModel.homeUiState.value.errorMessage).isNull()
+        Truth.assertThat(viewModel.homeUiState.value.isLoading).isTrue() // the default valur for loading is false, but as the getContinents() is called in init block, it will be change to true
     }
 
     @Test
     fun `should return list of continents if successful`() = runTest {
-        backgroundScope.launch(UnconfinedTestDispatcher()) { viewModel.homeState.collect() }
+        backgroundScope.launch(UnconfinedTestDispatcher()) { viewModel.homeUiState.collect() }
 
         // Given
         whenever(continentsUseCase.getContinents()).thenReturn(ResultState.Success(Continent.LIST_OF_CONTINENTS))
@@ -106,7 +106,7 @@ class HomeViewModelTest {
         // Given
 
         // Then
-        viewModel.homeState.test {
+        viewModel.homeUiState.test {
             Truth.assertThat(
                 HomeState(
                     isLoading = true,

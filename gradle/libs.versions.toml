@@ -9,7 +9,7 @@ androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 lifecycle-runtime-ktx = "2.7.0"
 activity-compose = "1.8.2"
-compose-bom = "2023.10.01"
+compose-bom = "2024.12.01"
 hilt-android = "2.51.1"
 hilt-navigation-compose = "1.1.0"
 hilt-test = "2.44"
@@ -38,6 +38,7 @@ material-version = "1.12.0"
 play-services-wearable = "18.1.0"
 compose-material = "1.2.1"
 compose-foundation = "1.2.1"
+compose-lifecycle = "2.8.7"
 core-splashscreen = "1.0.1"
 tiles = "1.1.0"
 tiles-material = "1.1.0"
@@ -97,6 +98,7 @@ google-material = { group = "com.google.android.material", name = "material", ve
 play-services-wearable = { group = "com.google.android.gms", name = "play-services-wearable", version.ref = "play-services-wearable" }
 androidx-compose-material = { group = "androidx.wear.compose", name = "compose-material", version.ref = "compose-material" }
 androidx-compose-foundation = { group = "androidx.wear.compose", name = "compose-foundation", version.ref = "compose-foundation" }
+compose-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "compose-lifecycle" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "core-splashscreen" }
 androidx-tiles = { group = "androidx.wear.tiles", name = "tiles", version.ref = "tiles" }
 androidx-tiles-material = { group = "androidx.wear.tiles", name = "tiles-material", version.ref = "tiles-material" }

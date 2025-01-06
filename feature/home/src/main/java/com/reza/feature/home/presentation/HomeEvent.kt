@@ -1,5 +1,5 @@
 package com.reza.feature.home.presentation
 
 sealed interface HomeEvent {
-    object GetContinents: HomeEvent
+    data class GetContinents(val isRefreshing: Boolean = false) : HomeEvent
 }
