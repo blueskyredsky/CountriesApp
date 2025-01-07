@@ -39,11 +39,11 @@ internal class DetailsViewModel @Inject constructor(
         getCountries()
     }
 
-    fun onEvent(event: HomeEvent) {
-        when (event) {
-            is HomeEvent.GetContinents -> getCountries()
-        }
-    }
+//    fun onEvent(event: HomeEvent) {
+//        when (event) {
+//            is HomeEvent.GetContinents -> getCountries()
+//        }
+//    }
 
     private fun getCountries() {
         savedStateHandle.get<String>(CONTINENT_CODE)?.let { code ->

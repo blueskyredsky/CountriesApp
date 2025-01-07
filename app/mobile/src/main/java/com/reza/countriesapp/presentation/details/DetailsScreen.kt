@@ -103,10 +103,10 @@ internal fun DetailsScreen(
                             resultCallback = { result ->
                                 when (result) {
                                     SnackbarResult.ActionPerformed ->
-                                        viewModel.onEvent(HomeEvent.GetContinents)
+                                        Unit
 
                                     SnackbarResult.Dismissed -> {
-                                        viewModel.consumeErrorMessage()
+                                        Unit
                                     }
                                 }
                             })
@@ -116,7 +116,7 @@ internal fun DetailsScreen(
                                 isRefreshing = state.isLoading,
                                 countries = it,
                                 onRefresh = {
-                                    viewModel.onEvent(HomeEvent.GetContinents)
+
                                 }
                             )
                         }

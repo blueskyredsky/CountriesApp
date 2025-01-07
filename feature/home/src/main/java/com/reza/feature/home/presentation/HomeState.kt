@@ -37,12 +37,17 @@ sealed interface HomeUiState {
      *
      * @property errorMessage The error message to display.
      */
-    data class Error(val errorMessage: String) : HomeUiState
+    data class Error(val errorMessage: String?) : HomeUiState
 
     /**
      * Represents the empty state.
      */
     data object Empty : HomeUiState
+
+    /**
+     * Represents the loading state.
+     */
+    data object Loading : HomeUiState
 }
 
 /**

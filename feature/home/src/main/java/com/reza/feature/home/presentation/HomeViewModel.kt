@@ -8,6 +8,7 @@ import com.reza.feature.home.domain.usecase.ContinentImageUseCase
 import com.reza.feature.home.domain.usecase.ContinentsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -28,51 +29,64 @@ internal class HomeViewModel @Inject constructor(
 
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
         _homeUiState.update {
-            HomeUiState.Error(exception.message ?: "Something went wrong, please try again!")
+            HomeUiState.Error(exception.message ?: "Something went wrong, please try again!") // fixme string resource
         }
     }
 
     private fun getContinents(isRefreshing: Boolean = false) {
         viewModelScope.launch(exceptionHandler) {
-            // Loading state
-            if (isRefreshing) {
-                _homeLoadingState.update {
-                    HomeLoadingState.Refreshing
-                }
-            } else {
-                _homeLoadingState.update {
-                    HomeLoadingState.Loading
-                }
-            }
-
-            // Getting continents
-            when (val result = continentsUseCase.getContinents()) {
-                is ResultState.Success -> {
-                    _homeUiState.update {
-                        HomeUiState.Success(result.data.transformToContinentViews {
-                            continentsImageUseCase.findContinentImage(it)
-                        })
+            if (_homeUiState.value !is HomeUiState.Success || isRefreshing) { // to avoid calling api again when navigating back to homeScreen
+                // Loading state
+                if (isRefreshing) {
+                    _homeLoadingState.update {
+                        HomeLoadingState.Refreshing
+                    }
+                } else {
+                    _homeLoadingState.update {
+                        HomeLoadingState.Loading
                     }
                 }
 
-                is ResultState.Failure -> {
-                    _homeUiState.update {
-                        HomeUiState.Error(result.error)
+                _homeUiState.update {
+                    HomeUiState.Loading
+                }
+
+                // Getting continents
+                when (val result = continentsUseCase.getContinents()) {
+                    is ResultState.Success -> {
+                        _homeLoadingState.update {
+                            HomeLoadingState.Idle
+                        }
+                        _homeUiState.update {
+                            HomeUiState.Success(result.data.transformToContinentViews {
+                                continentsImageUseCase.findContinentImage(it)
+                            })
+                        }
+                    }
+
+                    is ResultState.Failure -> {
+                        _homeLoadingState.update {
+                            HomeLoadingState.Idle
+                        }
+                        _homeUiState.update {
+                            HomeUiState.Error(result.error)
+                        }
                     }
                 }
             }
         }
     }
 
-    fun consumeErrorMessage() {
-//        _homeState.update { state ->
-//            state.copy(errorMessage = null)
-//        }
+    private fun consumeErrorMessage() {
+        _homeUiState.update {
+            HomeUiState.Error(null)
+        }
     }
 
     fun onEvent(event: HomeEvent) {
         when (event) {
             is HomeEvent.GetContinents -> getContinents(event.isRefreshing)
+            HomeEvent.ConsumeErrorMessage -> consumeErrorMessage()
         }
     }
 }
