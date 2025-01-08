@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.yield
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,6 +32,10 @@ internal class HomeViewModel @Inject constructor(
         _homeUiState.update {
             HomeUiState.Error(exception.message ?: "Something went wrong, please try again!") // fixme string resource
         }
+    }
+
+    private suspend fun emitUiState(state: HomeUiState) {
+        _homeUiState.emit(state)
     }
 
     private fun getContinents(isRefreshing: Boolean = false) {
