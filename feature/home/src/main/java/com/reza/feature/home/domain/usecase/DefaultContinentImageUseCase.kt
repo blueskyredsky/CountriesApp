@@ -5,6 +5,7 @@ import com.reza.feature.home.domain.model.Continent
 import javax.inject.Inject
 
 internal class DefaultContinentImageUseCase @Inject constructor() : ContinentImageUseCase {
+
     override fun findContinentImage(name: String): Int {
         return when (name) {
             Continent.AFRICA -> R.drawable.ic_africa

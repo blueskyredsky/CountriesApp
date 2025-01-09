@@ -34,10 +34,6 @@ internal class HomeViewModel @Inject constructor(
         }
     }
 
-    private suspend fun emitUiState(state: HomeUiState) {
-        _homeUiState.emit(state)
-    }
-
     private fun getContinents(isRefreshing: Boolean = false) {
         viewModelScope.launch(exceptionHandler) {
             if (_homeUiState.value !is HomeUiState.Success || isRefreshing) { // to avoid calling api again when navigating back to homeScreen

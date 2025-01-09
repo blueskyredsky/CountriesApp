@@ -42,6 +42,7 @@ dependencies {
     api(libs.turbine)
     api(libs.mockito.nhaarman)
     api(libs.mockito)
+    api(libs.mockk)
     api(libs.truth)
     api(libs.apollo.test)
     api(libs.apollo.mock.server)

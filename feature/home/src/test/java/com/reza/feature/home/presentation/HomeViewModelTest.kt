@@ -1,34 +1,30 @@
 package com.reza.feature.home.presentation
 
-
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import com.nhaarman.mockitokotlin2.whenever
 import com.reza.common.domain.model.ResultState
 import com.reza.feature.home.domain.model.Continent
 import com.reza.feature.home.domain.usecase.ContinentImageUseCase
 import com.reza.feature.home.domain.usecase.ContinentsUseCase
+import com.reza.feature.home.domain.usecase.TestContinentImageUseCase
+import com.reza.feature.home.domain.usecase.TestContinentUseCase
 import com.reza.unit.util.MainDispatcherRule
-import kotlinx.coroutines.test.advanceUntilIdle
+import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.mockk
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(MockitoJUnitRunner::class)
 class HomeViewModelTest {
 
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
-    @Mock
-    private lateinit var continentImageUseCase: ContinentImageUseCase
-
-    @Mock
-    private lateinit var continentsUseCase: ContinentsUseCase
+    private val continentsUseCase = mockk<ContinentsUseCase>()
+    private val continentImageUseCase = mockk<ContinentImageUseCase>()
 
     private lateinit var viewModel: HomeViewModel
 
@@ -41,16 +37,19 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `check initial states`() = runTest {
+    fun homeViewModel_initialState_is_emptyAndIdle() = runTest {
         assertThat(HomeUiState.Empty).isEqualTo(viewModel.homeUiState.value)
         assertThat(HomeLoadingState.Idle).isEqualTo(viewModel.homeLoadingState.value)
     }
 
     @Test
-    fun testLoadingAndSuccessStates() = runTest {
+    fun homeViewModel_onGetContinents_showsLoadingAndSuccessStates() = runTest {
         // Given
-        val expectedContinents = Continent.LIST_OF_CONTINENTS
-        whenever(continentsUseCase.getContinents()).thenReturn(ResultState.Success(expectedContinents))
+        coEvery { continentsUseCase.getContinents() } coAnswers {
+            delay(1L)
+            ResultState.Success(Continent.LIST_OF_CONTINENTS)
+        }
+        every { continentImageUseCase.findContinentImage(any<String>()) } answers { -1 }
 
         // When
         viewModel.onEvent(HomeEvent.GetContinents())
@@ -62,6 +61,30 @@ class HomeViewModelTest {
 
             val successState = awaitItem()
             assertThat(successState).isInstanceOf(HomeUiState.Success::class.java)
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun homeViewModel_onGetContinents_showsLoadingAndErrorStates() = runTest {
+        // Given
+        coEvery { continentsUseCase.getContinents() } coAnswers {
+            delay(1L)
+            ResultState.Failure("")
+        }
+        every { continentImageUseCase.findContinentImage(any<String>()) } answers { -1 }
+
+        // When
+        viewModel.onEvent(HomeEvent.GetContinents())
+
+        // Then
+        viewModel.homeUiState.test {
+            val loadingState = awaitItem()
+            assertThat(loadingState).isInstanceOf(HomeUiState.Loading::class.java)
+
+            val successState = awaitItem()
+            assertThat(successState).isInstanceOf(HomeUiState.Error::class.java)
 
             cancelAndIgnoreRemainingEvents()
         }

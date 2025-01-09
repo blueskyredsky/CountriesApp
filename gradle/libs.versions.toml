@@ -25,6 +25,7 @@ apollo-mock-server-version = "0.0.1"
 viewmodel-compose = "2.7.0"
 hilt-kapt = "2.51.1"
 mockito = "5.1.0"
+mockk = "1.13.14"
 nhaarman = "2.2.0"
 truth = "1.1.4"
 okhttp3-loging = "4.10.0"
@@ -86,6 +87,7 @@ viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-
 hilt-kapt = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt-kapt" }
 mockito = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito"}
 mockito-nhaarman = { group = "com.nhaarman.mockitokotlin2", name = "mockito-kotlin", version.ref = "nhaarman"}
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk"}
 truth = { group = "com.google.truth", name = "truth", version.ref = "truth"}
 apollo-test = { group = "com.apollographql.apollo", name = "apollo-testing-support", version.ref = "apollo"}
 apollo-mock-server = { group = "com.apollographql.mockserver", name = "apollo-mockserver", version.ref = "apollo-mock-server-version"}
