@@ -1,5 +1,6 @@
 package com.reza.feature.home.presentation
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.reza.common.domain.model.ResultState
@@ -58,23 +59,33 @@ internal class HomeViewModel @Inject constructor(
                         _homeLoadingState.update {
                             HomeLoadingState.Idle
                         }
-                        _homeUiState.update {
-                            HomeUiState.Success(result.data.transformToContinentViews {
-                                continentsImageUseCase.findContinentImage(it)
-                            })
-                        }
+                        setHomeUiStateToSuccess(result)
                     }
 
                     is ResultState.Failure -> {
                         _homeLoadingState.update {
                             HomeLoadingState.Idle
                         }
-                        _homeUiState.update {
-                            HomeUiState.Error(result.error)
-                        }
+                        setHomeUiStateToError(result)
                     }
                 }
             }
+        }
+    }
+
+    @VisibleForTesting
+    fun setHomeUiStateToSuccess(result: ResultState.Success<List<Continent>>) {
+        _homeUiState.update {
+            HomeUiState.Success(result.data.transformToContinentViews {
+                continentsImageUseCase.findContinentImage(it)
+            })
+        }
+    }
+
+    @VisibleForTesting
+    fun setHomeUiStateToError(result: ResultState.Failure) {
+        _homeUiState.update {
+            HomeUiState.Error(result.error)
         }
     }
 
