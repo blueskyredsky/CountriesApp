@@ -1,5 +1,5 @@
 [versions]
-com-android-application = "8.7.0"
+com-android-application = "8.8.0"
 firebase-bom = "33.0.0"
 javax-inject = "1"
 org-jetbrains-kotlin-android = "1.9.23"

@@ -3,7 +3,7 @@ package com.reza.feature.home.data.repository
 import com.apollographql.apollo.exception.ApolloException
 import com.reza.common.domain.model.ResultState
 import com.reza.feature.home.data.datasource.remote.ContinentRemoteDataSource
-import com.reza.feature.home.data.model.toContinent
+import com.reza.feature.home.data.mapper.toContinent
 import com.reza.feature.home.domain.model.Continent
 import com.reza.feature.home.domain.repository.ContinentRepository
 import javax.inject.Inject
