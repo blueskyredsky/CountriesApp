@@ -1,12 +1,12 @@
-package com.reza.details.domain.repository
+package com.reza.details.domain.usecase
 
 import com.reza.common.domain.model.ResultState
 import com.reza.details.domain.model.Country
 
 /**
- * A repository interface for retrieving country data.
+ * A use case interface for retrieving country data.
  */
-interface CountriesRepository {
+interface CountriesUseCase {
     /**
      * Retrieves a list of countries for a given continent code.
      */

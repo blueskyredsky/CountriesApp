@@ -2,8 +2,8 @@ package com.reza.feature.home.domain.usecase
 
 import com.google.common.truth.Truth.assertThat
 import com.reza.common.domain.model.ResultState
-import com.reza.feature.home.data.repository.DefaultContinentRepository
 import com.reza.feature.home.domain.model.Continent
+import com.reza.feature.home.domain.repository.ContinentRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -16,9 +16,9 @@ import org.mockito.junit.MockitoJUnitRunner
 class DefaultContinentsUseCaseTest {
 
     @Mock
-    private lateinit var repository: DefaultContinentRepository
+    private lateinit var repository: ContinentRepository
 
-    private lateinit var useCase: DefaultContinentsUseCase
+    private lateinit var useCase: ContinentsUseCase
 
     @Before
     fun setup() {

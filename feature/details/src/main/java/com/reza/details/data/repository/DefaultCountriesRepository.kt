@@ -8,7 +8,7 @@ import com.reza.details.domain.model.Country
 import com.reza.details.domain.repository.CountriesRepository
 import javax.inject.Inject
 
-internal class DefaultCountryRepository @Inject constructor(
+internal class DefaultCountriesRepository @Inject constructor(
     private val countriesDataSource: CountriesRemoteDataSource
 ) : CountriesRepository {
     override suspend fun getCountries(code: String): ResultState<List<Country>> {

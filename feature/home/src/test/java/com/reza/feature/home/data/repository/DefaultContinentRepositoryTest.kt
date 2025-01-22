@@ -5,6 +5,7 @@ import com.google.common.truth.Truth.assertThat
 import com.reza.ContinentsQuery
 import com.reza.common.domain.model.ResultState
 import com.reza.feature.home.data.datasource.remote.ContinentRemoteDataSource
+import com.reza.feature.home.domain.repository.ContinentRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -22,7 +23,7 @@ class DefaultContinentRepositoryTest {
     @Mock
     private lateinit var apolloResponse: ApolloResponse<ContinentsQuery.Data>
 
-    private lateinit var repository: DefaultContinentRepository
+    private lateinit var repository: ContinentRepository
 
     @Before
     fun setup() {

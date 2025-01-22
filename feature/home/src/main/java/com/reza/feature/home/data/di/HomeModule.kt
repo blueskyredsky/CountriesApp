@@ -10,29 +10,34 @@ import com.reza.feature.home.domain.usecase.DefaultContinentImageUseCase
 import com.reza.feature.home.domain.usecase.DefaultContinentsUseCase
 import dagger.Binds
 import dagger.Module
+import dagger.Reusable
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
-abstract class ActivityRetainedModule {
+abstract class HomeModule {
 
     @Binds
-    internal abstract fun bindContinentsDataSource(
+    @Reusable
+    internal abstract fun bindContinentRemoteDataSource(
         defaultContinentDataSource: DefaultContinentRemoteDataSource
     ): ContinentRemoteDataSource
 
     @Binds
+    @Reusable
     internal abstract fun bindContinentRepository(
         defaultContinentRepository: DefaultContinentRepository
     ): ContinentRepository
 
     @Binds
+    @Reusable
     internal abstract fun bindContinentsUseCase(
         defaultContinentsUseCase: DefaultContinentsUseCase
     ): ContinentsUseCase
 
     @Binds
+    @Reusable
     internal abstract fun bindContinentImageUseCase(
         defaultContinentImageUseCase: DefaultContinentImageUseCase
     ): ContinentImageUseCase
