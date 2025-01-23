@@ -5,7 +5,7 @@ import com.reza.details.domain.repository.CountriesRepository
 import javax.inject.Inject
 import com.reza.common.domain.model.ResultState
 
-class DefaultCountriesUseCase @Inject constructor(
+internal class DefaultCountriesUseCase @Inject constructor(
     private val countriesRepository: CountriesRepository
 ) : CountriesUseCase {
     override suspend fun getCountries(code: String): ResultState<List<Country>> {

@@ -5,7 +5,7 @@ import com.apollographql.apollo.api.ApolloResponse
 import com.reza.ContinentQuery
 import javax.inject.Inject
 
-class DefaultCountriesRemoteDataSource @Inject constructor(
+internal class DefaultCountriesRemoteDataSource @Inject constructor(
     private val apolloClient: ApolloClient
 ) : CountriesRemoteDataSource {
 

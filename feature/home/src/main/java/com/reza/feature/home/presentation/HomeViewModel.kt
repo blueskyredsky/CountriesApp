@@ -4,23 +4,24 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.reza.common.domain.model.ResultState
+import com.reza.common.util.stringresolver.StringResolver
+import com.reza.common.R.string
 import com.reza.feature.home.domain.model.Continent
 import com.reza.feature.home.domain.usecase.ContinentImageUseCase
 import com.reza.feature.home.domain.usecase.ContinentsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.yield
 import javax.inject.Inject
 
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
     private val continentsUseCase: ContinentsUseCase,
-    private val continentsImageUseCase: ContinentImageUseCase
+    private val continentsImageUseCase: ContinentImageUseCase,
+    private val stringResolver: StringResolver,
 ) : ViewModel() {
 
     private val _homeUiState = MutableStateFlow<HomeUiState>(HomeUiState.Empty)
@@ -31,7 +32,9 @@ internal class HomeViewModel @Inject constructor(
 
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
         _homeUiState.update {
-            HomeUiState.Error(exception.message ?: "Something went wrong, please try again!") // fixme string resource
+            HomeUiState.Error(
+                exception.message ?: stringResolver.findString(string.general_error_message)
+            )
         }
     }
 

@@ -1,4 +1,4 @@
-package com.reza.feature.home.data.di
+package com.reza.feature.home.di
 
 import com.reza.feature.home.data.datasource.remote.ContinentRemoteDataSource
 import com.reza.feature.home.data.datasource.remote.DefaultContinentRemoteDataSource

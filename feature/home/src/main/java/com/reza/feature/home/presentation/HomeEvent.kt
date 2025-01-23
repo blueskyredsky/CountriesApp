@@ -7,8 +7,6 @@ sealed interface HomeEvent {
 
     /**
      * Represents an event to fetch or refresh the list of continents.
-     *
-     * @property isRefreshing Indicates whether the data is being refreshed. Defaults to `false`.
      */
     data class GetContinents(val isRefreshing: Boolean = false) : HomeEvent
 

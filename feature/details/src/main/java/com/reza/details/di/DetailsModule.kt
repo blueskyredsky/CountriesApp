@@ -1,9 +1,11 @@
-package com.reza.details.data.di
+package com.reza.details.di
 
 import com.reza.details.data.datasource.remote.CountriesRemoteDataSource
 import com.reza.details.data.datasource.remote.DefaultCountriesRemoteDataSource
 import com.reza.details.data.repository.DefaultCountriesRepository
 import com.reza.details.domain.repository.CountriesRepository
+import com.reza.details.domain.usecase.CountriesUseCase
+import com.reza.details.domain.usecase.DefaultCountriesUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.Reusable
@@ -24,4 +26,10 @@ abstract class DetailsModule {
     internal abstract fun bindCountriesRepository(
         defaultCountriesRepository: DefaultCountriesRepository
     ): CountriesRepository
+
+    @Binds
+    @Reusable
+    internal abstract fun bindCountriesUseCase(
+        defaultCountriesUseCase: DefaultCountriesUseCase
+    ): CountriesUseCase
 }

@@ -3,6 +3,7 @@ package com.reza.feature.home.presentation
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import com.reza.common.domain.model.ResultState
+import com.reza.common.util.stringresolver.StringResolver
 import com.reza.feature.home.domain.model.Continent
 import com.reza.feature.home.domain.usecase.ContinentImageUseCase
 import com.reza.feature.home.domain.usecase.ContinentsUseCase
@@ -25,6 +26,7 @@ class HomeViewModelTest {
 
     private val continentsUseCase = mockk<ContinentsUseCase>()
     private val continentImageUseCase = mockk<ContinentImageUseCase>()
+    private val stringResolver = mockk<StringResolver>()
 
     private lateinit var viewModel: HomeViewModel
 
@@ -32,7 +34,8 @@ class HomeViewModelTest {
     fun setup() {
         viewModel = HomeViewModel(
             continentsUseCase = continentsUseCase,
-            continentsImageUseCase = continentImageUseCase
+            continentsImageUseCase = continentImageUseCase,
+            stringResolver = stringResolver
         )
     }
 
@@ -150,21 +153,22 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun homeViewModel_onGetContinents_shouldNotCallApiAgain_whenHomeUiStateIsAlreadySuccess() = runTest {
-        // Given
-        every { continentImageUseCase.findContinentImage(any<String>()) } answers { -1 }
-        viewModel.setHomeUiStateToSuccess(ResultState.Success(Continent.LIST_OF_CONTINENTS))
+    fun homeViewModel_onGetContinents_shouldNotCallApiAgain_whenHomeUiStateIsAlreadySuccess() =
+        runTest {
+            // Given
+            every { continentImageUseCase.findContinentImage(any<String>()) } answers { -1 }
+            viewModel.setHomeUiStateToSuccess(ResultState.Success(Continent.LIST_OF_CONTINENTS))
 
-        // When
-        viewModel.onEvent(HomeEvent.GetContinents())
+            // When
+            viewModel.onEvent(HomeEvent.GetContinents())
 
-        // Then
-        viewModel.homeUiState.test {
-            val expectedState = awaitItem()
-            assertThat(expectedState).isNotInstanceOf(HomeUiState.Loading::class.java)
-            assertThat(expectedState).isInstanceOf(HomeUiState.Success::class.java)
+            // Then
+            viewModel.homeUiState.test {
+                val expectedState = awaitItem()
+                assertThat(expectedState).isNotInstanceOf(HomeUiState.Loading::class.java)
+                assertThat(expectedState).isInstanceOf(HomeUiState.Success::class.java)
 
-            cancelAndIgnoreRemainingEvents()
+                cancelAndIgnoreRemainingEvents()
+            }
         }
-    }
 }

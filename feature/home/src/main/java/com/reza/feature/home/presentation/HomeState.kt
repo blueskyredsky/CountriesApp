@@ -26,16 +26,12 @@ sealed interface HomeUiState {
 
     /**
      * Represents the success state. This state is immutable, meaning its properties cannot be changed after it is created.
-     *
-     * @property continents The list of [ContinentView]s to display.
      */
     @Immutable
     data class Success(val continents: List<ContinentView>) : HomeUiState
 
     /**
      * Represents the error state.
-     *
-     * @property errorMessage The error message to display.
      */
     data class Error(val errorMessage: String?) : HomeUiState
 
@@ -80,9 +76,6 @@ sealed interface HomeLoadingState {
  * Represents a view of a continent.
  *
  * This data class holds information about a continent, including its name and an associated image resource.
- *
- * @property continent The [Continent] object representing the continent.
- * @property imageResource The image resource ID associated with the continent.
  */
 data class ContinentView(
     val continent: Continent,

@@ -6,7 +6,7 @@ import com.reza.details.domain.model.Country
 /**
  * A repository interface for retrieving country data.
  */
-interface CountriesRepository {
+internal interface CountriesRepository {
     /**
      * Retrieves a list of countries for a given continent code.
      */
