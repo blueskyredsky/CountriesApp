@@ -1,19 +1,17 @@
 package com.reza.details.presentation
 
+import androidx.compose.runtime.Immutable
 import com.reza.details.domain.model.Country
 
 /**
  * Represents the UI state for the details screen.
- *
- * This sealed interface defines the different states that the details screen can be in,
- * such as success, error, empty, and loading.
  */
 sealed interface DetailsUiState {
 
     /**
      * Represents the success state, where the list of countries is available.
      */
-    @androidx.compose.runtime.Immutable
+    @Immutable
     data class Success(val continents: List<Country>) : DetailsUiState
 
     /**

@@ -22,8 +22,8 @@ fun AppNavGraph(
         navController = navController,
         startDestination = HOME
     ) {
-        home {
-            val route = "$DETAIL/${it.code}"
+        home { continent ->
+            val route = "$DETAIL/${continent.code}"
             navController.navigate(route = route)
         }
 
