@@ -47,6 +47,7 @@ horologist-compose-tools = "0.4.8"
 horologist-tiles = "0.4.8"
 watchface-complications-data-source-ktx = "1.1.1"
 runner = "1.6.1"
+jetbrains-kotlin-jvm = "1.9.23"
 
 [libraries]
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
@@ -117,5 +118,6 @@ com-android-test = { id = "com.android.test", version.ref = "com-android-applica
 com-android-library = { id = "com.android.library", version.ref = "com-android-application" }
 org-jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "org-jetbrains-kotlin-android" }
 apollo = { id = "com.apollographql.apollo", version.ref = "apollo" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrains-kotlin-jvm" }
 
 [bundles]
