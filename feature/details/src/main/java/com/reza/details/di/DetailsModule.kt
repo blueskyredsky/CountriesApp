@@ -15,6 +15,7 @@ import dagger.hilt.android.components.ActivityRetainedComponent
 @Module
 @InstallIn(ActivityRetainedComponent::class)
 abstract class DetailsModule {
+
     @Binds
     @Reusable
     internal abstract fun bindCountriesRemoteDataSource(

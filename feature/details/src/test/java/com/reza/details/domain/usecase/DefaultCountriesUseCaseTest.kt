@@ -27,7 +27,17 @@ class DefaultCountriesUseCaseTest {
     @Test
     fun `should return success with data when calling get countries`() = runTest {
         // Given
-        val sampleCountries = listOf(Country(name = "", emoji = "", currency = "", capital = "", phone = "", states = emptyList(), languages = emptyList()))
+        val sampleCountries = listOf(
+            Country(
+                name = "",
+                emoji = "",
+                currency = "",
+                capital = "",
+                phone = "",
+                states = emptyList(),
+                languages = emptyList()
+            )
+        )
         Mockito.`when`(repository.getCountries("")).thenReturn(ResultState.Success(sampleCountries))
 
         // When
