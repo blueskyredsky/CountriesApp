@@ -4,14 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import com.reza.countriesapp.presentation.details.DetailsScreen
+import com.reza.common.util.navigation.CONTINENT_CODE
+import com.reza.common.util.navigation.NavigationRoute
 import com.reza.details.presentation.navigation.details
 import com.reza.feature.home.presentation.navigation.home
-
-private const val HOME = "home"
-const val CONTINENT_CODE = "continentCode"
-private const val DETAIL = "detail"
 
 @Composable
 fun AppNavGraph(
@@ -21,24 +17,22 @@ fun AppNavGraph(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = HOME
+        startDestination = NavigationRoute.HOME.route
     ) {
-        // todo think of using an inner navigation graph
         home { continent ->
-            val route = "$DETAIL/${continent.code}"
+            val route = NavigationRoute.DETAIL.route.replace(CONTINENT_CODE, continent.code)
             navController.navigate(route = route)
         }
 
-        // todo working on connecting details
-        //details()
+        details()
 
-        composable("$DETAIL/{$CONTINENT_CODE}") { backStackEntry ->
+        /*composable("$DETAIL/{$CONTINENT_CODE}") { backStackEntry ->
             DetailsScreen(
                 continentCode = backStackEntry.arguments?.getString(CONTINENT_CODE),
                 onBackClick = {
                     navController.navigateUp()
                 }
             )
-        }
+        }*/
     }
 }
