@@ -3,65 +3,47 @@ package com.reza.details.presentation
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.reza.common.R
+import com.reza.common.domain.model.ResultState
 import com.reza.common.util.navigation.CONTINENT_CODE
+import com.reza.common.util.stringresolver.StringResolver
 import com.reza.details.domain.usecase.CountriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
 internal class DetailsViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
-    private val countriesUseCase: CountriesUseCase
+    savedStateHandle: SavedStateHandle,
+    private val countriesUseCase: CountriesUseCase,
+    private val stringResolver: StringResolver
 ) : ViewModel() {
 
-    private val _detailsUiState = MutableStateFlow<DetailsUiState>(DetailsUiState.Empty)
-    val detailsUiState = _detailsUiState.asStateFlow()
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val countries =
+        savedStateHandle.getStateFlow<String?>(key = CONTINENT_CODE, initialValue = null)
+            .flatMapLatest { countryCode ->
+                if (countryCode == null) {
+                    flowOf(DetailsUiState.Error(stringResolver.findString(R.string.general_error_message)))
+                } else {
+                    val result = when (val result = countriesUseCase.getCountries(countryCode)) {
+                        is ResultState.Success -> {
+                            DetailsUiState.Success(result.data)
+                        }
 
-    private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
-        _detailsUiState.update {
-            DetailsUiState.Error(
-                errorMessage = exception.message ?: "Something went wrong, please try again!"
-            )
-        }
-    }
-
-    private fun getCountries() {
-        savedStateHandle.get<String>(CONTINENT_CODE)?.let { code ->
-            viewModelScope.launch(exceptionHandler) {
-                // Loading state
-                /*_detailsState.update { state ->
-                    state.copy(
-                        isLoading = true
-                    )
+                        is ResultState.Failure -> {
+                            DetailsUiState.Error(result.error)
+                        }
+                    }
+                    flowOf(result)
                 }
-
-                when (val result = countriesUseCase.getCountries(code)) {
-                    is ResultState.Success -> {
-                        _detailsState.update { state ->
-                            state.copy(
-                                countries = result.data,
-                                isLoading = false,
-                                errorMessage = null
-                            )
-                        }
-                    }
-
-                    is ResultState.Failure -> {
-                        _detailsState.update { state ->
-                            state.copy(
-                                countries = null,
-                                isLoading = false,
-                                errorMessage = result.error
-                            )
-                        }
-                    }
-                }*/
-            }
-        }
-    }
+            }.stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = DetailsUiState.Loading,
+            )
 }
