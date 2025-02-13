@@ -108,7 +108,7 @@ internal fun ContinentsScreen(
                             targetState.errorMessage?.let { errorMessage ->
                                 screenState.showSnackBar(
                                     message = errorMessage,
-                                    actionLabel = stringResource(R.string.retry),
+                                    actionLabel = stringResource(com.reza.common.R.string.retry),
                                     resultCallback = { result ->
                                         when (result) {
                                             SnackbarResult.ActionPerformed ->
