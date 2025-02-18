@@ -26,7 +26,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.reza.details.R
 import com.reza.systemdesign.ui.common.LoadingItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

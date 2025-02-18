@@ -27,9 +27,6 @@ internal class HomeViewModel @Inject constructor(
     private val _homeUiState = MutableStateFlow<HomeUiState>(HomeUiState.Empty)
     val homeUiState = _homeUiState.asStateFlow()
 
-    private val _homeLoadingState = MutableStateFlow<HomeLoadingState>(HomeLoadingState.Idle)
-    val homeLoadingState = _homeLoadingState.asStateFlow()
-
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
         _homeUiState.update {
             HomeUiState.Error(
@@ -43,32 +40,18 @@ internal class HomeViewModel @Inject constructor(
             if (_homeUiState.value !is HomeUiState.Success || isRefreshing) { // to avoid calling api again when navigating back to homeScreen
                 // Loading state
                 if (isRefreshing) {
-                    _homeLoadingState.update {
-                        HomeLoadingState.Refreshing
-                    }
+                    _homeUiState.value = HomeUiState.Refreshing
                 } else {
-                    _homeLoadingState.update {
-                        HomeLoadingState.Loading
-                    }
-                }
-
-                _homeUiState.update {
-                    HomeUiState.Loading
+                    _homeUiState.value = HomeUiState.Loading
                 }
 
                 // Getting continents
                 when (val result = continentsUseCase.getContinents()) {
                     is ResultState.Success -> {
-                        _homeLoadingState.update {
-                            HomeLoadingState.Idle
-                        }
                         setHomeUiStateToSuccess(result)
                     }
 
                     is ResultState.Failure -> {
-                        _homeLoadingState.update {
-                            HomeLoadingState.Idle
-                        }
                         setHomeUiStateToError(result)
                     }
                 }

@@ -49,7 +49,6 @@ internal fun ContinentsScreen(
     onSelectContinent: (Continent) -> Unit
 ) {
     val homeUiState by viewModel.homeUiState.collectAsStateWithLifecycle()
-    val homeLoadingState by viewModel.homeLoadingState.collectAsStateWithLifecycle()
     val screenState = rememberHomeScreenState()
 
     LaunchedEffect(Unit) {
@@ -72,7 +71,7 @@ internal fun ContinentsScreen(
             val state = rememberPullToRefreshState()
             PullToRefreshBox(
                 state = state,
-                isRefreshing = homeLoadingState == HomeLoadingState.Refreshing,
+                isRefreshing = homeUiState == HomeUiState.Refreshing,
                 onRefresh = {
                     viewModel.onEvent(HomeEvent.GetContinents(true))
                 },
@@ -82,7 +81,7 @@ internal fun ContinentsScreen(
                 indicator = {
                     Indicator(
                         modifier = Modifier.align(Alignment.TopCenter),
-                        isRefreshing = homeLoadingState == HomeLoadingState.Refreshing,
+                        isRefreshing = homeUiState == HomeUiState.Refreshing,
                         containerColor = MaterialTheme.colorScheme.primaryContainer,
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
                         state = state
@@ -123,7 +122,12 @@ internal fun ContinentsScreen(
                             }
                         }
 
-                        HomeUiState.Loading -> Unit
+                        HomeUiState.Loading -> {
+                            // todo
+                        }
+                        HomeUiState.Refreshing -> {
+                            // todo
+                        }
                     }
                 }
             }

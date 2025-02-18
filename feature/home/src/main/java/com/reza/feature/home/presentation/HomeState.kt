@@ -13,15 +13,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.annotation.concurrent.Immutable
 
-/**
- * Represents the UI state of the Home screen.
- *
- * This sealed interface defines the different states that the Home screen can be in:
- * - **Loading:** Indicates that data is being loaded.
- * - **Success:** Indicates that data has been loaded successfully and displays a list of [ContinentView]s. This state is immutable.
- * - **Error:** Indicates that an error occurred while loading data and displays an error message.
- * - **Empty:** Indicates that there is no data to display.
- */
 sealed interface HomeUiState {
 
     /**
@@ -44,32 +35,11 @@ sealed interface HomeUiState {
      * Represents the loading state.
      */
     data object Loading : HomeUiState
-}
-
-/**
- * Represents the loading state of the Home screen.
- *
- * This sealed interface defines the different loading states that the Home screen can be in:
- * - **Idle:** Indicates that the screen is not currently loading any data.
- * - **Loading:** Indicates that the screen is loading data for the first time.
- * - **Refreshing:** Indicates that the screen is refreshing existing data.
- */
-sealed interface HomeLoadingState {
 
     /**
-     * Represents the idle state, where the screen is not loading any data.
+     * Represents the refreshing state.
      */
-    data object Idle : HomeLoadingState
-
-    /**
-     * Represents the loading state, where the screen is loading data for the first time.
-     */
-    data object Loading : HomeLoadingState
-
-    /**
-     * Represents the refreshing state, where the screen is refreshing existing data.
-     */
-    data object Refreshing : HomeLoadingState
+    data object Refreshing : HomeUiState
 }
 
 /**
