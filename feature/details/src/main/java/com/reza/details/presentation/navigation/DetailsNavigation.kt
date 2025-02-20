@@ -12,6 +12,8 @@ fun NavGraphBuilder.details() {
         val viewModel = hiltViewModel<DetailsViewModel>(backStackEntry)
         DetailsScreen(
             viewModel = viewModel
-        )
+        ) {
+
+        }
     }
 }

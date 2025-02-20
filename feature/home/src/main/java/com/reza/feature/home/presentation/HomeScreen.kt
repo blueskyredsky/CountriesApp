@@ -40,6 +40,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.reza.countriesapp.ui.theme.CountriesAppTheme
 import com.reza.feature.home.R
 import com.reza.feature.home.domain.model.Continent
+import com.reza.systemdesign.ui.common.ShimmerLazyColumn
 import com.reza.systemdesign.ui.util.Constants
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -123,7 +124,7 @@ internal fun ContinentsScreen(
                         }
 
                         HomeUiState.Loading -> {
-                            // todo
+                            ShimmerLazyColumn()
                         }
                         HomeUiState.Refreshing -> {
                             // todo

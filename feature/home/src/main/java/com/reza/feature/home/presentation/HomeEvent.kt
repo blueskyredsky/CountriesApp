@@ -1,8 +1,5 @@
 package com.reza.feature.home.presentation
 
-/**
- * Represents the events that can occur on the Home screen.
- */
 sealed interface HomeEvent {
 
     /**

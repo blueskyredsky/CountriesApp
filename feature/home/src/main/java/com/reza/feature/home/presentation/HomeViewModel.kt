@@ -37,7 +37,7 @@ internal class HomeViewModel @Inject constructor(
 
     private fun getContinents(isRefreshing: Boolean = false) {
         viewModelScope.launch(exceptionHandler) {
-            if (_homeUiState.value !is HomeUiState.Success || isRefreshing) { // to avoid calling api again when navigating back to homeScreen
+            if (_homeUiState.value !is HomeUiState.Success || isRefreshing) { // to avoid calling api again when navigating back to HomeScreen
                 // Loading state
                 if (isRefreshing) {
                     _homeUiState.value = HomeUiState.Refreshing

@@ -7,8 +7,6 @@ import com.reza.common.util.stringresolver.StringResolver
 import com.reza.feature.home.domain.model.Continent
 import com.reza.feature.home.domain.usecase.ContinentImageUseCase
 import com.reza.feature.home.domain.usecase.ContinentsUseCase
-import com.reza.feature.home.domain.usecase.TestContinentImageUseCase
-import com.reza.feature.home.domain.usecase.TestContinentUseCase
 import com.reza.unit.util.MainDispatcherRule
 import io.mockk.coEvery
 import io.mockk.every
