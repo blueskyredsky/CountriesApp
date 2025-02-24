@@ -126,9 +126,7 @@ internal fun ContinentsScreen(
                         HomeUiState.Loading -> {
                             ShimmerLazyColumn()
                         }
-                        HomeUiState.Refreshing -> {
-                            // todo
-                        }
+                        HomeUiState.Refreshing -> Unit
                     }
                 }
             }

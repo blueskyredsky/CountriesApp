@@ -7,18 +7,19 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
@@ -35,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import com.reza.countriesapp.ui.theme.CountriesAppTheme
 import com.reza.systemdesign.ui.util.Constants
 
+// fixme should be modified based on design system
 @Composable
 fun ShimmerLazyColumn() {
     LazyColumn(
@@ -50,45 +52,29 @@ fun ShimmerLazyColumn() {
 fun ShimmerItem(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
+            .padding(start = 16.dp, end = 16.dp, top = 16.dp)
             .fillMaxWidth()
-            .height(120.dp),
-        horizontalArrangement = Arrangement.spacedBy(
-            space = 16.dp,
-            alignment = Alignment.CenterHorizontally
-        ),
+            .border(1.dp, Color.LightGray, RoundedCornerShape(10.dp)),
+        horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Spacer(modifier = Modifier.width(16.dp))
         ShimmerEffect(
             Modifier
-                .size(80.dp)
-                .background(Color.LightGray, shape = RoundedCornerShape(50))
+                .weight(1f)
+                .padding(8.dp)
+                .height(28.dp)
+                .clip(RoundedCornerShape(20.dp))
+                .background(Color.LightGray)
         )
 
-        Column(
-            modifier = Modifier
-                .weight(0.7f)
-                .height(60.dp)
-                .padding(end = 20.dp)
-        ) {
-            ShimmerEffect(
-                Modifier
-                    .width(320.dp)
-                    .height(20.dp)
-                    .clip(RoundedCornerShape(20.dp))
-                    .background(Color.LightGray)
-            )
+        Spacer(modifier = Modifier.width(16.dp))
 
-            Spacer(modifier = Modifier.height(12.dp))
-
-            ShimmerEffect(
-                Modifier
-                    .width(100.dp)
-                    .height(20.dp)
-                    .clip(RoundedCornerShape(20.dp))
-                    .background(Color.LightGray)
-            )
-        }
+        ShimmerEffect(
+            Modifier
+                .size(48.dp)
+                .padding(8.dp)
+                .background(Color.LightGray, shape = RoundedCornerShape(50))
+        )
     }
 }
 
