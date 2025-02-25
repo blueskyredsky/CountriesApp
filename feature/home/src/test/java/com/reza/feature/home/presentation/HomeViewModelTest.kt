@@ -38,9 +38,8 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun homeViewModel_initialState_is_emptyAndIdle() = runTest {
+    fun homeViewModel_initialState_is_empty() = runTest {
         assertThat(HomeUiState.Empty).isEqualTo(viewModel.homeUiState.value)
-        assertThat(HomeLoadingState.Idle).isEqualTo(viewModel.homeLoadingState.value)
     }
 
     @Test
@@ -59,6 +58,7 @@ class HomeViewModelTest {
         viewModel.homeUiState.test {
             val loadingState = awaitItem()
             assertThat(loadingState).isInstanceOf(HomeUiState.Loading::class.java)
+            assertThat(loadingState).isNotInstanceOf(HomeUiState.Refreshing::class.java)
 
             val successState = awaitItem()
             assertThat(successState).isInstanceOf(HomeUiState.Success::class.java)
@@ -92,54 +92,6 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun homeViewModel_onGetContinents_showsLoadingAndIdleStates_whenIsNotRefreshing() = runTest {
-        // Given
-        coEvery { continentsUseCase.getContinents() } coAnswers {
-            delay(1L)
-            ResultState.Success(Continent.LIST_OF_CONTINENTS)
-        }
-        every { continentImageUseCase.findContinentImage(any<String>()) } answers { -1 }
-
-        // When
-        viewModel.onEvent(HomeEvent.GetContinents())
-
-        // Them
-        viewModel.homeLoadingState.test {
-            val loadingState = awaitItem()
-            assertThat(loadingState).isEqualTo(HomeLoadingState.Loading)
-
-            val idleState = awaitItem()
-            assertThat(idleState).isEqualTo(HomeLoadingState.Idle)
-
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
-
-    @Test
-    fun homeViewModel_onGetContinents_showsRefreshingAndIdleStates_whenIsRefreshing() = runTest {
-        // Given
-        coEvery { continentsUseCase.getContinents() } coAnswers {
-            delay(1L)
-            ResultState.Success(Continent.LIST_OF_CONTINENTS)
-        }
-        every { continentImageUseCase.findContinentImage(any<String>()) } answers { -1 }
-
-        // When
-        viewModel.onEvent(HomeEvent.GetContinents(true))
-
-        // Then
-        viewModel.homeLoadingState.test {
-            val loadingState = awaitItem()
-            assertThat(loadingState).isEqualTo(HomeLoadingState.Refreshing)
-
-            val idleState = awaitItem()
-            assertThat(idleState).isEqualTo(HomeLoadingState.Idle)
-
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
-
-    @Test
     fun homeViewModel_onConsumeErrorMessage_showsErrorStateWithNullMessage() = runTest {
         // Given
 
@@ -165,6 +117,59 @@ class HomeViewModelTest {
                 val expectedState = awaitItem()
                 assertThat(expectedState).isNotInstanceOf(HomeUiState.Loading::class.java)
                 assertThat(expectedState).isInstanceOf(HomeUiState.Success::class.java)
+
+                cancelAndIgnoreRemainingEvents()
+            }
+        }
+
+    @Test
+    fun homeViewModel_onGetContinents_shouldCallApiAgain_whenHomeUiStateIsAlreadyError() =
+        runTest {
+            // Given
+            coEvery { continentsUseCase.getContinents() } coAnswers {
+                delay(1L)
+                ResultState.Success(Continent.LIST_OF_CONTINENTS)
+            }
+            every { continentImageUseCase.findContinentImage(any<String>()) } answers { -1 }
+            viewModel.setHomeUiStateToError(ResultState.Failure(""))
+
+            // When
+            viewModel.onEvent(HomeEvent.GetContinents())
+
+            // Then
+            viewModel.homeUiState.test {
+                val loadingState = awaitItem()
+                assertThat(loadingState).isInstanceOf(HomeUiState.Loading::class.java)
+
+                val successState = awaitItem()
+                assertThat(successState).isInstanceOf(HomeUiState.Success::class.java)
+
+                cancelAndIgnoreRemainingEvents()
+            }
+        }
+
+    @Test
+    fun homeViewModel_onGetContinents_shouldCallApiAgain_whenHomeUiStateIsSuccessAndIsRefreshingIsTrue() =
+        runTest {
+            // Given
+            coEvery { continentsUseCase.getContinents() } coAnswers {
+                delay(1L)
+                ResultState.Success(Continent.LIST_OF_CONTINENTS)
+            }
+            every { continentImageUseCase.findContinentImage(any<String>()) } answers { -1 }
+            viewModel.setHomeUiStateToSuccess(ResultState.Success(Continent.LIST_OF_CONTINENTS))
+
+            // When
+            viewModel.onEvent(HomeEvent.GetContinents(isRefreshing = true))
+
+            // Then
+            viewModel.homeUiState.test {
+                val refreshState = awaitItem()
+                assertThat(refreshState).isInstanceOf(HomeUiState.Refreshing::class.java)
+                assertThat(refreshState).isNotInstanceOf(HomeUiState.Loading::class.java)
+
+                val successState = awaitItem()
+                assertThat(successState).isInstanceOf(HomeUiState.Success::class.java)
 
                 cancelAndIgnoreRemainingEvents()
             }
