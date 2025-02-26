@@ -24,15 +24,8 @@ fun AppNavGraph(
             navController.navigate(route = route)
         }
 
-        details()
-
-        /*composable("$DETAIL/{$CONTINENT_CODE}") { backStackEntry ->
-            DetailsScreen(
-                continentCode = backStackEntry.arguments?.getString(CONTINENT_CODE),
-                onBackClick = {
-                    navController.navigateUp()
-                }
-            )
-        }*/
+        details {
+            navController.navigateUp()
+        }
     }
 }

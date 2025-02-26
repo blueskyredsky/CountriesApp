@@ -7,13 +7,12 @@ import com.reza.common.util.navigation.NavigationRoute
 import com.reza.details.presentation.DetailsScreen
 import com.reza.details.presentation.DetailsViewModel
 
-fun NavGraphBuilder.details() {
+fun NavGraphBuilder.details(onBackClick: () -> Unit) {
     composable(NavigationRoute.DETAIL.route) { backStackEntry ->
         val viewModel = hiltViewModel<DetailsViewModel>(backStackEntry)
         DetailsScreen(
-            viewModel = viewModel
-        ) {
-
-        }
+            viewModel = viewModel,
+            onBackClick = onBackClick
+        )
     }
 }

@@ -18,7 +18,7 @@ android {
 
     defaultConfig {
         minSdk = 24
-        targetSdk = 34
+        lint.targetSdk = 34
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         // This way, the :macrobenchmark module is able to only build and benchmark the production product flavor

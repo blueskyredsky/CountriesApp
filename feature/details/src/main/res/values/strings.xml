@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="currency">Currency</string>
+    <string name="capital">Capital</string>
+    <string name="phone">Phone</string>
+</resources>

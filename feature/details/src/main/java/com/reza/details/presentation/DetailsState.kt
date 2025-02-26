@@ -12,7 +12,7 @@ sealed interface DetailsUiState {
      * Represents the success state, where the list of countries is available.
      */
     @Immutable
-    data class Success(val continents: List<Country>) : DetailsUiState
+    data class Success(val countries: List<Country>) : DetailsUiState
 
     /**
      * Represents the error state, where an error occurred while fetching the data.
