@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.hilt.android)
     kotlin("kapt") // todo change that to alias
     id("kotlin-parcelize") // todo change that to alias
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -71,6 +72,9 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.kapt)
     implementation(libs.hilt.navigation.compose)
+
+    // serialisation
+    implementation(libs.kotlinx.serialization.json)
 
     // ui test
     androidTestImplementation(libs.ui.test.junit4)

@@ -1,6 +1,6 @@
 package com.reza.countriesapp.factory
 
-import com.reza.countriesapp.domain.model.Continent
+import com.reza.feature.home.domain.model.Continent
 
 object ContinentFactory {
 

@@ -2,7 +2,6 @@
 com-android-application = "8.8.0"
 firebase-bom = "33.0.0"
 javax-inject = "1"
-org-jetbrains-kotlin-android = "1.9.23"
 core-ktx = "1.12.0"
 junit = "4.13.2"
 androidx-test-ext-junit = "1.1.5"
@@ -13,7 +12,7 @@ compose-bom = "2024.12.01"
 hilt-android = "2.51.1"
 hilt-navigation-compose = "1.1.0"
 hilt-test = "2.44"
-navigation-compose = "2.7.6"
+navigation-compose = "2.8.5"
 coil = "2.4.0"
 accompanist = "0.31.0-alpha"
 coroutines-test = "1.7.3"
@@ -46,7 +45,8 @@ horologist-compose-tools = "0.4.8"
 horologist-tiles = "0.4.8"
 watchface-complications-data-source-ktx = "1.1.1"
 runner = "1.6.1"
-jetbrains-kotlin-jvm = "1.9.23"
+kotlin = "1.9.23"
+kotlinxSerializationJson = "1.8.0"
 
 [libraries]
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
@@ -106,16 +106,18 @@ horologist-compose-tools = { group = "com.google.android.horologist", name = "ho
 horologist-tiles = { group = "com.google.android.horologist", name = "horologist-tiles", version.ref = "horologist-tiles" }
 androidx-watchface-complications-data-source-ktx = { group = "androidx.wear.watchface", name = "watchface-complications-data-source-ktx", version.ref = "watchface-complications-data-source-ktx" }
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "com-android-application" }
-org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }
+org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt-android" }
 com-android-test = { id = "com.android.test", version.ref = "com-android-application" }
 com-android-library = { id = "com.android.library", version.ref = "com-android-application" }
-org-jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "org-jetbrains-kotlin-android" }
+org-jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 apollo = { id = "com.apollographql.apollo", version.ref = "apollo" }
-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrains-kotlin-jvm" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 
 [bundles]

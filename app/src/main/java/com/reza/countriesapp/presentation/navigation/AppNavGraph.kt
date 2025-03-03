@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import com.reza.common.util.navigation.CONTINENT_CODE
 import com.reza.common.util.navigation.NavigationRoute
 import com.reza.details.presentation.navigation.details
-import com.reza.feature.home.presentation.navigation.home
+import com.reza.feature.home.presentation.navigation.homeSection
 
 @Composable
 fun AppNavGraph(
@@ -19,7 +19,7 @@ fun AppNavGraph(
         navController = navController,
         startDestination = NavigationRoute.HOME.route
     ) {
-        home { continent ->
+        homeSection { continent ->
             val route = NavigationRoute.DETAIL.route.replace(CONTINENT_CODE, continent.code)
             navController.navigate(route = route)
         }
