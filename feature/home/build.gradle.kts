@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.compose.lifecycle)
     implementation(libs.material3)
     implementation(libs.material)
+    implementation(libs.navigation.compose)
     debugImplementation(libs.ui.tooling)
     implementation(libs.ui.tooling.preview)
 

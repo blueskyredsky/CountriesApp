@@ -3,17 +3,17 @@ package com.reza.feature.home.presentation.navigation
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
+import androidx.navigation.navigation
 import com.reza.feature.home.domain.model.Continent
 import com.reza.feature.home.presentation.ContinentsScreen
 import com.reza.feature.home.presentation.HomeViewModel
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object HomeRoute
+data object HomeRoute // route to home screen
 
 @Serializable
-data object HomeBaseRoute
+data object HomeBaseRoute // route to base navigation graph
 
 fun NavGraphBuilder.homeSection(onSelectContinent: (Continent) -> Unit) {
     navigation<HomeBaseRoute>(startDestination = HomeRoute) {
