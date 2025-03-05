@@ -8,6 +8,7 @@ plugins {
     kotlin("kapt")
     id("kotlin-parcelize")
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -96,9 +97,7 @@ android {
     sourceSets {
         getByName("androidTest").assets.srcDirs("src/debug/assets")
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.13"
-    }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"

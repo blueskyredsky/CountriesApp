@@ -44,7 +44,7 @@ horologist-compose-tools = "0.4.8"
 horologist-tiles = "0.4.8"
 watchface-complications-data-source-ktx = "1.1.1"
 runner = "1.6.1"
-kotlin = "1.9.23"
+kotlin = "2.1.0"
 kotlinxSerializationJson = "1.8.0"
 
 [libraries]
@@ -117,6 +117,7 @@ org-jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "k
 apollo = { id = "com.apollographql.apollo", version.ref = "apollo" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 
 [bundles]
