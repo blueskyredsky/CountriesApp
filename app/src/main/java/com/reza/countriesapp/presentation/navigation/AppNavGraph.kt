@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.reza.common.util.navigation.CONTINENT_CODE
 import com.reza.common.util.navigation.NavigationRoute
-import com.reza.details.presentation.navigation.details
+import com.reza.details.presentation.navigation.detailsSection
 import com.reza.feature.home.presentation.navigation.HomeBaseRoute
 import com.reza.feature.home.presentation.navigation.homeSection
 
@@ -25,7 +25,7 @@ fun AppNavGraph(
             navController.navigate(route = route)
         }
 
-        details {
+        detailsSection {
             navController.navigateUp()
         }
     }

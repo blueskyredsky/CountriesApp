@@ -3,12 +3,15 @@ package com.reza.details.presentation.navigation
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.reza.common.util.navigation.NavigationRoute
 import com.reza.details.presentation.DetailsScreen
 import com.reza.details.presentation.DetailsViewModel
+import kotlinx.serialization.Serializable
 
-fun NavGraphBuilder.details(onBackClick: () -> Unit) {
-    composable(NavigationRoute.DETAIL.route) { backStackEntry ->
+@Serializable
+data class DetailsRoute(val contentId: String? = null) // route to details screen
+
+fun NavGraphBuilder.detailsSection(onBackClick: () -> Unit) {
+    composable<DetailsRoute> { backStackEntry ->
         val viewModel = hiltViewModel<DetailsViewModel>(backStackEntry)
         DetailsScreen(
             viewModel = viewModel,

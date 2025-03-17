@@ -1,6 +1,7 @@
 package com.reza.feature.home.presentation.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
@@ -13,7 +14,7 @@ import kotlinx.serialization.Serializable
 data object HomeRoute // route to home screen
 
 @Serializable
-data object HomeBaseRoute // route to base navigation graph
+data object HomeBaseRoute // route to home base navigation graph
 
 fun NavGraphBuilder.homeSection(onSelectContinent: (Continent) -> Unit) {
     navigation<HomeBaseRoute>(startDestination = HomeRoute) {
@@ -25,4 +26,8 @@ fun NavGraphBuilder.homeSection(onSelectContinent: (Continent) -> Unit) {
             )
         }
     }
+}
+
+fun NavController.navigateToDetails() {
+
 }
