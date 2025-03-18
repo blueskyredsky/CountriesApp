@@ -1,11 +1,9 @@
 package com.reza.details.presentation
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.reza.common.R
 import com.reza.common.domain.model.ResultState
-import com.reza.common.util.navigation.CONTINENT_CODE
 import com.reza.common.util.stringresolver.StringResolver
 import com.reza.details.domain.usecase.CountriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,16 +18,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class DetailsViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val countriesUseCase: CountriesUseCase,
     private val stringResolver: StringResolver
 ) : ViewModel() {
 
     private val refreshTrigger = MutableStateFlow(Unit)
 
+    private val continentCode = MutableStateFlow<String?>(null)
+
     @OptIn(ExperimentalCoroutinesApi::class)
     val detailsUiState = combine(
-        savedStateHandle.getStateFlow<String?>(key = CONTINENT_CODE, initialValue = null),
+        continentCode,
         refreshTrigger
     ) { countryCode, _ ->
         countryCode
@@ -55,12 +54,16 @@ internal class DetailsViewModel @Inject constructor(
     )
 
     fun onEvent(event: DetailsEvent) {
-        when (event) {
+        when (val value = event) {
             DetailsEvent.ConsumeErrorMessage -> {
 
             }
 
-            DetailsEvent.GetCountries -> {
+            is DetailsEvent.GetCountries -> {
+                continentCode.value = value.continentCode
+            }
+
+            DetailsEvent.Refresh -> {
                 refreshTrigger.value = Unit
             }
         }

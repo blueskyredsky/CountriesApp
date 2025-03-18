@@ -33,6 +33,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -53,7 +54,14 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun DetailsScreen(viewModel: DetailsViewModel, onBackClick: () -> Unit) {
+internal fun DetailsScreen(
+    viewModel: DetailsViewModel,
+    onBackClick: () -> Unit,
+    continentCode: String
+) {
+    LaunchedEffect(key1 = continentCode) {
+       viewModel.onEvent(Getcon)
+    }
 
     val detailsUiState by viewModel.detailsUiState.collectAsStateWithLifecycle()
     val screenState = rememberDetailsScreenState()

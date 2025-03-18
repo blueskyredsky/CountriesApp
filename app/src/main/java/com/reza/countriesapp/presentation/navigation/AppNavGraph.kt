@@ -4,11 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.reza.common.util.navigation.CONTINENT_CODE
-import com.reza.common.util.navigation.NavigationRoute
-import com.reza.details.presentation.navigation.detailsSection
-import com.reza.feature.home.presentation.navigation.HomeBaseRoute
-import com.reza.feature.home.presentation.navigation.homeSection
+import com.reza.details.presentation.navigation.detailsScreen
+import com.reza.details.presentation.navigation.navigateToDetails
+import com.reza.feature.home.presentation.navigation.HomeRoute
+import com.reza.feature.home.presentation.navigation.homeScreen
 
 @Composable
 fun AppNavGraph(
@@ -18,14 +17,13 @@ fun AppNavGraph(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = HomeBaseRoute
+        startDestination = HomeRoute
     ) {
-        homeSection { continent ->
-            val route = NavigationRoute.DETAIL.route.replace(CONTINENT_CODE, continent.code)
-            navController.navigate(route = route)
+        homeScreen { continent ->
+            navController.navigateToDetails(continent.code)
         }
 
-        detailsSection {
+        detailsScreen {
             navController.navigateUp()
         }
     }
