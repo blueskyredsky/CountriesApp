@@ -60,7 +60,7 @@ internal fun DetailsScreen(
     continentCode: String
 ) {
     LaunchedEffect(key1 = continentCode) {
-       viewModel.onEvent(Getcon)
+        viewModel.onEvent(DetailsEvent.GetCountries(continentCode))
     }
 
     val detailsUiState by viewModel.detailsUiState.collectAsStateWithLifecycle()
@@ -117,7 +117,12 @@ internal fun DetailsScreen(
                                 resultCallback = { result ->
                                     when (result) {
                                         SnackbarResult.ActionPerformed ->
-                                            viewModel.onEvent(DetailsEvent.GetCountries)
+                                            viewModel.onEvent(
+                                                DetailsEvent.GetCountries(
+                                                    continentCode = continentCode,
+                                                    isRefreshing = true
+                                                )
+                                            )
 
                                         SnackbarResult.Dismissed -> {
                                             viewModel.onEvent(DetailsEvent.ConsumeErrorMessage)
@@ -135,9 +140,18 @@ internal fun DetailsScreen(
                             isRefreshing = false,
                             countries = targetState.countries,
                             onRefresh = {
-
+                                viewModel.onEvent(
+                                    DetailsEvent.GetCountries(
+                                        continentCode = continentCode,
+                                        isRefreshing = true
+                                    )
+                                )
                             }
                         )
+                    }
+
+                    DetailsUiState.Refreshing -> {
+
                     }
                 }
             }

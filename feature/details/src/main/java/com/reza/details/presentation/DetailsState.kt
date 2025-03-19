@@ -28,4 +28,10 @@ sealed interface DetailsUiState {
      * Represents the loading state, where the data is being fetched.
      */
     data object Loading : DetailsUiState
+
+    /**
+     * Represents the refreshing state, where the data is being refreshed.
+     */
+    data object Refreshing : DetailsUiState
+
 }

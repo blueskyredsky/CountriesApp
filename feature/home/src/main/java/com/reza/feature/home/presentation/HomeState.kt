@@ -29,7 +29,7 @@ sealed interface HomeUiState {
     /**
      * Represents the empty state.
      */
-    data object Empty : HomeUiState // todo: have a better error handling
+    data object Empty : HomeUiState
 
     /**
      * Represents the loading state.
