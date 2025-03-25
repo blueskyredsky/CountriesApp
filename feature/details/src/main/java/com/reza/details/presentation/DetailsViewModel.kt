@@ -46,7 +46,7 @@ internal class DetailsViewModel @Inject constructor(
                 // Getting continents
                 when (val result = countriesUseCase.getCountries(continentCode)) {
                     is ResultState.Success -> {
-                        setHomeUiStateToSuccess(result)
+                        setDetailsUiStateToSuccess(result)
                     }
 
                     is ResultState.Failure -> {
@@ -58,7 +58,7 @@ internal class DetailsViewModel @Inject constructor(
     }
 
     @VisibleForTesting
-    fun setHomeUiStateToSuccess(result: ResultState.Success<List<Country>>) {
+    fun setDetailsUiStateToSuccess(result: ResultState.Success<List<Country>>) {
         _detailsUiState.update {
             DetailsUiState.Success(result.data)
         }
