@@ -20,7 +20,7 @@ fun AppNavGraph(
         startDestination = HomeRoute
     ) {
         homeScreen { continent ->
-            navController.navigateToDetails(continent.code)
+            navController.navigateToDetails(continent = continent.name, continentCode = continent.code)
         }
 
         detailsScreen {

@@ -15,6 +15,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -38,6 +39,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -57,7 +59,8 @@ import kotlinx.coroutines.launch
 internal fun DetailsScreen(
     viewModel: DetailsViewModel,
     onBackClick: () -> Unit,
-    continentCode: String
+    continentCode: String,
+    continent: String
 ) {
     LaunchedEffect(key1 = continentCode) {
         viewModel.onEvent(DetailsEvent.GetCountries(continentCode))
@@ -74,13 +77,12 @@ internal fun DetailsScreen(
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 title = {
+                    Text(continent)
                     TextField(
-                        modifier = Modifier.fillMaxWidth(),
-                        value = "search...",
-                        onValueChange = {
-
-                        })
-                    //Text(stringResource(R.string.countries))
+                        value = "",
+                        onValueChange = {},
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
@@ -91,11 +93,11 @@ internal fun DetailsScreen(
                     }
                 },
                 actions = {
-//                    IconButton(onClick = {
-//
-//                    }) {
-//                        Icon(Icons.Default.Search, contentDescription = "search")
-//                    }
+                    IconButton(onClick = {
+                        // todo change visibility of search text filed
+                    }) {
+                        Icon(Icons.Default.Search, contentDescription = "search")
+                    }
                 }
             )
         },
@@ -151,7 +153,7 @@ internal fun DetailsScreen(
                     }
 
                     DetailsUiState.Refreshing -> {
-
+                        // todo
                     }
                 }
             }
@@ -288,10 +290,11 @@ internal class DetailsStateHolder(
     }
 }
 
+// todo update search bar visibility in the screen state
 @Composable
 internal fun rememberDetailsScreenState(
     snackBarHostState: SnackbarHostState = remember { SnackbarHostState() },
     scope: CoroutineScope = rememberCoroutineScope(),
-) = remember {
+) = rememberSaveable {
     DetailsStateHolder(scope = scope, snackBarHostState = snackBarHostState)
 }
