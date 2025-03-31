@@ -11,8 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material3.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Search
@@ -31,19 +31,24 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -53,6 +58,7 @@ import com.reza.systemdesign.ui.common.LoadingItem
 import com.reza.systemdesign.ui.util.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import kotlin.coroutines.EmptyCoroutineContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,6 +71,8 @@ internal fun DetailsScreen(
     LaunchedEffect(key1 = continentCode) {
         viewModel.onEvent(DetailsEvent.GetCountries(continentCode))
     }
+
+    val state = rememberPagerState(pageCount = { 10 })
 
     val detailsUiState by viewModel.detailsUiState.collectAsStateWithLifecycle()
     val screenState = rememberDetailsScreenState()
@@ -271,8 +279,23 @@ private fun ItemRow(
 @Stable
 internal class DetailsStateHolder(
     val snackBarHostState: SnackbarHostState,
-    private val scope: CoroutineScope
+    private val scope: CoroutineScope,
+    isSearchVisible: Boolean = false,
+    searchQuery: String = ""
 ) {
+    var isSearchVisible by mutableStateOf(isSearchVisible)
+        private set
+
+    var searchQuery by mutableStateOf(searchQuery)
+
+    fun clearSearchQuery() {
+        searchQuery = ""
+    }
+
+    fun toggleSearchVisibility() {
+        isSearchVisible = !isSearchVisible
+    }
+
     fun showSnackBar(
         message: String,
         actionLabel: String,
@@ -288,13 +311,37 @@ internal class DetailsStateHolder(
             resultCallback(result)
         }
     }
+
+    companion object {
+        fun detailsStateSaver(
+            snackBarHostState: SnackbarHostState = SnackbarHostState(),
+            scope: CoroutineScope = CoroutineScope(EmptyCoroutineContext)
+        ) = Saver<DetailsStateHolder, DetailsScreenStateBundle>(
+            save = {
+                DetailsScreenStateBundle(
+                    it.isSearchVisible,
+                    it.searchQuery,
+                )
+            },
+            restore = {
+                DetailsStateHolder(
+                    snackBarHostState,
+                    scope,
+                    it.isSearchVisible,
+                    it.searchQuery,
+                )
+            },
+        )
+    }
 }
+
+data class DetailsScreenStateBundle(val isSearchVisible: Boolean, val searchQuery: String)
 
 // todo update search bar visibility in the screen state
 @Composable
 internal fun rememberDetailsScreenState(
     snackBarHostState: SnackbarHostState = remember { SnackbarHostState() },
     scope: CoroutineScope = rememberCoroutineScope(),
-) = rememberSaveable {
+) = remember {
     DetailsStateHolder(scope = scope, snackBarHostState = snackBarHostState)
 }
