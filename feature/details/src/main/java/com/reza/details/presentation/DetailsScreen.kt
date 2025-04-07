@@ -72,8 +72,6 @@ internal fun DetailsScreen(
         viewModel.onEvent(DetailsEvent.GetCountries(continentCode))
     }
 
-    val state = rememberPagerState(pageCount = { 10 })
-
     val detailsUiState by viewModel.detailsUiState.collectAsStateWithLifecycle()
     val screenState = rememberDetailsScreenState()
 
@@ -85,15 +83,27 @@ internal fun DetailsScreen(
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 title = {
-                    Text(continent)
-                    TextField(
-                        value = "",
-                        onValueChange = {},
-                        modifier = Modifier.fillMaxWidth()
-                    )
+                    if (screenState.isSearchVisible) {
+                        TextField(
+                            value = "",
+                            onValueChange = {},
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    } else {
+                        Text(continent)
+                    }
                 },
                 navigationIcon = {
-                    IconButton(onClick = onBackClick) {
+                    IconButton(
+                        onClick = {
+                            if (screenState.isSearchVisible) {
+                                screenState.clearSearchQuery()
+                                screenState.toggleSearchVisibility()
+                            } else {
+                                onBackClick()
+                            }
+                        }
+                    ) {
                         Icon(
                             Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                             contentDescription = "back"
@@ -101,9 +111,7 @@ internal fun DetailsScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = {
-                        // todo change visibility of search text filed
-                    }) {
+                    IconButton(onClick = screenState::toggleSearchVisibility) {
                         Icon(Icons.Default.Search, contentDescription = "search")
                     }
                 }
@@ -314,34 +322,37 @@ internal class DetailsStateHolder(
 
     companion object {
         fun detailsStateSaver(
-            snackBarHostState: SnackbarHostState = SnackbarHostState(),
-            scope: CoroutineScope = CoroutineScope(EmptyCoroutineContext)
-        ) = Saver<DetailsStateHolder, DetailsScreenStateBundle>(
-            save = {
-                DetailsScreenStateBundle(
-                    it.isSearchVisible,
-                    it.searchQuery,
-                )
+            snackBarHostState: SnackbarHostState,
+            scope: CoroutineScope
+        ) = Saver<DetailsStateHolder, Any>(
+            save = { value ->
+                listOf(value.isSearchVisible, value.searchQuery)
             },
-            restore = {
-                DetailsStateHolder(
-                    snackBarHostState,
-                    scope,
-                    it.isSearchVisible,
-                    it.searchQuery,
-                )
+            restore = { value ->
+                val list = value as? List<*>
+                if (list?.size == 2) {
+                    val isSearchVisible = list[0] as? Boolean ?: false
+                    val searchQuery = list[1] as? String ?: ""
+                    DetailsStateHolder(
+                        snackBarHostState = snackBarHostState,
+                        scope = scope,
+                        isSearchVisible = isSearchVisible,
+                        searchQuery = searchQuery
+                    )
+                } else {
+                    null // Return null if the saved data is invalid
+                }
             },
         )
     }
 }
 
-data class DetailsScreenStateBundle(val isSearchVisible: Boolean, val searchQuery: String)
-
-// todo update search bar visibility in the screen state
 @Composable
 internal fun rememberDetailsScreenState(
     snackBarHostState: SnackbarHostState = remember { SnackbarHostState() },
     scope: CoroutineScope = rememberCoroutineScope(),
-) = remember {
+) = rememberSaveable(
+    saver = DetailsStateHolder.detailsStateSaver(snackBarHostState, scope)
+) {
     DetailsStateHolder(scope = scope, snackBarHostState = snackBarHostState)
 }
