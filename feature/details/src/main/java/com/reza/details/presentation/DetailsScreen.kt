@@ -1,7 +1,10 @@
 package com.reza.details.presentation
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +18,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -32,6 +36,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -47,6 +52,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -83,14 +89,26 @@ internal fun DetailsScreen(
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 title = {
-                    if (screenState.isSearchVisible) {
-                        TextField(
-                            value = "",
-                            onValueChange = {},
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                    } else {
-                        Text(continent)
+                    AnimatedContent(screenState.isSearchVisible) { isSearchIconVisible ->
+                        if (isSearchIconVisible) {
+                            TextField(
+                                value = screenState.searchQuery,
+                                onValueChange = {
+                                    screenState.searchQuery = it
+                                },
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = TextFieldDefaults.colors(
+                                    focusedContainerColor = Color.White.copy(alpha = 0.5f),
+                                    unfocusedContainerColor = Color.White.copy(alpha = 0.5f),
+                                    disabledContainerColor = Color.Transparent,
+                                    focusedIndicatorColor = Color.Transparent,
+                                    unfocusedIndicatorColor = Color.Transparent,
+                                    disabledIndicatorColor = Color.Transparent
+                                )
+                            )
+                        } else {
+                            Text(continent)
+                        }
                     }
                 },
                 navigationIcon = {
@@ -111,8 +129,25 @@ internal fun DetailsScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = screenState::toggleSearchVisibility) {
-                        Icon(Icons.Default.Search, contentDescription = "search")
+                    IconButton(onClick = {
+                        screenState.toggleSearchVisibility()
+                        if (screenState.isSearchVisible) {
+                            screenState.clearSearchQuery()
+                        }
+                    }) {
+                        AnimatedContent(screenState.isSearchVisible) { isSearchIconVisible ->
+                            if (isSearchIconVisible) {
+                                Icon(
+                                    Icons.Default.Close,
+                                    contentDescription = stringResource(R.string.close)
+                                )
+                            } else {
+                                Icon(
+                                    Icons.Default.Search,
+                                    contentDescription = stringResource(R.string.search)
+                                )
+                            }
+                        }
                     }
                 }
             )
@@ -342,7 +377,7 @@ internal class DetailsStateHolder(
                 } else {
                     null // Return null if the saved data is invalid
                 }
-            },
+            }
         )
     }
 }

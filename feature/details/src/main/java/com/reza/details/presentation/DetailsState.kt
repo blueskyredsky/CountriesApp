@@ -33,5 +33,4 @@ sealed interface DetailsUiState {
      * Represents the refreshing state, where the data is being refreshed.
      */
     data object Refreshing : DetailsUiState
-
 }
