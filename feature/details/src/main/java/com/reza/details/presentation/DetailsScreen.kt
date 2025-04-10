@@ -1,10 +1,8 @@
 package com.reza.details.presentation
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
@@ -54,7 +51,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -64,7 +60,6 @@ import com.reza.systemdesign.ui.common.LoadingItem
 import com.reza.systemdesign.ui.util.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import kotlin.coroutines.EmptyCoroutineContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -104,7 +99,13 @@ internal fun DetailsScreen(
                                     focusedIndicatorColor = Color.Transparent,
                                     unfocusedIndicatorColor = Color.Transparent,
                                     disabledIndicatorColor = Color.Transparent
-                                )
+                                ),
+                                placeholder = {
+                                    Text(
+                                        text = stringResource(R.string.search),
+                                        color = Color.Black.copy(alpha = 0.5f)
+                                    )
+                                }
                             )
                         } else {
                             Text(continent)
@@ -130,9 +131,10 @@ internal fun DetailsScreen(
                 },
                 actions = {
                     IconButton(onClick = {
-                        screenState.toggleSearchVisibility()
                         if (screenState.isSearchVisible) {
                             screenState.clearSearchQuery()
+                        } else {
+                            screenState.toggleSearchVisibility()
                         }
                     }) {
                         AnimatedContent(screenState.isSearchVisible) { isSearchIconVisible ->
@@ -317,77 +319,4 @@ private fun ItemRow(
             text = value,
         )
     }
-}
-
-@Stable
-internal class DetailsStateHolder(
-    val snackBarHostState: SnackbarHostState,
-    private val scope: CoroutineScope,
-    isSearchVisible: Boolean = false,
-    searchQuery: String = ""
-) {
-    var isSearchVisible by mutableStateOf(isSearchVisible)
-        private set
-
-    var searchQuery by mutableStateOf(searchQuery)
-
-    fun clearSearchQuery() {
-        searchQuery = ""
-    }
-
-    fun toggleSearchVisibility() {
-        isSearchVisible = !isSearchVisible
-    }
-
-    fun showSnackBar(
-        message: String,
-        actionLabel: String,
-        resultCallback: (SnackbarResult) -> Unit
-    ) {
-        scope.launch {
-            val result =
-                snackBarHostState.showSnackbar(
-                    message = message,
-                    actionLabel = actionLabel,
-                    duration = SnackbarDuration.Short
-                )
-            resultCallback(result)
-        }
-    }
-
-    companion object {
-        fun detailsStateSaver(
-            snackBarHostState: SnackbarHostState,
-            scope: CoroutineScope
-        ) = Saver<DetailsStateHolder, Any>(
-            save = { value ->
-                listOf(value.isSearchVisible, value.searchQuery)
-            },
-            restore = { value ->
-                val list = value as? List<*>
-                if (list?.size == 2) {
-                    val isSearchVisible = list[0] as? Boolean ?: false
-                    val searchQuery = list[1] as? String ?: ""
-                    DetailsStateHolder(
-                        snackBarHostState = snackBarHostState,
-                        scope = scope,
-                        isSearchVisible = isSearchVisible,
-                        searchQuery = searchQuery
-                    )
-                } else {
-                    null // Return null if the saved data is invalid
-                }
-            }
-        )
-    }
-}
-
-@Composable
-internal fun rememberDetailsScreenState(
-    snackBarHostState: SnackbarHostState = remember { SnackbarHostState() },
-    scope: CoroutineScope = rememberCoroutineScope(),
-) = rememberSaveable(
-    saver = DetailsStateHolder.detailsStateSaver(snackBarHostState, scope)
-) {
-    DetailsStateHolder(scope = scope, snackBarHostState = snackBarHostState)
 }
