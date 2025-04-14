@@ -18,4 +18,9 @@ internal sealed interface DetailsEvent {
      * This is typically used after an error has been handled or displayed.
      */
     data object ConsumeErrorMessage : DetailsEvent
+
+    /**
+     * Represents an event to search for countries based on a given query
+     */
+    data class Search(val query: String) : DetailsEvent
 }

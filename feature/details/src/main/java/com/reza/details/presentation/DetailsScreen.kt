@@ -1,5 +1,6 @@
 package com.reza.details.presentation
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
@@ -74,7 +75,14 @@ internal fun DetailsScreen(
     }
 
     val detailsUiState by viewModel.detailsUiState.collectAsStateWithLifecycle()
+    val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle()
     val screenState = rememberDetailsScreenState()
+
+    BackHandler(enabled = screenState.isSearchVisible) {
+        screenState.clearSearchQuery()
+        viewModel.onEvent(DetailsEvent.Search(""))
+        screenState.toggleSearchVisibility()
+    }
 
     Scaffold(
         topBar = {
@@ -87,9 +95,10 @@ internal fun DetailsScreen(
                     AnimatedContent(screenState.isSearchVisible) { isSearchIconVisible ->
                         if (isSearchIconVisible) {
                             TextField(
-                                value = screenState.searchQuery,
-                                onValueChange = {
-                                    screenState.searchQuery = it
+                                value = searchQuery,
+                                onValueChange = { newQuery ->
+                                    viewModel.onEvent(DetailsEvent.Search(newQuery))
+                                    screenState.searchQuery = newQuery
                                 },
                                 modifier = Modifier.fillMaxWidth(),
                                 colors = TextFieldDefaults.colors(
@@ -133,6 +142,7 @@ internal fun DetailsScreen(
                     IconButton(onClick = {
                         if (screenState.isSearchVisible) {
                             screenState.clearSearchQuery()
+                            viewModel.onEvent(DetailsEvent.Search(""))
                         } else {
                             screenState.toggleSearchVisibility()
                         }
