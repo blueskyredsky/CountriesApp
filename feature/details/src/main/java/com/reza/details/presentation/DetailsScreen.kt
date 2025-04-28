@@ -76,6 +76,7 @@ internal fun DetailsScreen(
 
     val detailsUiState by viewModel.detailsUiState.collectAsStateWithLifecycle()
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle()
+    val filteredCountries by viewModel.filteredCountries.collectAsStateWithLifecycle()
     val screenState = rememberDetailsScreenState()
 
     BackHandler(enabled = screenState.isSearchVisible) {
@@ -203,7 +204,7 @@ internal fun DetailsScreen(
                     is DetailsUiState.Success -> {
                         CountriesList(
                             isRefreshing = false,
-                            countries = targetState.countries,
+                            countries = filteredCountries,
                             onRefresh = {
                                 viewModel.onEvent(
                                     DetailsEvent.GetCountries(

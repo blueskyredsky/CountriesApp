@@ -11,8 +11,11 @@ import com.reza.details.domain.usecase.CountriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,8 +25,6 @@ internal class DetailsViewModel @Inject constructor(
     private val countriesUseCase: CountriesUseCase,
     private val stringResolver: StringResolver
 ) : ViewModel() {
-
-    // todo list of countries should be kept in memory in a property
 
     private val _detailsUiState = MutableStateFlow<DetailsUiState>(DetailsUiState.Empty)
     val detailsUiState = _detailsUiState.asStateFlow()
@@ -36,6 +37,25 @@ internal class DetailsViewModel @Inject constructor(
             DetailsUiState.Error(
                 exception.message ?: stringResolver.findString(R.string.general_error_message)
             )
+        }
+    }
+
+    val filteredCountries = combine(detailsUiState, searchQuery) { uiState, query ->
+        if (uiState is DetailsUiState.Success) {
+            filterCountries(uiState.countries, query)
+        } else {
+            emptyList()
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = emptyList()
+    )
+
+    private fun filterCountries(countries: List<Country>, query: String): List<Country> {
+        return countries.filter { country ->
+            country.name.lowercase().contains(query.lowercase()) ||
+                    country.capital.lowercase().contains(query.lowercase())
         }
     }
 
