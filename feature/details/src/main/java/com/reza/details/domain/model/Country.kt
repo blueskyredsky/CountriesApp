@@ -26,5 +26,26 @@ data class Country(
                 languages = emptyList()
             )
         )
+
+        val LIST_OF_COUNTRIES_WITH_REAL_VALUES = listOf(
+            Country(
+                name = "Iran",
+                emoji = "-",
+                currency = "-",
+                capital = "Tehran",
+                phone = "-",
+                states = emptyList(),
+                languages = emptyList()
+            ),
+            Country(
+                name = "Iraq",
+                emoji = "-",
+                currency = "-",
+                capital = "Baghdad",
+                phone = "-",
+                states = emptyList(),
+                languages = emptyList()
+            )
+        )
     }
 }

@@ -233,7 +233,7 @@ internal fun DetailsScreen(
 private fun CountriesList(
     modifier: Modifier = Modifier,
     isRefreshing: Boolean,
-    countries: List<Country?>,
+    countries: List<Country>,
     onRefresh: () -> Unit
 ) {
     val pullRefreshState = rememberPullRefreshState(
@@ -248,18 +248,16 @@ private fun CountriesList(
                 .pullRefresh(pullRefreshState)
         ) {
             items(
-                key = { item -> item?.name ?: "" },
+                key = { item -> item.name },
                 items = countries
             ) { country ->
-                country?.let {
-                    CountryItem(
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp)
-                            .padding(top = 16.dp)
-                            .fillMaxWidth(),
-                        country = it
-                    )
-                }
+                CountryItem(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 16.dp)
+                        .fillMaxWidth(),
+                    country = country
+                )
             }
         }
         PullRefreshIndicator(

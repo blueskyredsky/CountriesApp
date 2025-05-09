@@ -117,11 +117,11 @@ class DetailsViewModelTest {
     fun detailsViewModel_onGetCountries_shouldCallApiAgain_whenDetailsUiStateIsAlreadyError() =
         runTest {
             // Given
+            viewModel.setDetailsUiStateToError(ResultState.Failure(""))
             coEvery { countriesUseCase.getCountries("") } coAnswers {
                 delay(1L)
                 ResultState.Success(Country.LIST_OF_COUNTRIES)
             }
-            viewModel.setDetailsUiStateToError(ResultState.Failure(""))
 
             // When
             viewModel.onEvent(DetailsEvent.GetCountries(""))
@@ -142,11 +142,11 @@ class DetailsViewModelTest {
     fun detailsViewModel_onGetCountries_shouldCallApiAgain_whenDetailsUiStateIsSuccessAndIsRefreshingIsTrue() =
         runTest {
             // Given
+            viewModel.setDetailsUiStateToSuccess(ResultState.Success(Country.LIST_OF_COUNTRIES))
             coEvery { countriesUseCase.getCountries("") } coAnswers {
                 delay(1L)
                 ResultState.Success(Country.LIST_OF_COUNTRIES)
             }
-            viewModel.setDetailsUiStateToSuccess(ResultState.Success(Country.LIST_OF_COUNTRIES))
 
             // When
             viewModel.onEvent(DetailsEvent.GetCountries(continentCode = "", isRefreshing = true))
@@ -163,4 +163,23 @@ class DetailsViewModelTest {
                 cancelAndIgnoreRemainingEvents()
             }
         }
+
+    @Test
+    fun detailsViewModel_onSearchCountries_whenDetailsUiStateIsAlreadySuccess_shouldFilterCorrectly() = runTest {
+        // Given
+        viewModel.setDetailsUiStateToSuccess(ResultState.Success(Country.LIST_OF_COUNTRIES_WITH_REAL_VALUES))
+
+        // When
+        viewModel.onEvent(DetailsEvent.Search("iran"))
+
+        // Then
+        viewModel.filteredCountries.test {
+            val item = awaitItem()
+            assertThat(item).hasSize(0)
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    // todo add more tests
 }
