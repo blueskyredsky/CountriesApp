@@ -165,12 +165,29 @@ class DetailsViewModelTest {
         }
 
     @Test
-    fun detailsViewModel_onSearchCountries_whenDetailsUiStateIsAlreadySuccess_shouldFilterCorrectly() = runTest {
+    fun detailsViewModel_onSearchACountryWhichIsInCountries_shouldReturnFilteredCountry() = runTest {
         // Given
         viewModel.setDetailsUiStateToSuccess(ResultState.Success(Country.LIST_OF_COUNTRIES_WITH_REAL_VALUES))
 
         // When
         viewModel.onEvent(DetailsEvent.Search("iran"))
+
+        // Then
+        viewModel.filteredCountries.test {
+            val item = awaitItem()
+            assertThat(item).hasSize(1)
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun detailsViewModel_onSearchACountryWhichIsNotInCountries_shouldReturnEmptyList() = runTest {
+        // Given
+        viewModel.setDetailsUiStateToSuccess(ResultState.Success(Country.LIST_OF_COUNTRIES_WITH_REAL_VALUES))
+
+        // When
+        viewModel.onEvent(DetailsEvent.Search("Germany"))
 
         // Then
         viewModel.filteredCountries.test {
@@ -181,5 +198,20 @@ class DetailsViewModelTest {
         }
     }
 
-    // todo add more tests
+    @Test
+    fun detailsViewModel_onSearchACountry_whenApiIsFailed_shouldReturnEmptyList() = runTest {
+        // Given
+        viewModel.setDetailsUiStateToError(ResultState.Failure(""))
+
+        // When
+        viewModel.onEvent(DetailsEvent.Search("Germany"))
+
+        // Then
+        viewModel.filteredCountries.test {
+            val item = awaitItem()
+            assertThat(item).hasSize(0)
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
 }
