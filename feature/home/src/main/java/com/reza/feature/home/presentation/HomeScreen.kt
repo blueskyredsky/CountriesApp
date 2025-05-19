@@ -57,6 +57,7 @@ internal fun ContinentsScreen(
     }
 
     Scaffold(
+        modifier = Modifier.testTag(Constants.UiTags.HomeScreen.customName),
         topBar = {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(

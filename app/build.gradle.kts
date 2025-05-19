@@ -124,6 +124,7 @@ dependencies {
     implementation(project(":feature:home"))
     implementation(project(":feature:details"))
     implementation(project(":core:common"))
+    implementation(project(":core:designsystem"))
     implementation(project(":core:networking")) // fixme no need to add this dependency in this layer
     implementation(project(":core:threading")) // fixme no need to add this dependency in this layer
     testImplementation(project(":core:testing:unit"))
