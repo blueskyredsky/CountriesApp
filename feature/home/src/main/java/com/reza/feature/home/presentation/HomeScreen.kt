@@ -41,7 +41,7 @@ import com.reza.countriesapp.ui.theme.CountriesAppTheme
 import com.reza.feature.home.R
 import com.reza.feature.home.domain.model.Continent
 import com.reza.systemdesign.ui.common.ShimmerLazyColumn
-import com.reza.systemdesign.ui.util.Constants
+import com.reza.systemdesign.ui.util.UiTags
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -57,7 +57,7 @@ internal fun ContinentsScreen(
     }
 
     Scaffold(
-        modifier = Modifier.testTag(Constants.UiTags.HomeScreen.customName),
+        modifier = Modifier.testTag(UiTags.HomeScreen.ROOT),
         topBar = {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -173,7 +173,7 @@ private fun ContinentItem(
         modifier = modifier
             .clip(MaterialTheme.shapes.small)
             .clickable { onSelectContinent(continentView.continent) }
-            .testTag(Constants.UiTags.ContinentItem.customName),
+            .testTag(UiTags.HomeScreen.CONTINENT_ITEM),
         shape = MaterialTheme.shapes.small,
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp

@@ -34,13 +34,13 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.reza.countriesapp.ui.theme.CountriesAppTheme
-import com.reza.systemdesign.ui.util.Constants
+import com.reza.systemdesign.ui.util.UiTags
 
 // fixme should be modified based on design system
 @Composable
 fun ShimmerLazyColumn() {
     LazyColumn(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().testTag(UiTags.HomeScreen.SHIMMER_LAZY_COLUMN)
     ) {
         items(10) {
             ShimmerItem()
@@ -131,7 +131,7 @@ fun LoadingItem(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        CircularProgressIndicator(Modifier.testTag(Constants.UiTags.ProgressIndicator.customName))
+        CircularProgressIndicator(Modifier.testTag(UiTags.DetailsScreen.PROGRESS_INDICATOR))
     }
 }
 
