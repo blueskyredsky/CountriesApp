@@ -23,7 +23,6 @@ class ContinentsScreenTest {
     @get:Rule(order = 1)
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
-
     @Test
     fun appNavHost_verifyStartDestination() {
         composeTestRule.onNodeWithTag(UiTags.HomeScreen.ROOT).assertExists()
