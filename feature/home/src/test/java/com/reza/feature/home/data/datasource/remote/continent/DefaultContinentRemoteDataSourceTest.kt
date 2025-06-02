@@ -39,7 +39,6 @@ class DefaultContinentRemoteDataSourceTest {
                     name = Continent.ANTARCTICA
                     code = Continent.ANTARCTICA_CODE
                 }
-
             )
         }
         apolloClient.enqueueTestResponse(testQuery, data)
