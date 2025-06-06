@@ -4,6 +4,7 @@ import com.reza.common.domain.model.ResultState
 import com.reza.feature.home.domain.model.Continent
 
 class FakeContinentsUseCase: ContinentsUseCase {
+
     override suspend fun getContinents(): ResultState<List<Continent>> {
         return ResultState.Success(
             listOf(
