@@ -1,7 +1,36 @@
 package com.reza.feature.home.domain.usecase
 
-class FakeContinentImageUseCase: ContinentImageUseCase {
+import com.reza.feature.home.R
+import com.reza.feature.home.domain.model.Continent
+
+class FakeContinentImageUseCase : ContinentImageUseCase {
+
+    private val continentImageMap = mutableMapOf<String, Int>()
+    private var defaultImageResId: Int = com.reza.systemdesign.R.drawable.ic_close
+
+    init {
+        continentImageMap[Continent.ASIA] = R.drawable.ic_asia
+        continentImageMap[Continent.EUROPE] = R.drawable.ic_europe
+        continentImageMap[Continent.AFRICA] = R.drawable.ic_africa
+        continentImageMap[Continent.NORTH_AMERICA] = R.drawable.ic_north_america
+        continentImageMap[Continent.SOUTH_AMERICA] = R.drawable.ic_south_america
+        continentImageMap[Continent.OCEANIA] = R.drawable.ic_australia
+        continentImageMap[Continent.ANTARCTICA] = R.drawable.ic_antarctica
+    }
+
     override fun findContinentImage(name: String): Int {
-        return
+        return continentImageMap[name] ?: defaultImageResId
+    }
+
+    fun setContinentImage(name: String, @Suppress("SameParameterValue") imageResId: Int) {
+        continentImageMap[name] = imageResId
+    }
+
+    fun setDefaultImageResId(@Suppress("SameParameterValue") imageResId: Int) {
+        this.defaultImageResId = imageResId
+    }
+
+    fun clearMappings() {
+        continentImageMap.clear()
     }
 }

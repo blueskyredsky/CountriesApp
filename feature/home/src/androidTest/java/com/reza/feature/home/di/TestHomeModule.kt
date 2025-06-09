@@ -10,5 +10,5 @@ import dagger.hilt.testing.TestInstallIn
     replaces = [HomeModule::class]
 )
 abstract class TestHomeModule {
-    // only replacing fake data source with the real one should work
+    // replacing fake implementations
 }
