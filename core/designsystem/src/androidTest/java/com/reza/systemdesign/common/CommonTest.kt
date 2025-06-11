@@ -4,15 +4,10 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import com.reza.systemdesign.ui.common.LoadingItem
-import com.reza.systemdesign.ui.util.Constants
+import com.reza.systemdesign.ui.util.UiTags
 import org.junit.Rule
 import org.junit.Test
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
 class CommonTest {
 
     @get:Rule(order = 0)
@@ -25,7 +20,7 @@ class CommonTest {
         }
 
         composeTestRule
-            .onNodeWithTag(testTag = Constants.UiTags.ProgressIndicator.customName)
+            .onNodeWithTag(testTag = UiTags.DetailsScreen.PROGRESS_INDICATOR)
             .assertIsDisplayed()
     }
 }

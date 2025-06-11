@@ -1,6 +1,16 @@
 package com.reza.feature.home.di
 
+import com.reza.feature.home.data.datasource.remote.ContinentRemoteDataSource
+import com.reza.feature.home.data.datasource.remote.FakeContinentRemoteDataSource
+import com.reza.feature.home.data.repository.FakeContinentRepository
+import com.reza.feature.home.domain.repository.ContinentRepository
+import com.reza.feature.home.domain.usecase.ContinentImageUseCase
+import com.reza.feature.home.domain.usecase.ContinentsUseCase
+import com.reza.feature.home.domain.usecase.FakeContinentImageUseCase
+import com.reza.feature.home.domain.usecase.FakeContinentsUseCase
+import dagger.Binds
 import dagger.Module
+import dagger.Reusable
 import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.testing.TestInstallIn
 
@@ -10,5 +20,27 @@ import dagger.hilt.testing.TestInstallIn
     replaces = [HomeModule::class]
 )
 abstract class TestHomeModule {
-    // replacing fake implementations
+    @Binds
+    @Reusable
+    internal abstract fun bindContinentRemoteDataSource(
+        fakeContinentDataSource: FakeContinentRemoteDataSource
+    ): ContinentRemoteDataSource
+
+    @Binds
+    @Reusable
+    internal abstract fun bindContinentRepository(
+        fakeContinentRepository: FakeContinentRepository
+    ): ContinentRepository
+
+    @Binds
+    @Reusable
+    internal abstract fun bindContinentsUseCase(
+        fakeContinentsUseCase: FakeContinentsUseCase
+    ): ContinentsUseCase
+
+    @Binds
+    @Reusable
+    internal abstract fun bindContinentImageUseCase(
+        fakeContinentImageUseCase: FakeContinentImageUseCase
+    ): ContinentImageUseCase
 }

@@ -57,4 +57,5 @@ dependencies {
     implementation(libs.ui.tooling.preview)
 
     androidTestImplementation(libs.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.test.manifest)
 }

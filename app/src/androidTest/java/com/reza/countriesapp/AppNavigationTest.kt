@@ -15,7 +15,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
-class ContinentsScreenTest {
+class AppNavigationTest {
 
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
