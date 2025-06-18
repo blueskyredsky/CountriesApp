@@ -15,12 +15,9 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class HomeScreenTest {
 
-    // Rule for Hilt to manage dependency injection in tests.
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)
 
-    // Rule for Compose UI testing. Use createAndroidComposeRule for Activity-based tests.
-    // This rule allows you to control the activity and compose content.
     @get:Rule(order = 1)
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 }
