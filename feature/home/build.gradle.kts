@@ -48,6 +48,7 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:designsystem"))
     testImplementation(project(":core:testing:unit"))
+    androidTestImplementation(project(":core:testing:ui"))
 
     implementation(libs.javax.inject)
 
