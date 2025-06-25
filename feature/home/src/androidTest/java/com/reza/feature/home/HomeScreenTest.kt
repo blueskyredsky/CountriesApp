@@ -6,6 +6,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.reza.common.di.CommonModule
 import com.reza.feature.home.di.HomeModule
 import com.reza.feature.home.domain.model.Continent
 import com.reza.feature.home.domain.usecase.FakeContinentImageUseCase
@@ -31,8 +32,7 @@ import org.junit.runner.RunWith
 import javax.inject.Inject
 
 @HiltAndroidTest
-@UninstallModules(HomeModule::class)
-@RunWith(AndroidJUnit4::class)
+@UninstallModules(HomeModule::class, CommonModule::class)
 class HomeScreenTest {
 
     @get:Rule(order = 0)

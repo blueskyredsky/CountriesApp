@@ -2,8 +2,9 @@ package com.reza.ui.util
 
 import androidx.annotation.StringRes
 import com.reza.common.util.stringresolver.StringResolver
+import javax.inject.Inject
 
-class FakeStringResolver : StringResolver {
+class FakeStringResolver @Inject constructor() : StringResolver {
     private val stringMap = mutableMapOf<Int, String>()
 
     fun stubString(@StringRes stringId: Int, value: String) {

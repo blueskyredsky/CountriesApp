@@ -83,6 +83,8 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+        languageVersion = "1.9" // Or your exact Kotlin plugin version
+        apiVersion = "1.9"
     }
     buildFeatures {
         compose = true

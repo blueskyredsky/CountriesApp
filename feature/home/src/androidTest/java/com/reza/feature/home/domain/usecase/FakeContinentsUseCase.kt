@@ -3,8 +3,9 @@ package com.reza.feature.home.domain.usecase
 import com.reza.common.domain.model.ResultState
 import com.reza.feature.home.domain.model.Continent
 import java.io.IOException
+import javax.inject.Inject
 
-class FakeContinentsUseCase: ContinentsUseCase {
+class FakeContinentsUseCase @Inject constructor() : ContinentsUseCase {
 
     var shouldReturnError: Boolean = false
     var errorType: Throwable? = null

@@ -2,8 +2,9 @@ package com.reza.feature.home.domain.usecase
 
 import com.reza.feature.home.R
 import com.reza.feature.home.domain.model.Continent
+import javax.inject.Inject
 
-class FakeContinentImageUseCase : ContinentImageUseCase {
+class FakeContinentImageUseCase @Inject constructor() : ContinentImageUseCase {
 
     private val continentImageMap = mutableMapOf<String, Int>()
     private var defaultImageResId: Int = com.reza.systemdesign.R.drawable.ic_close
