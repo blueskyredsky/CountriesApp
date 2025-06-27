@@ -34,8 +34,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
-        languageVersion = "1.9" // Or "1.9.23" if your Kotlin plugin is 1.9.23
-        apiVersion = "1.9" // Or "1.9.23"
     }
     buildFeatures {
         compose = true
@@ -92,4 +90,11 @@ dependencies {
 // Allow references to generated code
 kapt {
     correctErrorTypes = true
+
+    // Add this for verbose logging
+    arguments {
+        arguments {
+            arg("dagger.verbose", "true")
+        }
+    }
 }

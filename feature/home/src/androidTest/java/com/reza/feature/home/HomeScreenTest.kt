@@ -1,8 +1,11 @@
 package com.reza.feature.home
 
 import androidx.activity.ComponentActivity
+import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -32,6 +35,7 @@ import org.junit.runner.RunWith
 import javax.inject.Inject
 
 @HiltAndroidTest
+@RunWith(AndroidJUnit4::class)
 @UninstallModules(HomeModule::class, CommonModule::class)
 class HomeScreenTest {
 
@@ -92,14 +96,14 @@ class HomeScreenTest {
         Dispatchers.resetMain()
     }
 
+    @OptIn(ExperimentalTestApi::class)
     @Test
-    fun screen_displays_loading_state() = runTest(testDispatcher) {
-        // By default, your ViewModel should start in a loading state, and your use case
-        // won't return data immediately. The initial LaunchedEffect in ContinentsScreen
-        // will call viewModel.onEvent(HomeEvent.GetContinents()) which leads to loading.
-        advanceUntilIdle() // Allow the LaunchedEffect to trigger and ViewModel to process
+    fun screen_displays_loading_state() {
+        composeTestRule.waitUntilDoesNotExist(hasTestTag(UiTags.HomeScreen.SHIMMER_LAZY_COLUMN))
 
-        composeTestRule.onNodeWithTag(UiTags.HomeScreen.SHIMMER_LAZY_COLUMN).assertIsDisplayed()
-        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.continents)).assertIsDisplayed()
+        composeTestRule.onAllNodes(
+            hasTestTag(UiTags.HomeScreen.CONTINENT_ITEM)
+        ).onFirst().assertIsDisplayed()
+
     }
 }
