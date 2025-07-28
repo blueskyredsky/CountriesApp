@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.reza.feature.home"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 24
@@ -90,11 +90,4 @@ dependencies {
 // Allow references to generated code
 kapt {
     correctErrorTypes = true
-
-    // Add this for verbose logging
-    arguments {
-        arguments {
-            arg("dagger.verbose", "true")
-        }
-    }
 }

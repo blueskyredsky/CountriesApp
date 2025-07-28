@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.reza.benchmark"
-    compileSdk = 34
+    compileSdk = 36
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -18,7 +18,7 @@ android {
 
     defaultConfig {
         minSdk = 24
-        lint.targetSdk = 34
+        targetSdk = 36
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         // This way, the :macrobenchmark module is able to only build and benchmark the production product flavor

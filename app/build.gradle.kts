@@ -13,12 +13,12 @@ plugins {
 
 android {
     namespace = "com.reza.mobile"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.reza.countriesapp"
         minSdk = 24
-        lint.targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 

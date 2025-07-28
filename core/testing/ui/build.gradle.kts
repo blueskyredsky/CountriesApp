@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.reza.ui"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 24
