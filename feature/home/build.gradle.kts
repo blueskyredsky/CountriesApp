@@ -5,7 +5,6 @@ plugins {
     kotlin("kapt") // todo change that to alias
     id("kotlin-parcelize") // todo change that to alias
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -37,6 +36,9 @@ android {
     }
     buildFeatures {
         compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.10"
     }
 }
 
