@@ -109,11 +109,13 @@ android {
             dimension = "environment"
             applicationIdSuffix = ".demo"
             versionNameSuffix = "-demo"
+            testInstrumentationRunner = "com.reza.countriesapp.HiltTestRunner"
         }
         create("production") {
             dimension = "environment"
             applicationIdSuffix = ".production"
             versionNameSuffix = "-production"
+            testInstrumentationRunner = "com.reza.countriesapp.HiltTestRunner"
         }
     }
 }
@@ -128,6 +130,7 @@ dependencies {
     implementation(project(":core:networking")) // fixme no need to add this dependency in this layer
     implementation(project(":core:threading")) // fixme no need to add this dependency in this layer
     testImplementation(project(":core:testing:unit"))
+    androidTestImplementation(project(":core:testing:ui"))
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)

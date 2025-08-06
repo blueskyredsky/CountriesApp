@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-internal class HomeViewModel @Inject constructor(
+class HomeViewModel @Inject constructor(
     private val continentsUseCase: ContinentsUseCase,
     private val continentsImageUseCase: ContinentImageUseCase,
     private val stringResolver: StringResolver,

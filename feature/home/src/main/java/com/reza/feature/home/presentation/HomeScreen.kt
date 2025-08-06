@@ -45,7 +45,7 @@ import com.reza.systemdesign.ui.util.UiTags
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun ContinentsScreen(
+fun ContinentsScreen(
     viewModel: HomeViewModel,
     onSelectContinent: (Continent) -> Unit
 ) {
