@@ -1,12 +1,12 @@
-package com.reza.feature.home.di
+package com.reza.countriesapp.home.di
 
+import com.reza.countriesapp.home.FakeContinentImageUseCase
+import com.reza.countriesapp.home.FakeContinentsUseCase
+import com.reza.feature.home.di.HomeModule
 import com.reza.feature.home.domain.usecase.ContinentImageUseCase
 import com.reza.feature.home.domain.usecase.ContinentsUseCase
-import com.reza.feature.home.domain.usecase.FakeContinentImageUseCase
-import com.reza.feature.home.domain.usecase.FakeContinentsUseCase
 import dagger.Binds
 import dagger.Module
-import dagger.Reusable
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 
@@ -18,12 +18,12 @@ import dagger.hilt.testing.TestInstallIn
 abstract class TestHomeModule {
 
     @Binds
-    internal abstract fun bindContinentsUseCase(
+    abstract fun bindContinentsUseCase(
         fakeContinentsUseCase: FakeContinentsUseCase
     ): ContinentsUseCase
 
     @Binds
-    internal abstract fun bindContinentImageUseCase(
+    abstract fun bindContinentImageUseCase(
         fakeContinentImageUseCase: FakeContinentImageUseCase
     ): ContinentImageUseCase
 }

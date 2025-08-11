@@ -1,11 +1,10 @@
-package com.reza.feature.home.di
+package com.reza.countriesapp.home.di
 
 import com.reza.common.di.CommonModule
 import com.reza.common.util.stringresolver.StringResolver
 import com.reza.ui.util.FakeStringResolver
 import dagger.Binds
 import dagger.Module
-import dagger.Reusable
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 
@@ -14,10 +13,9 @@ import dagger.hilt.testing.TestInstallIn
     components = [SingletonComponent::class],
     replaces = [CommonModule::class]
 )
-abstract class TestCommonModule {
-
+abstract class TestStringResolverModule {
     @Binds
-    internal abstract fun bindStringResolver(
+    abstract fun bindStringResolver(
         fakeStringResolver: FakeStringResolver
     ): StringResolver
 }

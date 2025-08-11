@@ -36,7 +36,7 @@ import javax.inject.Inject
 
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
-@UninstallModules(HomeModule::class, CommonModule::class)
+@UninstallModules(HomeModule::class)
 class HomeScreenTest {
 
     @get:Rule(order = 0)

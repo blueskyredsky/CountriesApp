@@ -29,10 +29,12 @@ class FakeContinentsUseCase @Inject constructor() : ContinentsUseCase {
     }
 
 
-    fun setSuccess(data: List<Continent> = listOf(
-        Continent(code = Continent.ASIA_CODE, name = Continent.ASIA),
-        Continent(code = Continent.EUROPE_CODE, name = Continent.EUROPE)
-    )) {
+    fun setSuccess(
+        data: List<Continent> = listOf(
+            Continent(code = Continent.ASIA_CODE, name = Continent.ASIA),
+            Continent(code = Continent.EUROPE_CODE, name = Continent.EUROPE)
+        )
+    ) {
         shouldReturnError = false
         successData = data
     }
