@@ -86,8 +86,8 @@ dependencies {
     androidTestImplementation(libs.androidx.runner)
     kaptAndroidTest(libs.hilt.kapt.test)
 
-    androidTestImplementation("androidx.test:core:1.6.1") // Or a newer stable version
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
+    androidTestImplementation(libs.androidx.core)
+    androidTestImplementation(libs.androidx.test.ext.junit)
 }
 
 // Allow references to generated code

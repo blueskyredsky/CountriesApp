@@ -6,10 +6,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onFirst
-import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.onNodeWithText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.reza.common.di.CommonModule
 import com.reza.feature.home.di.HomeModule
 import com.reza.feature.home.domain.model.Continent
 import com.reza.feature.home.domain.usecase.FakeContinentImageUseCase
@@ -21,12 +18,7 @@ import com.reza.ui.util.FakeStringResolver
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
-import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -56,12 +48,9 @@ class HomeScreenTest {
 
     private lateinit var homeViewModel: HomeViewModel
 
-    private val testDispatcher = StandardTestDispatcher()
-
     @Before
     fun setup() {
         hiltRule.inject()
-        Dispatchers.setMain(testDispatcher)
 
         // Reset the state of your fakes before each test to ensure isolation
         fakeContinentsUseCase.reset()
@@ -82,28 +71,28 @@ class HomeScreenTest {
             continentsImageUseCase = fakeContinentImageUseCase,
             stringResolver = fakeStringResolver
         )
+    }
 
+    @After
+    fun tearDown() {
+        /* ٔNO-OP */
+    }
+
+    @OptIn(ExperimentalTestApi::class)
+    @Test
+    fun screen_displays_loading_state() = runTest {
         composeTestRule.setContent {
             ContinentsScreen(
                 viewModel = homeViewModel,
                 onSelectContinent = {}
             )
         }
-    }
 
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
-    }
-
-    @OptIn(ExperimentalTestApi::class)
-    @Test
-    fun screen_displays_loading_state() {
-        composeTestRule.waitUntilDoesNotExist(hasTestTag(UiTags.HomeScreen.SHIMMER_LAZY_COLUMN))
+        // Advance the coroutine dispatcher to ensure all coroutines complete
+        testScheduler.advanceUntilIdle()
 
         composeTestRule.onAllNodes(
             hasTestTag(UiTags.HomeScreen.CONTINENT_ITEM)
         ).onFirst().assertIsDisplayed()
-
     }
 }

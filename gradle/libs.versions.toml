@@ -1,10 +1,11 @@
 [versions]
 com-android-application = "8.11.1"
+core = "1.7.0"
 firebase-bom = "33.0.0"
 javax-inject = "1"
 core-ktx = "1.12.0"
 junit = "4.13.2"
-androidx-test-ext-junit = "1.1.5"
+androidx-test-ext-junit = "1.3.0"
 espresso-core = "3.5.1"
 lifecycle-runtime-ktx = "2.7.0"
 activity-compose = "1.8.2"
@@ -48,6 +49,7 @@ kotlin = "2.1.0"
 kotlinxSerializationJson = "1.8.0"
 
 [libraries]
+androidx-core = { module = "androidx.test:core", version.ref = "core" }
 androidx-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
