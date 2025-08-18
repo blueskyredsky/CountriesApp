@@ -133,7 +133,10 @@ fun ContinentsScreen(
             }
         },
         snackbarHost = {
-            SnackbarHost(hostState = screenState.snackBarHostState)
+            SnackbarHost(
+                modifier = Modifier.testTag(UiTags.Common.SNACK_BAR),
+                hostState = screenState.snackBarHostState
+            )
         }
     )
 }

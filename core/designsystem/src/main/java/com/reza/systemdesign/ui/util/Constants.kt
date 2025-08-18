@@ -1,6 +1,9 @@
 package com.reza.systemdesign.ui.util
 
 object UiTags {
+    object Common {
+        const val SNACK_BAR = "snack_bar"
+    }
     object HomeScreen {
         const val ROOT = "home_screen_root"
         const val SHIMMER_LAZY_COLUMN = "shimmer_lazy_column"

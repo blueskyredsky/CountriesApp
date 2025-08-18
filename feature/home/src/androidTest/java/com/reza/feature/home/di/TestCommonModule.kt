@@ -5,7 +5,6 @@ import com.reza.common.util.stringresolver.StringResolver
 import com.reza.ui.util.FakeStringResolver
 import dagger.Binds
 import dagger.Module
-import dagger.Reusable
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 

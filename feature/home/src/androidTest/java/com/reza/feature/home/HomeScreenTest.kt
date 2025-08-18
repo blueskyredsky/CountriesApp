@@ -3,9 +3,12 @@ package com.reza.feature.home
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onFirst
+import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.reza.feature.home.di.HomeModule
 import com.reza.feature.home.domain.model.Continent
@@ -19,6 +22,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import kotlinx.coroutines.test.runTest
+import okio.IOException
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -80,7 +84,7 @@ class HomeScreenTest {
 
     @OptIn(ExperimentalTestApi::class)
     @Test
-    fun screen_displays_loading_state() = runTest {
+    fun screen_displays_success_state() = runTest {
         composeTestRule.setContent {
             ContinentsScreen(
                 viewModel = homeViewModel,
@@ -88,8 +92,48 @@ class HomeScreenTest {
             )
         }
 
-        // Advance the coroutine dispatcher to ensure all coroutines complete
-        testScheduler.advanceUntilIdle()
+        composeTestRule.onAllNodes(
+            hasTestTag(UiTags.HomeScreen.CONTINENT_ITEM)
+        ).onFirst().assertIsDisplayed()
+    }
+
+    @Test
+    fun screen_displays_error_state() = runTest {
+        val errorMessage = "Failed to load continents"
+        fakeContinentsUseCase.setError(IOException(errorMessage))
+
+        composeTestRule.setContent {
+            ContinentsScreen(
+                viewModel = homeViewModel,
+                onSelectContinent = {}
+            )
+        }
+
+        composeTestRule.onNode(
+            hasText(errorMessage) and hasAnyAncestor(hasTestTag(UiTags.Common.SNACK_BAR))
+        ).assertIsDisplayed()
+    }
+
+    @OptIn(ExperimentalTestApi::class)
+    @Test
+    fun screen_displays_error_state_and_retries_successfully() = runTest {
+        val errorMessage = "Failed to load continents"
+        fakeContinentsUseCase.setError(IOException(errorMessage))
+
+        composeTestRule.setContent {
+            ContinentsScreen(
+                viewModel = homeViewModel,
+                onSelectContinent = {}
+            )
+        }
+
+        composeTestRule.onNode(
+            hasText(errorMessage) and hasAnyAncestor(hasTestTag(UiTags.Common.SNACK_BAR))
+        ).assertIsDisplayed()
+
+        // Trigger the retry action by clicking the "Retry" button
+        fakeContinentsUseCase.setSuccess()
+        composeTestRule.onNode(hasText("Retry")).performClick()
 
         composeTestRule.onAllNodes(
             hasTestTag(UiTags.HomeScreen.CONTINENT_ITEM)
