@@ -2,8 +2,8 @@ plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.hilt.android)
-    kotlin("kapt") // todo change that to alias
-    id("kotlin-parcelize") // todo change that to alias
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
 }
@@ -43,12 +43,12 @@ android {
 dependencies {
 
     // projects
-    implementation(project(":core:threading"))
-    implementation(project(":core:networking"))
-    implementation(project(":core:common"))
-    implementation(project(":core:designsystem"))
-    testImplementation(project(":core:testing:unit"))
-
+    implementation(projects.core.threading)
+    implementation(projects.core.networking)
+    implementation(projects.core.common)
+    implementation(projects.core.designsystem)
+    implementation(projects.core.testing.ui)
+    implementation(projects.core.testing.unit)
 
     implementation(libs.javax.inject)
 
@@ -85,4 +85,7 @@ dependencies {
     androidTestImplementation(libs.navigation.test)
     androidTestImplementation(libs.androidx.runner)
     kaptAndroidTest(libs.hilt.kapt.test)
+
+    androidTestImplementation(libs.androidx.core)
+    androidTestImplementation(libs.androidx.test.ext.junit)
 }

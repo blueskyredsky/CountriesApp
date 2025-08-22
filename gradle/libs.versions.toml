@@ -47,6 +47,7 @@ watchface-complications-data-source-ktx = "1.1.1"
 runner = "1.6.1"
 kotlin = "2.1.0"
 kotlinxSerializationJson = "1.8.0"
+agp = "8.11.1"
 
 [libraries]
 androidx-core = { module = "androidx.test:core", version.ref = "core" }
@@ -121,6 +122,10 @@ apollo = { id = "com.apollographql.apollo", version.ref = "apollo" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt" }
+kotlin-parcelize = { id = "kotlin-parcelize" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 
 [bundles]

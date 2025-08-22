@@ -5,8 +5,8 @@ plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.hilt.android)
-    kotlin("kapt")
-    id("kotlin-parcelize")
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
 }
@@ -123,14 +123,14 @@ android {
 dependencies {
 
     // Projects
-    implementation(project(":feature:home"))
-    implementation(project(":feature:details"))
-    implementation(project(":core:common"))
-    implementation(project(":core:designsystem"))
-    implementation(project(":core:networking")) // fixme no need to add this dependency in this layer
-    implementation(project(":core:threading")) // fixme no need to add this dependency in this layer
-    testImplementation(project(":core:testing:unit"))
-    androidTestImplementation(project(":core:testing:ui"))
+    implementation(projects.feature.home)
+    implementation(projects.feature.details)
+    implementation(projects.core.threading)
+    implementation(projects.core.networking)
+    implementation(projects.core.common)
+    implementation(projects.core.designsystem)
+    implementation(projects.core.testing.ui)
+    implementation(projects.core.testing.unit)
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)

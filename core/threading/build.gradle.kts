@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.hilt.android)
-    kotlin("kapt") // todo change that to alias
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
