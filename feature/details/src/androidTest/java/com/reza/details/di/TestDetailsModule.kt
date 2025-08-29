@@ -1,6 +1,7 @@
 package com.reza.details.di
 
 import com.reza.details.domain.usecase.CountriesUseCase
+import com.reza.details.domain.usecases.FakeCountriesUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.components.SingletonComponent

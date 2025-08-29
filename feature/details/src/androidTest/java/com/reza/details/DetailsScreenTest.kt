@@ -64,13 +64,14 @@ class DetailsScreenTest {
         composeTestRule.setContent {
             DetailsScreen(
                 viewModel = detailsViewModel,
-                onSelectContinent = {}
+                onBackClick = {},
+                continentCode = "NA",
+                continent = "North America",
             )
         }
 
         composeTestRule.onAllNodes(
-            hasTestTag(UiTags.HomeScreen.CONTINENT_ITEM)
+            hasTestTag(UiTags.DetailsScreen.COUNTRY_ITEM)
         ).onFirst().assertIsDisplayed()
     }
-
 }

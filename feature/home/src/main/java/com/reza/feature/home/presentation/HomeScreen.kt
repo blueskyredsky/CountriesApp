@@ -173,6 +173,10 @@ private fun ContinentItem(
     onSelectContinent: (Continent) -> Unit
 ) {
     Card(
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainer,
+            contentColor = MaterialTheme.colorScheme.onSurface
+        ),
         modifier = modifier
             .clip(MaterialTheme.shapes.small)
             .clickable { onSelectContinent(continentView.continent) }

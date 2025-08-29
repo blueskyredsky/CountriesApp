@@ -9,13 +9,13 @@ plugins {
 }
 
 android {
-    namespace = "com.reza.details"
+    namespace = "com.reza.feature.details"
     compileSdk = 36
 
     defaultConfig {
         minSdk = 24
 
-        testInstrumentationRunner = "com.reza.feature.details.HiltTestRunner"
+        testInstrumentationRunner = "com.reza.details.HiltTestRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 

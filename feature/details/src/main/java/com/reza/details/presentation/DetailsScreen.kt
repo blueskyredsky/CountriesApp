@@ -46,8 +46,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.reza.details.R
 import com.reza.details.domain.model.Country
+import com.reza.feature.details.R
 import com.reza.systemdesign.ui.common.LoadingItem
 import com.reza.systemdesign.ui.util.UiTags
 
@@ -265,8 +265,8 @@ private fun CountryItem(
 ) {
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.background,
-            contentColor = MaterialTheme.colorScheme.onBackground
+            containerColor = MaterialTheme.colorScheme.surfaceContainer,
+            contentColor = MaterialTheme.colorScheme.onSurface
         ),
         modifier = modifier
             .clip(MaterialTheme.shapes.small)

@@ -12,7 +12,7 @@ plugins {
 }
 
 android {
-    namespace = "com.reza.mobile"
+    namespace = "com.reza.app"
     compileSdk = 36
 
     defaultConfig {
