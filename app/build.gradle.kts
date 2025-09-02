@@ -127,8 +127,8 @@ android {
 dependencies {
 
     // Projects
-    implementation(projects.feature.home)
-    implementation(projects.feature.details)
+    implementation(projects.feature.continents)
+    implementation(projects.feature.countries)
     implementation(projects.core.threading)
     implementation(projects.core.networking)
     implementation(projects.core.common)

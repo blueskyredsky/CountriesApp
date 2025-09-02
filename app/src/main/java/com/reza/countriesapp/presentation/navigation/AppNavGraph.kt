@@ -4,10 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.reza.details.presentation.navigation.detailsScreen
-import com.reza.details.presentation.navigation.navigateToDetails
-import com.reza.feature.home.presentation.navigation.HomeRoute
-import com.reza.feature.home.presentation.navigation.homeScreen
+import com.reza.countries.presentation.navigation.detailsScreen
+import com.reza.countries.presentation.navigation.navigateToDetails
+import com.reza.feature.continents.presentation.navigation.HomeRoute
+import com.reza.feature.continents.presentation.navigation.homeScreen
 
 @Composable
 fun AppNavGraph(
