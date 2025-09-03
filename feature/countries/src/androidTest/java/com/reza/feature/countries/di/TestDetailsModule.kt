@@ -1,7 +1,8 @@
-package com.reza.countries.di
+package com.reza.feature.countries.di
 
+import com.reza.countries.di.DetailsModule
 import com.reza.countries.domain.usecase.CountriesUseCase
-import com.reza.countries.domain.usecases.FakeCountriesUseCase
+import com.reza.feature.countries.domain.usecases.FakeCountriesUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.components.SingletonComponent

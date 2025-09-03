@@ -1,4 +1,4 @@
-package com.reza.countries.domain.usecases
+package com.reza.feature.countries.domain.usecases
 
 import com.reza.common.domain.model.ResultState
 import com.reza.countries.domain.model.Country

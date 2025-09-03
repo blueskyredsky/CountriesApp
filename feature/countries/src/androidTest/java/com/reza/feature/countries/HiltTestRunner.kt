@@ -1,4 +1,4 @@
-package com.reza.countries
+package com.reza.feature.countries
 
 import android.app.Application
 import android.content.Context

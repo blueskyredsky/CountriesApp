@@ -1,4 +1,4 @@
-package com.reza.countries
+package com.reza.feature.countries
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.ExperimentalTestApi
@@ -8,9 +8,10 @@ import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onFirst
+import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.reza.countries.di.DetailsModule
-import com.reza.countries.domain.usecases.FakeCountriesUseCase
+import com.reza.feature.countries.domain.usecases.FakeCountriesUseCase
 import com.reza.countries.presentation.CountriesScreen
 import com.reza.countries.presentation.DetailsViewModel
 import com.reza.systemdesign.ui.util.UiTags
@@ -93,5 +94,32 @@ class CountriesScreenTest {
         composeTestRule.onNode(
             hasText(FakeCountriesUseCase.ERROR_MESSAGE) and hasAnyAncestor(hasTestTag(UiTags.Common.SNACK_BAR))
         ).assertIsDisplayed()
+    }
+
+    @OptIn(ExperimentalTestApi::class)
+    @Test
+    fun screen_displays_error_state_and_retries_successfully() = runTest {
+        fakeCountriesUseCase.shouldReturnError = true
+
+        composeTestRule.setContent {
+            CountriesScreen(
+                viewModel = detailsViewModel,
+                onBackClick = {},
+                continentCode = "NA",
+                continent = "North America",
+            )
+        }
+
+        composeTestRule.onNode(
+            hasText(FakeCountriesUseCase.ERROR_MESSAGE) and hasAnyAncestor(hasTestTag(UiTags.Common.SNACK_BAR))
+        ).assertIsDisplayed()
+
+        // Trigger the retry action by clicking the "Retry" button
+        fakeCountriesUseCase.shouldReturnError = false
+        composeTestRule.onNode(hasText("Retry")).performClick()
+
+        composeTestRule.onAllNodes(
+            hasTestTag(UiTags.DetailsScreen.COUNTRY_ITEM)
+        ).onFirst().assertIsDisplayed()
     }
 }

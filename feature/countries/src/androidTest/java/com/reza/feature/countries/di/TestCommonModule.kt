@@ -1,4 +1,4 @@
-package com.reza.countries.di
+package com.reza.feature.countries.di
 
 import com.reza.common.di.CommonModule
 import com.reza.common.util.stringresolver.StringResolver

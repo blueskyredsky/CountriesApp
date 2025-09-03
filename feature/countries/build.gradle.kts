@@ -15,7 +15,7 @@ android {
     defaultConfig {
         minSdk = 24
 
-        testInstrumentationRunner = "com.reza.details.HiltTestRunner"
+        testInstrumentationRunner = "com.reza.feature.countries.HiltTestRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
