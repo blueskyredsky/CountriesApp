@@ -1,7 +1,5 @@
 [versions]
-com-android-application = "8.11.1"
 core = "1.7.0"
-firebase-bom = "33.0.0"
 javax-inject = "1"
 core-ktx = "1.12.0"
 junit = "4.13.2"
@@ -15,11 +13,8 @@ hilt-kapt = "2.57"
 hilt-test = "2.57"
 androidxHiltNavigationCompose = "1.2.0"
 navigation = "2.8.5"
-coil = "2.4.0"
-accompanist = "0.31.0-alpha"
 coroutines-test = "1.7.3"
 turbine = "1.0.0"
-datastore = "1.0.0"
 apollo = "4.0.0"
 apollo-mock-server-version = "0.0.1"
 viewmodel-compose = "2.7.0"
@@ -34,16 +29,7 @@ appcompat = "1.6.1"
 timber-version = "5.0.1"
 material = "1.5.4"
 material-version = "1.12.0"
-play-services-wearable = "18.1.0"
-compose-material = "1.2.1"
-compose-foundation = "1.2.1"
 compose-lifecycle = "2.8.7"
-core-splashscreen = "1.0.1"
-tiles = "1.1.0"
-tiles-material = "1.1.0"
-horologist-compose-tools = "0.4.8"
-horologist-tiles = "0.4.8"
-watchface-complications-data-source-ktx = "1.1.1"
 runner = "1.6.1"
 kotlin = "2.1.0"
 kotlinxSerializationJson = "1.8.0"
@@ -52,8 +38,6 @@ agp = "8.11.1"
 [libraries]
 androidx-core = { module = "androidx.test:core", version.ref = "core" }
 androidx-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 javax-inject = { module = "javax.inject:javax.inject", version.ref = "javax-inject" }
 navigation-test = { group = "androidx.navigation", name = "navigation-testing", version.ref = "navigation"}
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -63,26 +47,19 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
-ui = { group = "androidx.compose.ui", name = "ui" }
-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 material3 = { group = "androidx.compose.material3", name = "material3" }
 material = { group = "androidx.compose.material", name = "material", version.ref = "material" }
-material-icons = { group = "androidx.compose.material", name = "material-icons-extended" }
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt-android" }
-hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt-android" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
 hilt-test = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt-test" }
 hilt-kapt-test = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt-test" }
-coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
-accompanist-placeholder = { group = "com.google.accompanist", name = "accompanist-placeholder-material", version.ref = "accompanist" }
 coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines-test" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 apollo = { group = "com.apollographql.apollo", name = "apollo-runtime", version.ref = "apollo" }
 viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "viewmodel-compose" }
 hilt-kapt = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt-kapt" }
@@ -98,34 +75,21 @@ benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber-version" }
 google-material = { group = "com.google.android.material", name = "material", version.ref = "material-version" }
-play-services-wearable = { group = "com.google.android.gms", name = "play-services-wearable", version.ref = "play-services-wearable" }
-androidx-compose-material = { group = "androidx.wear.compose", name = "compose-material", version.ref = "compose-material" }
-androidx-compose-foundation = { group = "androidx.wear.compose", name = "compose-foundation", version.ref = "compose-foundation" }
 compose-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "compose-lifecycle" }
-androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "core-splashscreen" }
-androidx-tiles = { group = "androidx.wear.tiles", name = "tiles", version.ref = "tiles" }
-androidx-tiles-material = { group = "androidx.wear.tiles", name = "tiles-material", version.ref = "tiles-material" }
-horologist-compose-tools = { group = "com.google.android.horologist", name = "horologist-compose-tools", version.ref = "horologist-compose-tools" }
-horologist-tiles = { group = "com.google.android.horologist", name = "horologist-tiles", version.ref = "horologist-tiles" }
-androidx-watchface-complications-data-source-ktx = { group = "androidx.wear.watchface", name = "watchface-complications-data-source-ktx", version.ref = "watchface-complications-data-source-ktx" }
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 
 [plugins]
-com-android-application = { id = "com.android.application", version.ref = "com-android-application" }
+com-android-application = { id = "com.android.application", version.ref = "agp" }
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt-android" }
-com-android-test = { id = "com.android.test", version.ref = "com-android-application" }
-com-android-library = { id = "com.android.library", version.ref = "com-android-application" }
-org-jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+com-android-test = { id = "com.android.test", version.ref = "agp" }
+com-android-library = { id = "com.android.library", version.ref = "agp" }
 apollo = { id = "com.apollographql.apollo", version.ref = "apollo" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt" }
 kotlin-parcelize = { id = "kotlin-parcelize" }
-android-application = { id = "com.android.application", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-android-library = { id = "com.android.library", version.ref = "agp" }
 
 [bundles]
