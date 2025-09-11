@@ -93,7 +93,7 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.navigation.test)
     androidTestImplementation(libs.androidx.runner)
-    kaptAndroidTest(libs.hilt.kapt.test)
+    kaptAndroidTest(libs.hilt.kapt)
 
     androidTestImplementation(libs.androidx.core)
     androidTestImplementation(libs.androidx.test.ext.junit)
