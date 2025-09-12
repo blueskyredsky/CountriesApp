@@ -18,7 +18,7 @@ private const val TIME_OUT = 10L
 @Module
 @InstallIn(SingletonComponent::class)
 object SingletonComponentNetworkModule {
-    // Networking
+
     @Singleton
     @Provides
     fun provideOkHttpLoggingInterceptor() =

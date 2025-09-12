@@ -36,7 +36,6 @@ import androidx.compose.ui.unit.dp
 import com.reza.countriesapp.ui.theme.CountriesAppTheme
 import com.reza.systemdesign.ui.util.UiTags
 
-// fixme should be modified based on design system
 @Composable
 fun ShimmerLazyColumn() {
     LazyColumn(
@@ -49,7 +48,17 @@ fun ShimmerLazyColumn() {
 }
 
 @Composable
-fun ShimmerItem(modifier: Modifier = Modifier) {
+fun LoadingItem(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator(Modifier.testTag(UiTags.DetailsScreen.PROGRESS_INDICATOR))
+    }
+}
+
+@Composable
+private fun ShimmerItem(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .padding(start = 16.dp, end = 16.dp, top = 16.dp)
@@ -79,7 +88,7 @@ fun ShimmerItem(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ShimmerEffect(
+private fun ShimmerEffect(
     modifier: Modifier,
     widthOfShadowBrush: Int = 500,
     angleOfAxisY: Float = 270f,
@@ -122,16 +131,6 @@ fun ShimmerEffect(
                 .matchParentSize()
                 .background(brush)
         )
-    }
-}
-
-@Composable
-fun LoadingItem(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator(Modifier.testTag(UiTags.DetailsScreen.PROGRESS_INDICATOR))
     }
 }
 
