@@ -18,18 +18,18 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class ContinentsViewModel @Inject constructor(
     private val continentsUseCase: ContinentsUseCase,
     private val continentsImageUseCase: ContinentImageUseCase,
     private val stringResolver: StringResolver,
 ) : ViewModel() {
 
-    private val _homeUiState = MutableStateFlow<HomeUiState>(HomeUiState.Empty)
-    val homeUiState = _homeUiState.asStateFlow()
+    private val _continentsUiState = MutableStateFlow<ContinentsUiState>(ContinentsUiState.Empty)
+    val continentsUiState = _continentsUiState.asStateFlow()
 
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
-        _homeUiState.update {
-            HomeUiState.Error(
+        _continentsUiState.update {
+            ContinentsUiState.Error(
                 exception.message ?: stringResolver.findString(string.general_error_message)
             )
         }
@@ -37,22 +37,22 @@ class HomeViewModel @Inject constructor(
 
     private fun getContinents(isRefreshing: Boolean = false) {
         viewModelScope.launch(exceptionHandler) {
-            if (_homeUiState.value !is HomeUiState.Success || isRefreshing) { // to avoid calling api again when navigating back to HomeScreen
+            if (_continentsUiState.value !is ContinentsUiState.Success || isRefreshing) { // to avoid calling api again when navigating back to HomeScreen
                 // Loading state
                 if (isRefreshing) {
-                    _homeUiState.value = HomeUiState.Refreshing
+                    _continentsUiState.value = ContinentsUiState.Refreshing
                 } else {
-                    _homeUiState.value = HomeUiState.Loading
+                    _continentsUiState.value = ContinentsUiState.Loading
                 }
 
                 // Getting continents
                 when (val result = continentsUseCase.getContinents()) {
                     is ResultState.Success -> {
-                        setHomeUiStateToSuccess(result)
+                        setContinentsUiStateToSuccess(result)
                     }
 
                     is ResultState.Failure -> {
-                        setHomeUiStateToError(result)
+                        setContinentsUiStateToError(result)
                     }
                 }
             }
@@ -60,31 +60,31 @@ class HomeViewModel @Inject constructor(
     }
 
     @VisibleForTesting
-    fun setHomeUiStateToSuccess(result: ResultState.Success<List<Continent>>) {
-        _homeUiState.update {
-            HomeUiState.Success(result.data.transformToContinentViews {
+    fun setContinentsUiStateToSuccess(result: ResultState.Success<List<Continent>>) {
+        _continentsUiState.update {
+            ContinentsUiState.Success(result.data.transformToContinentViews {
                 continentsImageUseCase.findContinentImage(it)
             })
         }
     }
 
     @VisibleForTesting
-    fun setHomeUiStateToError(result: ResultState.Failure) {
-        _homeUiState.update {
-            HomeUiState.Error(result.error)
+    fun setContinentsUiStateToError(result: ResultState.Failure) {
+        _continentsUiState.update {
+            ContinentsUiState.Error(result.error)
         }
     }
 
     private fun consumeErrorMessage() {
-        _homeUiState.update {
-            HomeUiState.Error(null)
+        _continentsUiState.update {
+            ContinentsUiState.Error(null)
         }
     }
 
-    fun onEvent(event: HomeEvent) {
+    fun onEvent(event: ContinentsEvent) {
         when (event) {
-            is HomeEvent.GetContinents -> getContinents(event.isRefreshing)
-            HomeEvent.ConsumeErrorMessage -> consumeErrorMessage()
+            is ContinentsEvent.GetContinents -> getContinents(event.isRefreshing)
+            ContinentsEvent.ConsumeErrorMessage -> consumeErrorMessage()
         }
     }
 }

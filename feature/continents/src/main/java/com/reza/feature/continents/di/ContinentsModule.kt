@@ -16,7 +16,7 @@ import dagger.hilt.android.components.ActivityRetainedComponent
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
-abstract class HomeModule {
+abstract class ContinentsModule {
 
     @Binds
     @Reusable

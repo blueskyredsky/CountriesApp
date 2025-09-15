@@ -6,8 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.reza.countries.presentation.navigation.detailsScreen
 import com.reza.countries.presentation.navigation.navigateToDetails
-import com.reza.feature.continents.presentation.navigation.HomeRoute
-import com.reza.feature.continents.presentation.navigation.homeScreen
+import com.reza.feature.continents.presentation.navigation.ContinentsRoute
+import com.reza.feature.continents.presentation.navigation.continentsScreen
 
 @Composable
 fun AppNavGraph(
@@ -17,9 +17,9 @@ fun AppNavGraph(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = HomeRoute
+        startDestination = ContinentsRoute
     ) {
-        homeScreen { continent ->
+        continentsScreen { continent ->
             navController.navigateToDetails(continent = continent.name, continentCode = continent.code)
         }
 

@@ -12,7 +12,7 @@ import dagger.hilt.testing.TestInstallIn
 @Module
 @TestInstallIn(
     components = [SingletonComponent::class],
-    replaces = [HomeModule::class]
+    replaces = [ContinentsModule::class]
 )
 abstract class TestHomeModule {
 

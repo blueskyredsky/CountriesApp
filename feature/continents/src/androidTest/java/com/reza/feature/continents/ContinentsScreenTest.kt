@@ -10,12 +10,12 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.reza.feature.continents.di.HomeModule
+import com.reza.feature.continents.di.ContinentsModule
 import com.reza.feature.continents.domain.model.Continent
 import com.reza.feature.continents.domain.usecase.FakeContinentImageUseCase
 import com.reza.feature.continents.domain.usecase.FakeContinentsUseCase
 import com.reza.feature.continents.presentation.ContinentsScreen
-import com.reza.feature.continents.presentation.HomeViewModel
+import com.reza.feature.continents.presentation.ContinentsViewModel
 import com.reza.systemdesign.ui.util.UiTags
 import com.reza.ui.util.FakeStringResolver
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -32,7 +32,7 @@ import javax.inject.Inject
 
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
-@UninstallModules(HomeModule::class)
+@UninstallModules(ContinentsModule::class)
 class ContinentsScreenTest {
 
     @get:Rule(order = 0)
@@ -50,7 +50,7 @@ class ContinentsScreenTest {
     @Inject
     lateinit var fakeContinentImageUseCase: FakeContinentImageUseCase
 
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var continentsViewModel: ContinentsViewModel
 
     @Before
     fun setup() {
@@ -70,7 +70,7 @@ class ContinentsScreenTest {
 
 
         // Manually create the HomeViewModel using the injected fakes
-        homeViewModel = HomeViewModel(
+        continentsViewModel = ContinentsViewModel(
             continentsUseCase = fakeContinentsUseCase,
             continentsImageUseCase = fakeContinentImageUseCase,
             stringResolver = fakeStringResolver
@@ -87,7 +87,7 @@ class ContinentsScreenTest {
     fun screen_displays_success_state() = runTest {
         composeTestRule.setContent {
             ContinentsScreen(
-                viewModel = homeViewModel,
+                viewModel = continentsViewModel,
                 onSelectContinent = {}
             )
         }
@@ -104,7 +104,7 @@ class ContinentsScreenTest {
 
         composeTestRule.setContent {
             ContinentsScreen(
-                viewModel = homeViewModel,
+                viewModel = continentsViewModel,
                 onSelectContinent = {}
             )
         }
@@ -122,7 +122,7 @@ class ContinentsScreenTest {
 
         composeTestRule.setContent {
             ContinentsScreen(
-                viewModel = homeViewModel,
+                viewModel = continentsViewModel,
                 onSelectContinent = {}
             )
         }

@@ -11,7 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Stable
-class HomeStateHolder(
+class ContinentsStateHolder(
     val snackBarHostState: SnackbarHostState,
     private val scope: CoroutineScope
 ) {
@@ -33,9 +33,9 @@ class HomeStateHolder(
 }
 
 @Composable
-fun rememberHomeScreenState(
+fun rememberContinentsScreenState(
     snackBarHostState: SnackbarHostState = remember { SnackbarHostState() },
     scope: CoroutineScope = rememberCoroutineScope(),
 ) = remember {
-    HomeStateHolder(scope = scope, snackBarHostState = snackBarHostState)
+    ContinentsStateHolder(scope = scope, snackBarHostState = snackBarHostState)
 }

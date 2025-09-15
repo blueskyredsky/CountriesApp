@@ -5,15 +5,15 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.reza.feature.continents.domain.model.Continent
 import com.reza.feature.continents.presentation.ContinentsScreen
-import com.reza.feature.continents.presentation.HomeViewModel
+import com.reza.feature.continents.presentation.ContinentsViewModel
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object HomeRoute // route to home screen
+data object ContinentsRoute // route to home screen
 
-fun NavGraphBuilder.homeScreen(onSelectContinent: (Continent) -> Unit) {
-    composable<HomeRoute> { backStackEntry ->
-        val viewModel = hiltViewModel<HomeViewModel>(backStackEntry)
+fun NavGraphBuilder.continentsScreen(onSelectContinent: (Continent) -> Unit) {
+    composable<ContinentsRoute> { backStackEntry ->
+        val viewModel = hiltViewModel<ContinentsViewModel>(backStackEntry)
         ContinentsScreen(
             viewModel = viewModel,
             onSelectContinent = onSelectContinent
