@@ -4,33 +4,33 @@ import androidx.compose.runtime.Immutable
 import com.reza.countries.domain.model.Country
 
 /**
- * Represents the UI state for the details screen.
+ * Represents the UI state for the countries screen.
  */
-sealed interface DetailsUiState {
+sealed interface CountriesUiState {
 
     /**
      * Represents the success state, where the list of countries is available.
      */
     @Immutable
-    data class Success(val countries: List<Country>) : DetailsUiState
+    data class Success(val countries: List<Country>) : CountriesUiState
 
     /**
      * Represents the error state, where an error occurred while fetching the data.
      */
-    data class Error(val errorMessage: String?) : DetailsUiState
+    data class Error(val errorMessage: String?) : CountriesUiState
 
     /**
      * Represents the empty state, where there is no data to display.
      */
-    data object Empty : DetailsUiState
+    data object Empty : CountriesUiState
 
     /**
      * Represents the loading state, where the data is being fetched.
      */
-    data object Loading : DetailsUiState
+    data object Loading : CountriesUiState
 
     /**
      * Represents the refreshing state, where the data is being refreshed.
      */
-    data object Refreshing : DetailsUiState
+    data object Refreshing : CountriesUiState
 }

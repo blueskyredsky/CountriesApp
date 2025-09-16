@@ -28,48 +28,48 @@ class AppNavigationTest {
 
     @Test
     fun appNavHost_verifyStartDestination() {
-        composeTestRule.onNodeWithTag(UiTags.HomeScreen.ROOT).assertExists()
+        composeTestRule.onNodeWithTag(UiTags.ContinentScreen.ROOT).assertExists()
     }
 
     @OptIn(ExperimentalTestApi::class)
     @Test
     fun verify_shimmerAndThenItemsAreDisplayed() {
         // the waitUntil APIs
-        composeTestRule.waitUntilDoesNotExist(hasTestTag(UiTags.HomeScreen.SHIMMER_LAZY_COLUMN))
+        composeTestRule.waitUntilDoesNotExist(hasTestTag(UiTags.ContinentScreen.SHIMMER_LAZY_COLUMN))
 
         composeTestRule.onAllNodes(
-            hasTestTag(UiTags.HomeScreen.CONTINENT_ITEM)
+            hasTestTag(UiTags.ContinentScreen.CONTINENT_ITEM)
         ).onFirst().assertIsDisplayed()
     }
 
     @OptIn(ExperimentalTestApi::class)
     @Test
-    fun appNavHost_verifyNavigateToDetailsDestination() {
+    fun appNavHost_verifyNavigateToCountriesDestination() {
         // the waitUntil APIs
-        composeTestRule.waitUntilDoesNotExist(hasTestTag(UiTags.HomeScreen.SHIMMER_LAZY_COLUMN))
+        composeTestRule.waitUntilDoesNotExist(hasTestTag(UiTags.ContinentScreen.SHIMMER_LAZY_COLUMN))
 
         composeTestRule.onAllNodes(
-            hasTestTag(UiTags.HomeScreen.CONTINENT_ITEM)
+            hasTestTag(UiTags.ContinentScreen.CONTINENT_ITEM)
         ).onFirst().performClick()
 
-        composeTestRule.onNodeWithTag(UiTags.DetailsScreen.ROOT).assertExists()
+        composeTestRule.onNodeWithTag(UiTags.CountriesScreen.ROOT).assertExists()
     }
 
     @OptIn(ExperimentalTestApi::class)
     @Test
-    fun verify_itemsOnDetailsScreenAreDisplayed() {
+    fun verify_itemsOnCountriesScreenAreDisplayed() {
         // the waitUntil APIs
-        composeTestRule.waitUntilDoesNotExist(hasTestTag(UiTags.HomeScreen.SHIMMER_LAZY_COLUMN))
+        composeTestRule.waitUntilDoesNotExist(hasTestTag(UiTags.ContinentScreen.SHIMMER_LAZY_COLUMN))
 
         composeTestRule.onAllNodes(
-            hasTestTag(UiTags.HomeScreen.CONTINENT_ITEM)
+            hasTestTag(UiTags.ContinentScreen.CONTINENT_ITEM)
         ).onFirst().performClick()
 
         // the waitUntil APIs
-        composeTestRule.waitUntilDoesNotExist(hasTestTag(UiTags.DetailsScreen.PROGRESS_INDICATOR))
+        composeTestRule.waitUntilDoesNotExist(hasTestTag(UiTags.CountriesScreen.PROGRESS_INDICATOR))
 
         composeTestRule.onAllNodes(
-            hasTestTag(UiTags.DetailsScreen.COUNTRY_ITEM)
+            hasTestTag(UiTags.CountriesScreen.COUNTRY_ITEM)
         ).onFirst().assertIsDisplayed()
     }
 }

@@ -1,9 +1,9 @@
 package com.reza.countries.presentation
 
 /**
- * Sealed interface representing events related to home screen
+ * Sealed interface representing events related to continents screen
  */
-internal sealed interface DetailsEvent {
+internal sealed interface CountriesEvent {
     /**
      * Represents an event to fetch the list of countries for a given continent.
      *
@@ -11,16 +11,16 @@ internal sealed interface DetailsEvent {
      * @property isRefreshing Indicates whether this request is part of a refresh operation.
      * Defaults to `false`.
      */
-    data class GetCountries(val continentCode: String, val isRefreshing: Boolean = false) : DetailsEvent
+    data class GetCountries(val continentCode: String, val isRefreshing: Boolean = false) : CountriesEvent
 
     /**
      * Represents an event to consume and clear any existing error messages.
      * This is typically used after an error has been handled or displayed.
      */
-    data object ConsumeErrorMessage : DetailsEvent
+    data object ConsumeErrorMessage : CountriesEvent
 
     /**
      * Represents an event to search for countries based on a given query
      */
-    data class Search(val query: String) : DetailsEvent
+    data class Search(val query: String) : CountriesEvent
 }

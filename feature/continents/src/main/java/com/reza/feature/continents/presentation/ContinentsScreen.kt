@@ -35,7 +35,7 @@ fun ContinentsScreen(
     viewModel: ContinentsViewModel,
     onSelectContinent: (Continent) -> Unit
 ) {
-    val homeUiState by viewModel.continentsUiState.collectAsStateWithLifecycle()
+    val continentsUiState by viewModel.continentsUiState.collectAsStateWithLifecycle()
     val screenState = rememberContinentsScreenState()
 
     LaunchedEffect(Unit) {
@@ -43,7 +43,7 @@ fun ContinentsScreen(
     }
 
     Scaffold(
-        modifier = Modifier.testTag(UiTags.HomeScreen.ROOT),
+        modifier = Modifier.testTag(UiTags.ContinentScreen.ROOT),
         topBar = {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -59,7 +59,7 @@ fun ContinentsScreen(
             val state = rememberPullToRefreshState()
             PullToRefreshBox(
                 state = state,
-                isRefreshing = homeUiState == ContinentsUiState.Refreshing,
+                isRefreshing = continentsUiState == ContinentsUiState.Refreshing,
                 onRefresh = {
                     viewModel.onEvent(ContinentsEvent.GetContinents(true))
                 },
@@ -69,7 +69,7 @@ fun ContinentsScreen(
                 indicator = {
                     Indicator(
                         modifier = Modifier.align(Alignment.TopCenter),
-                        isRefreshing = homeUiState == ContinentsUiState.Refreshing,
+                        isRefreshing = continentsUiState == ContinentsUiState.Refreshing,
                         containerColor = MaterialTheme.colorScheme.primaryContainer,
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
                         state = state
@@ -77,7 +77,7 @@ fun ContinentsScreen(
                 }
             ) {
                 Crossfade(
-                    targetState = homeUiState,
+                    targetState = continentsUiState,
                     animationSpec = tween(500),
                     label = "cross fade"
                 ) { targetState ->

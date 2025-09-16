@@ -20,7 +20,7 @@ class CommonTest {
         }
 
         composeTestRule
-            .onNodeWithTag(testTag = UiTags.DetailsScreen.PROGRESS_INDICATOR)
+            .onNodeWithTag(testTag = UiTags.CountriesScreen.PROGRESS_INDICATOR)
             .assertIsDisplayed()
     }
 }

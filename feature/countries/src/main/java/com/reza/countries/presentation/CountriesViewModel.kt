@@ -20,27 +20,27 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-internal class DetailsViewModel @Inject constructor(
+internal class CountriesViewModel @Inject constructor(
     private val countriesUseCase: CountriesUseCase,
     private val stringResolver: StringResolver
 ) : ViewModel() {
 
-    private val _detailsUiState = MutableStateFlow<DetailsUiState>(DetailsUiState.Empty)
-    val detailsUiState = _detailsUiState.asStateFlow()
+    private val _countriesUiState = MutableStateFlow<CountriesUiState>(CountriesUiState.Empty)
+    val countriesUiState = _countriesUiState.asStateFlow()
 
     private val _searchQuery = MutableStateFlow("")
     val searchQuery = _searchQuery.asStateFlow()
 
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
-        _detailsUiState.update {
-            DetailsUiState.Error(
+        _countriesUiState.update {
+            CountriesUiState.Error(
                 exception.message ?: stringResolver.findString(R.string.general_error_message)
             )
         }
     }
 
-    val filteredCountries = combine(detailsUiState, searchQuery) { uiState, query ->
-        if (uiState is DetailsUiState.Success) {
+    val filteredCountries = combine(countriesUiState, searchQuery) { uiState, query ->
+        if (uiState is CountriesUiState.Success) {
             filterCountries(uiState.countries, query)
         } else {
             emptyList()
@@ -63,22 +63,22 @@ internal class DetailsViewModel @Inject constructor(
         continentCode: String
     ) {
         viewModelScope.launch(exceptionHandler) {
-            if (_detailsUiState.value !is DetailsUiState.Success || isRefreshing) { // to avoid calling api again when navigating back to HomeScreen
+            if (_countriesUiState.value !is CountriesUiState.Success || isRefreshing) { // to avoid calling api again when navigating back to CountriesScreen
                 // Loading state
                 if (isRefreshing) {
-                    _detailsUiState.value = DetailsUiState.Refreshing
+                    _countriesUiState.value = CountriesUiState.Refreshing
                 } else {
-                    _detailsUiState.value = DetailsUiState.Loading
+                    _countriesUiState.value = CountriesUiState.Loading
                 }
 
                 // Getting continents
                 when (val result = countriesUseCase.getCountries(continentCode)) {
                     is ResultState.Success -> {
-                        setDetailsUiStateToSuccess(result = result)
+                        setCountriesUiStateToSuccess(result = result)
                     }
 
                     is ResultState.Failure -> {
-                        setDetailsUiStateToError(result)
+                        setCountriesUiStateToError(result)
                     }
                 }
             }
@@ -86,38 +86,38 @@ internal class DetailsViewModel @Inject constructor(
     }
 
     @VisibleForTesting
-    fun setDetailsUiStateToSuccess(
+    fun setCountriesUiStateToSuccess(
         result: ResultState.Success<List<Country>>
     ) {
-        _detailsUiState.update {
-            DetailsUiState.Success(result.data)
+        _countriesUiState.update {
+            CountriesUiState.Success(result.data)
         }
     }
 
     @VisibleForTesting
-    fun setDetailsUiStateToError(result: ResultState.Failure) {
-        _detailsUiState.update {
-            DetailsUiState.Error(result.error)
+    fun setCountriesUiStateToError(result: ResultState.Failure) {
+        _countriesUiState.update {
+            CountriesUiState.Error(result.error)
         }
     }
 
     private fun consumeErrorMessage() {
-        _detailsUiState.update {
-            DetailsUiState.Error(null)
+        _countriesUiState.update {
+            CountriesUiState.Error(null)
         }
     }
 
-    fun onEvent(event: DetailsEvent) {
+    fun onEvent(event: CountriesEvent) {
         when (event) {
-            DetailsEvent.ConsumeErrorMessage -> {
+            CountriesEvent.ConsumeErrorMessage -> {
                 consumeErrorMessage()
             }
 
-            is DetailsEvent.GetCountries -> {
+            is CountriesEvent.GetCountries -> {
                 getCountries(isRefreshing = event.isRefreshing, continentCode = event.continentCode)
             }
 
-            is DetailsEvent.Search -> {
+            is CountriesEvent.Search -> {
                 _searchQuery.value = event.query
             }
         }

@@ -10,10 +10,10 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.reza.countries.di.DetailsModule
+import com.reza.countries.di.CountriesModule
 import com.reza.feature.countries.domain.usecases.FakeCountriesUseCase
 import com.reza.countries.presentation.CountriesScreen
-import com.reza.countries.presentation.DetailsViewModel
+import com.reza.countries.presentation.CountriesViewModel
 import com.reza.systemdesign.ui.util.UiTags
 import com.reza.ui.util.FakeStringResolver
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -29,7 +29,7 @@ import javax.inject.Inject
 
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
-@UninstallModules(DetailsModule::class)
+@UninstallModules(CountriesModule::class)
 class CountriesScreenTest {
 
     @get:Rule(order = 0)
@@ -44,13 +44,13 @@ class CountriesScreenTest {
     @Inject
     lateinit var fakeCountriesUseCase: FakeCountriesUseCase
 
-    private lateinit var detailsViewModel: DetailsViewModel
+    private lateinit var countriesViewModel: CountriesViewModel
 
     @Before
     fun setup() {
         hiltRule.inject()
 
-        detailsViewModel = DetailsViewModel(
+        countriesViewModel = CountriesViewModel(
             countriesUseCase = fakeCountriesUseCase,
             stringResolver = fakeStringResolver
         )
@@ -66,7 +66,7 @@ class CountriesScreenTest {
     fun screen_displays_success_state() = runTest {
         composeTestRule.setContent {
             CountriesScreen(
-                viewModel = detailsViewModel,
+                viewModel = countriesViewModel,
                 onBackClick = {},
                 continentCode = "NA",
                 continent = "North America",
@@ -74,7 +74,7 @@ class CountriesScreenTest {
         }
 
         composeTestRule.onAllNodes(
-            hasTestTag(UiTags.DetailsScreen.COUNTRY_ITEM)
+            hasTestTag(UiTags.CountriesScreen.COUNTRY_ITEM)
         ).onFirst().assertIsDisplayed()
     }
 
@@ -84,7 +84,7 @@ class CountriesScreenTest {
 
         composeTestRule.setContent {
             CountriesScreen(
-                viewModel = detailsViewModel,
+                viewModel = countriesViewModel,
                 onBackClick = {},
                 continentCode = "NA",
                 continent = "North America",
@@ -103,7 +103,7 @@ class CountriesScreenTest {
 
         composeTestRule.setContent {
             CountriesScreen(
-                viewModel = detailsViewModel,
+                viewModel = countriesViewModel,
                 onBackClick = {},
                 continentCode = "NA",
                 continent = "North America",
@@ -119,7 +119,7 @@ class CountriesScreenTest {
         composeTestRule.onNode(hasText("Retry")).performClick()
 
         composeTestRule.onAllNodes(
-            hasTestTag(UiTags.DetailsScreen.COUNTRY_ITEM)
+            hasTestTag(UiTags.CountriesScreen.COUNTRY_ITEM)
         ).onFirst().assertIsDisplayed()
     }
 }

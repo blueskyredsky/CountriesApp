@@ -40,7 +40,7 @@ internal fun ContinentItem(
         modifier = modifier
             .clip(MaterialTheme.shapes.small)
             .clickable { onSelectContinent(continentView.continent) }
-            .testTag(UiTags.HomeScreen.CONTINENT_ITEM),
+            .testTag(UiTags.ContinentScreen.CONTINENT_ITEM),
         shape = MaterialTheme.shapes.small,
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp

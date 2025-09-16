@@ -14,7 +14,7 @@ import dagger.hilt.testing.TestInstallIn
     components = [SingletonComponent::class],
     replaces = [ContinentsModule::class]
 )
-abstract class TestHomeModule {
+abstract class TestContinentsModule {
 
     @Binds
     internal abstract fun bindContinentsUseCase(

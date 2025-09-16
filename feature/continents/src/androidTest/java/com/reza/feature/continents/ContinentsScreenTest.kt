@@ -69,7 +69,7 @@ class ContinentsScreenTest {
         fakeContinentImageUseCase.setContinentImage(Continent.ANTARCTICA, R.drawable.ic_antarctica)
 
 
-        // Manually create the HomeViewModel using the injected fakes
+        // Manually create the ContinentViewModel using the injected fakes
         continentsViewModel = ContinentsViewModel(
             continentsUseCase = fakeContinentsUseCase,
             continentsImageUseCase = fakeContinentImageUseCase,
@@ -93,7 +93,7 @@ class ContinentsScreenTest {
         }
 
         composeTestRule.onAllNodes(
-            hasTestTag(UiTags.HomeScreen.CONTINENT_ITEM)
+            hasTestTag(UiTags.ContinentScreen.CONTINENT_ITEM)
         ).onFirst().assertIsDisplayed()
     }
 
@@ -136,7 +136,7 @@ class ContinentsScreenTest {
         composeTestRule.onNode(hasText("Retry")).performClick()
 
         composeTestRule.onAllNodes(
-            hasTestTag(UiTags.HomeScreen.CONTINENT_ITEM)
+            hasTestTag(UiTags.ContinentScreen.CONTINENT_ITEM)
         ).onFirst().assertIsDisplayed()
     }
 }

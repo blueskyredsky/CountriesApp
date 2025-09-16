@@ -15,11 +15,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
@@ -39,7 +37,7 @@ import com.reza.systemdesign.ui.util.UiTags
 @Composable
 fun ShimmerLazyColumn() {
     LazyColumn(
-        modifier = Modifier.fillMaxSize().testTag(UiTags.HomeScreen.SHIMMER_LAZY_COLUMN)
+        modifier = Modifier.fillMaxSize().testTag(UiTags.ContinentScreen.SHIMMER_LAZY_COLUMN)
     ) {
         items(10) {
             ShimmerItem()
@@ -53,7 +51,7 @@ fun LoadingItem(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        CircularProgressIndicator(Modifier.testTag(UiTags.DetailsScreen.PROGRESS_INDICATOR))
+        CircularProgressIndicator(Modifier.testTag(UiTags.CountriesScreen.PROGRESS_INDICATOR))
     }
 }
 

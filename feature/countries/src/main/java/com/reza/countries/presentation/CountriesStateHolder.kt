@@ -16,7 +16,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Stable
-internal class DetailsStateHolder(
+internal class CountriesStateHolder(
     val snackBarHostState: SnackbarHostState,
     private val scope: CoroutineScope,
     isSearchVisible: Boolean = false,
@@ -51,11 +51,11 @@ internal class DetailsStateHolder(
         }
     }
 
-    companion object {
-        fun detailsStateSaver(
+    companion object Companion {
+        fun countriesStateSaver(
             snackBarHostState: SnackbarHostState,
             scope: CoroutineScope
-        ) = Saver<DetailsStateHolder, Any>(
+        ) = Saver<CountriesStateHolder, Any>(
             save = { value ->
                 listOf(value.isSearchVisible, value.searchQuery)
             },
@@ -64,7 +64,7 @@ internal class DetailsStateHolder(
                 if (list?.size == 2) {
                     val isSearchVisible = list[0] as? Boolean ?: false
                     val searchQuery = list[1] as? String ?: ""
-                    DetailsStateHolder(
+                    CountriesStateHolder(
                         snackBarHostState = snackBarHostState,
                         scope = scope,
                         isSearchVisible = isSearchVisible,
@@ -79,11 +79,11 @@ internal class DetailsStateHolder(
 }
 
 @Composable
-internal fun rememberDetailsScreenState(
+internal fun rememberCountriesScreenState(
     snackBarHostState: SnackbarHostState = remember { SnackbarHostState() },
     scope: CoroutineScope = rememberCoroutineScope(),
 ) = rememberSaveable(
-    saver = DetailsStateHolder.detailsStateSaver(snackBarHostState, scope)
+    saver = CountriesStateHolder.countriesStateSaver(snackBarHostState, scope)
 ) {
-    DetailsStateHolder(scope = scope, snackBarHostState = snackBarHostState)
+    CountriesStateHolder(scope = scope, snackBarHostState = snackBarHostState)
 }

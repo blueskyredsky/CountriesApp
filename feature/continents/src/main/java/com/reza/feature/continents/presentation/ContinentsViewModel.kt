@@ -37,7 +37,7 @@ class ContinentsViewModel @Inject constructor(
 
     private fun getContinents(isRefreshing: Boolean = false) {
         viewModelScope.launch(exceptionHandler) {
-            if (_continentsUiState.value !is ContinentsUiState.Success || isRefreshing) { // to avoid calling api again when navigating back to HomeScreen
+            if (_continentsUiState.value !is ContinentsUiState.Success || isRefreshing) { // to avoid calling api again when navigating back to ContinentsScreen
                 // Loading state
                 if (isRefreshing) {
                     _continentsUiState.value = ContinentsUiState.Refreshing

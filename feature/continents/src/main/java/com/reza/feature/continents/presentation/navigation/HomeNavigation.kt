@@ -9,7 +9,7 @@ import com.reza.feature.continents.presentation.ContinentsViewModel
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object ContinentsRoute // route to home screen
+data object ContinentsRoute // route to continents screen
 
 fun NavGraphBuilder.continentsScreen(onSelectContinent: (Continent) -> Unit) {
     composable<ContinentsRoute> { backStackEntry ->

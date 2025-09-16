@@ -54,28 +54,28 @@ import com.reza.systemdesign.ui.util.UiTags
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun CountriesScreen(
-    viewModel: DetailsViewModel,
+    viewModel: CountriesViewModel,
     onBackClick: () -> Unit,
     continentCode: String,
     continent: String
 ) {
     LaunchedEffect(key1 = continentCode) {
-        viewModel.onEvent(DetailsEvent.GetCountries(continentCode))
+        viewModel.onEvent(CountriesEvent.GetCountries(continentCode))
     }
 
-    val detailsUiState by viewModel.detailsUiState.collectAsStateWithLifecycle()
+    val countriesUiState by viewModel.countriesUiState.collectAsStateWithLifecycle()
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle()
     val filteredCountries by viewModel.filteredCountries.collectAsStateWithLifecycle()
-    val screenState = rememberDetailsScreenState()
+    val screenState = rememberCountriesScreenState()
 
     BackHandler(enabled = screenState.isSearchVisible) {
         screenState.clearSearchQuery()
-        viewModel.onEvent(DetailsEvent.Search(""))
+        viewModel.onEvent(CountriesEvent.Search(""))
         screenState.toggleSearchVisibility()
     }
 
     Scaffold(
-        modifier = Modifier.testTag(UiTags.DetailsScreen.ROOT),
+        modifier = Modifier.testTag(UiTags.CountriesScreen.ROOT),
         topBar = {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -88,7 +88,7 @@ internal fun CountriesScreen(
                             TextField(
                                 value = searchQuery,
                                 onValueChange = { newQuery ->
-                                    viewModel.onEvent(DetailsEvent.Search(newQuery))
+                                    viewModel.onEvent(CountriesEvent.Search(newQuery))
                                     screenState.searchQuery = newQuery
                                 },
                                 modifier = Modifier.fillMaxWidth(),
@@ -133,7 +133,7 @@ internal fun CountriesScreen(
                     IconButton(onClick = {
                         if (screenState.isSearchVisible) {
                             screenState.clearSearchQuery()
-                            viewModel.onEvent(DetailsEvent.Search(""))
+                            viewModel.onEvent(CountriesEvent.Search(""))
                         } else {
                             screenState.toggleSearchVisibility()
                         }
@@ -158,14 +158,14 @@ internal fun CountriesScreen(
         content = { innerPaddingModifier ->
             Crossfade(
                 modifier = Modifier.padding(innerPaddingModifier),
-                targetState = detailsUiState,
+                targetState = countriesUiState,
                 animationSpec = tween(500),
                 label = "cross fade"
             ) { targetState ->
                 when (targetState) {
-                    DetailsUiState.Empty -> Unit
+                    CountriesUiState.Empty -> Unit
 
-                    is DetailsUiState.Error -> {
+                    is CountriesUiState.Error -> {
                         targetState.errorMessage?.let { errorMessage ->
                             screenState.showSnackBar(
                                 message = errorMessage,
@@ -174,14 +174,14 @@ internal fun CountriesScreen(
                                     when (result) {
                                         SnackbarResult.ActionPerformed ->
                                             viewModel.onEvent(
-                                                DetailsEvent.GetCountries(
+                                                CountriesEvent.GetCountries(
                                                     continentCode = continentCode,
                                                     isRefreshing = true
                                                 )
                                             )
 
                                         SnackbarResult.Dismissed -> {
-                                            viewModel.onEvent(DetailsEvent.ConsumeErrorMessage)
+                                            viewModel.onEvent(CountriesEvent.ConsumeErrorMessage)
                                         }
                                     }
                                 }
@@ -189,15 +189,15 @@ internal fun CountriesScreen(
                         }
                     }
 
-                    DetailsUiState.Loading -> LoadingItem()
+                    CountriesUiState.Loading -> LoadingItem()
 
-                    is DetailsUiState.Success -> {
+                    is CountriesUiState.Success -> {
                         CountriesList(
                             isRefreshing = false,
                             countries = filteredCountries,
                             onRefresh = {
                                 viewModel.onEvent(
-                                    DetailsEvent.GetCountries(
+                                    CountriesEvent.GetCountries(
                                         continentCode = continentCode,
                                         isRefreshing = true
                                     )
@@ -206,7 +206,7 @@ internal fun CountriesScreen(
                         )
                     }
 
-                    DetailsUiState.Refreshing -> {
+                    CountriesUiState.Refreshing -> {
                         // todo
                     }
                 }
@@ -272,7 +272,7 @@ private fun CountryItem(
         ),
         modifier = modifier
             .clip(MaterialTheme.shapes.small)
-            .testTag(UiTags.DetailsScreen.COUNTRY_ITEM),
+            .testTag(UiTags.CountriesScreen.COUNTRY_ITEM),
         shape = MaterialTheme.shapes.small,
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
