@@ -3,9 +3,9 @@ CountriesApp App
 CountriesApp is a mobile application built with Android and Jetpack Compose that allows users to
 explore a list of countries and their details, organised by continent.
 
-<img width="1344" height="2992" alt="Screenshot_1758091487" src="https://github.com/user-attachments/assets/79ebeac9-bfa7-45e5-b1b4-515fe563e2a9" />
-<img width="1344" height="2992" alt="Screenshot_1758091499" src="https://github.com/user-attachments/assets/315d13cb-d380-4461-838d-9a9f357466f1" />
-<img width="1344" height="2992" alt="Screenshot_1758091508" src="https://github.com/user-attachments/assets/df6e48a8-5986-45d0-b873-79f07e4c93ba" />
+<img width="300" height="600" alt="Screenshot_1758091487" src="https://github.com/user-attachments/assets/79ebeac9-bfa7-45e5-b1b4-515fe563e2a9" />
+<img width="300" height="600" alt="Screenshot_1758091499" src="https://github.com/user-attachments/assets/315d13cb-d380-4461-838d-9a9f357466f1" />
+<img width="300" height="600" alt="Screenshot_1758091508" src="https://github.com/user-attachments/assets/df6e48a8-5986-45d0-b873-79f07e4c93ba" />
 
 
 # Features ✨ 
