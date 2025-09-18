@@ -21,35 +21,23 @@ explore a list of countries and their details, organised by continent.
 
 **Search Functionality:** Quickly find a country by its name using the search bar.
 
-# Features 🏗️ 
+# Architecture 🏗️ 
 This app is built using a modular architecture following the principles of Clean Architecture to
 ensure a separation of concerns, scalability, and testability. The project is organized into distinct modules:
 
-**app:** The main application module.
-
-**benchmark:** Contains performance benchmarks.
-
-**build-logic:** Centralised build configuration logic.
-
-**core:** Reusable core components.
-
-**common:** Shared utilities.
-
-**designsystem:** UI components and design tokens.
-
-**logging:** Logging implementation.
-
-**networking:** API and networking logic using Apollo GraphQL.
-
-**testing:** Test utilities and shared test code.
-
-**threading:** Threading and coroutine management.
-
-**feature:** Contains feature-specific modules.
-
-**continents:** Displays the list of continents.
-
-**countries:** Displays the countries for a selected continent.
+* **app:** The main application module.
+* **benchmark:** Contains performance benchmarks.
+* **build-logic:** Centralised build configuration logic.
+* **core:** Reusable core components.
+* **common:** Shared utilities.
+* **designsystem:** UI components and design tokens.
+* **logging:** Logging implementation.
+* **networking:** API and networking logic using Apollo GraphQL.
+* **testing:** Test utilities and shared test code.
+* **threading:** Threading and coroutine management.
+* **feature:** Contains feature-specific modules.
+* **continents:** Displays the list of continents.
+* **countries:** Displays the countries for a selected continent.
 
 # Technology Stack 🛠️
 [Kotlin](https://kotlinlang.org/): The primary programming language.
