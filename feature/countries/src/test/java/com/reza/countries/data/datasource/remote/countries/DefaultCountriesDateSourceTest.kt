@@ -6,6 +6,8 @@ import com.apollographql.apollo.testing.QueueTestNetworkTransport
 import com.apollographql.apollo.testing.enqueueTestResponse
 import com.google.common.truth.Truth.assertThat
 import com.reza.ContinentQuery
+import com.reza.countries.data.datasource.remote.CountriesRemoteDataSource
+import com.reza.countries.data.datasource.remote.DefaultCountriesRemoteDataSource
 import com.reza.type.buildContinent
 import com.reza.type.buildCountry
 import com.reza.type.buildLanguage
@@ -15,6 +17,7 @@ import org.junit.Test
 
 class DefaultCountriesDateSourceTest {
 
+    private lateinit var countriesRemoteDataSource: CountriesRemoteDataSource
     private lateinit var apolloClient: ApolloClient
 
     @OptIn(ApolloExperimental::class)
@@ -23,6 +26,8 @@ class DefaultCountriesDateSourceTest {
         apolloClient = ApolloClient.Builder()
             .networkTransport(QueueTestNetworkTransport())
             .build()
+
+        countriesRemoteDataSource = DefaultCountriesRemoteDataSource(apolloClient)
     }
 
     @OptIn(ApolloExperimental::class)
@@ -49,15 +54,12 @@ class DefaultCountriesDateSourceTest {
         apolloClient.enqueueTestResponse(query, data)
 
         // When
-        val actual = apolloClient
-            .query(query)
-            .execute()
-            .data
+        val result = countriesRemoteDataSource.getCountries("AF").data
 
         // Then
         assertThat(data.continent?.countries?.first()?.currency)
-            .isEqualTo(actual?.continent?.countries?.first()?.currency)
+            .isEqualTo(result?.continent?.countries?.first()?.currency)
         assertThat(data.continent?.countries?.first()?.name)
-            .isEqualTo(actual?.continent?.countries?.first()?.name)
+            .isEqualTo(result?.continent?.countries?.first()?.name)
     }
 }
