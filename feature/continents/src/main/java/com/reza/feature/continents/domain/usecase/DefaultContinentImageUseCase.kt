@@ -2,12 +2,16 @@ package com.reza.feature.continents.domain.usecase
 
 import com.reza.feature.continents.R
 import com.reza.feature.continents.domain.model.Continent
+import com.reza.threading.common.DefaultDispatcher
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-internal class DefaultContinentImageUseCase @Inject constructor() : ContinentImageUseCase {
+internal class DefaultContinentImageUseCase @Inject constructor(@DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher) :
+    ContinentImageUseCase {
 
-    override fun findContinentImage(name: String): Int {
-        return when (name) {
+    override suspend fun findContinentImage(name: String): Int = withContext(defaultDispatcher) {
+        when (name) {
             Continent.AFRICA -> R.drawable.ic_africa
             Continent.ANTARCTICA -> R.drawable.ic_antarctica
             Continent.ASIA -> R.drawable.ic_asia

@@ -4,6 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import com.reza.common.domain.model.ResultState
 import com.reza.feature.continents.domain.model.Continent
 import com.reza.feature.continents.domain.repository.ContinentRepository
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -20,13 +21,15 @@ class DefaultContinentsUseCaseTest {
 
     private lateinit var useCase: ContinentsUseCase
 
+    private val standardTestDispatcher = StandardTestDispatcher()
+
     @Before
     fun setup() {
-        useCase = DefaultContinentsUseCase(continentRepository = repository)
+        useCase = DefaultContinentsUseCase(continentRepository = repository, ioDispatcher = standardTestDispatcher)
     }
 
     @Test
-    fun `should return success with data when calling get countries`() = runTest {
+    fun `should return success with data when calling get countries`() = runTest(standardTestDispatcher.scheduler) {
         // Given
         val sampleContinents = listOf(Continent(name = "", code = ""))
         Mockito.`when`(repository.getContinents()).thenReturn(ResultState.Success(sampleContinents))
@@ -40,7 +43,7 @@ class DefaultContinentsUseCaseTest {
     }
 
     @Test
-    fun `should return failure when calling get countries`() = runTest {
+    fun `should return failure when calling get countries`() = runTest(standardTestDispatcher.scheduler) {
         // Given
         Mockito.`when`(repository.getContinents()).thenReturn(ResultState.Failure(error = ""))
 

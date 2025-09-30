@@ -49,7 +49,7 @@ class ContinentsViewModelTest {
             delay(1L)
             ResultState.Success(Continent.LIST_OF_CONTINENTS)
         }
-        every { continentImageUseCase.findContinentImage(any<String>()) } answers { -1 }
+        coEvery { continentImageUseCase.findContinentImage(any<String>()) } answers { -1 }
 
         // When
         viewModel.onEvent(ContinentsEvent.GetContinents())
@@ -74,7 +74,7 @@ class ContinentsViewModelTest {
             delay(1L)
             ResultState.Failure("")
         }
-        every { continentImageUseCase.findContinentImage(any<String>()) } answers { -1 }
+        coEvery { continentImageUseCase.findContinentImage(any<String>()) } answers { -1 }
 
         // When
         viewModel.onEvent(ContinentsEvent.GetContinents())
@@ -106,7 +106,7 @@ class ContinentsViewModelTest {
     fun continentsViewModel_onGetContinents_shouldNotCallApiAgain_whenContinentsUiStateIsAlreadySuccess() =
         runTest {
             // Given
-            every { continentImageUseCase.findContinentImage(any<String>()) } answers { -1 }
+            coEvery { continentImageUseCase.findContinentImage(any<String>()) } answers { -1 }
             viewModel.setContinentsUiStateToSuccess(ResultState.Success(Continent.LIST_OF_CONTINENTS))
 
             // When
@@ -130,7 +130,7 @@ class ContinentsViewModelTest {
                 delay(1L)
                 ResultState.Success(Continent.LIST_OF_CONTINENTS)
             }
-            every { continentImageUseCase.findContinentImage(any<String>()) } answers { -1 }
+            coEvery { continentImageUseCase.findContinentImage(any<String>()) } answers { -1 }
             viewModel.setContinentsUiStateToError(ResultState.Failure(""))
 
             // When
@@ -156,7 +156,7 @@ class ContinentsViewModelTest {
                 delay(1L)
                 ResultState.Success(Continent.LIST_OF_CONTINENTS)
             }
-            every { continentImageUseCase.findContinentImage(any<String>()) } answers { -1 }
+            coEvery { continentImageUseCase.findContinentImage(any<String>()) } answers { -1 }
             viewModel.setContinentsUiStateToSuccess(ResultState.Success(Continent.LIST_OF_CONTINENTS))
 
             // When

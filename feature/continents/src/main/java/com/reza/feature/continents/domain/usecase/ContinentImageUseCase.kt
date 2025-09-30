@@ -7,5 +7,5 @@ interface ContinentImageUseCase {
     /**
      * Finds the image resource ID for a continent based on its name.
      */
-    fun findContinentImage(name: String): Int
+    suspend fun findContinentImage(name: String): Int
 }
