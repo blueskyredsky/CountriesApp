@@ -60,7 +60,7 @@ class ContinentsViewModel @Inject constructor(
     }
 
     @VisibleForTesting
-    suspend fun setContinentsUiStateToSuccess(result: ResultState.Success<List<Continent>>) {
+    fun setContinentsUiStateToSuccess(result: ResultState.Success<List<Continent>>) {
         _continentsUiState.update {
             ContinentsUiState.Success(result.data.transformToContinentViews {
                 continentsImageUseCase.findContinentImage(it)
@@ -100,7 +100,7 @@ class ContinentsViewModel @Inject constructor(
  * corresponding image resource ID.
  * @return A list of [ContinentView] objects.
  */
-suspend fun List<Continent>.transformToContinentViews(imageResource: suspend (String) -> Int): List<ContinentView> =
+fun List<Continent>.transformToContinentViews(imageResource: (String) -> Int): List<ContinentView> =
     this.map { continent ->
         ContinentView(
             continent = continent,

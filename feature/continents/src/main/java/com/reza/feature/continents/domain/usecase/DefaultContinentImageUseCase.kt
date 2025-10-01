@@ -7,11 +7,10 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-internal class DefaultContinentImageUseCase @Inject constructor(@DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher) :
-    ContinentImageUseCase {
+internal class DefaultContinentImageUseCase : ContinentImageUseCase {
 
-    override suspend fun findContinentImage(name: String): Int = withContext(defaultDispatcher) {
-        when (name) {
+    override fun findContinentImage(name: String): Int {
+        return when (name) {
             Continent.AFRICA -> R.drawable.ic_africa
             Continent.ANTARCTICA -> R.drawable.ic_antarctica
             Continent.ASIA -> R.drawable.ic_asia
