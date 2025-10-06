@@ -3,11 +3,9 @@ package com.reza.feature.continents.presentation
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.reza.common.R
 import com.reza.common.domain.model.ResultState
 import com.reza.common.util.stringresolver.StringResolver
-import com.reza.common.R.string
-import com.reza.feature.continents.domain.model.Continent
-import com.reza.feature.continents.domain.usecase.ContinentImageUseCase
 import com.reza.feature.continents.domain.usecase.ContinentsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -20,7 +18,6 @@ import javax.inject.Inject
 @HiltViewModel
 class ContinentsViewModel @Inject constructor(
     private val continentsUseCase: ContinentsUseCase,
-    private val continentsImageUseCase: ContinentImageUseCase,
     private val stringResolver: StringResolver,
 ) : ViewModel() {
 
@@ -30,7 +27,7 @@ class ContinentsViewModel @Inject constructor(
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
         _continentsUiState.update {
             ContinentsUiState.Error(
-                exception.message ?: stringResolver.findString(string.general_error_message)
+                exception.message ?: stringResolver.findString(R.string.general_error_message)
             )
         }
     }
@@ -60,11 +57,9 @@ class ContinentsViewModel @Inject constructor(
     }
 
     @VisibleForTesting
-    fun setContinentsUiStateToSuccess(result: ResultState.Success<List<Continent>>) {
+    fun setContinentsUiStateToSuccess(result: ResultState.Success<List<ContinentView>>) {
         _continentsUiState.update {
-            ContinentsUiState.Success(result.data.transformToContinentViews {
-                continentsImageUseCase.findContinentImage(it)
-            })
+            ContinentsUiState.Success(result.data)
         }
     }
 
@@ -88,22 +83,3 @@ class ContinentsViewModel @Inject constructor(
         }
     }
 }
-
-/**
- * Transforms a list of [Continent] objects into a list of [ContinentView] objects.
- *
- * This extension function iterates through the list of continents and creates a corresponding
- * [ContinentView] for each continent. It uses the provided `imageResource` function to
- * retrieve the image resource ID for each continent based on its name.
- *
- * @param imageResource A function that takes a continent name as input and returns the
- * corresponding image resource ID.
- * @return A list of [ContinentView] objects.
- */
-fun List<Continent>.transformToContinentViews(imageResource: (String) -> Int): List<ContinentView> =
-    this.map { continent ->
-        ContinentView(
-            continent = continent,
-            imageResource = imageResource(continent.name)
-        )
-    }

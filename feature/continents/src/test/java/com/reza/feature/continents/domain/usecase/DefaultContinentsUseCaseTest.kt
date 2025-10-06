@@ -4,11 +4,13 @@ import com.google.common.truth.Truth.assertThat
 import com.reza.common.domain.model.ResultState
 import com.reza.feature.continents.domain.model.Continent
 import com.reza.feature.continents.domain.repository.ContinentRepository
+import com.reza.feature.continents.presentation.ContinentView
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
@@ -19,38 +21,54 @@ class DefaultContinentsUseCaseTest {
     @Mock
     private lateinit var repository: ContinentRepository
 
+    @Mock
+    private lateinit var continentImageUseCase: ContinentImageUseCase
+
     private lateinit var useCase: ContinentsUseCase
 
     private val standardTestDispatcher = StandardTestDispatcher()
 
     @Before
     fun setup() {
-        useCase = DefaultContinentsUseCase(continentRepository = repository, ioDispatcher = standardTestDispatcher)
+        useCase = DefaultContinentsUseCase(
+            continentRepository = repository,
+            ioDispatcher = standardTestDispatcher,
+            continentImageUseCase = continentImageUseCase
+        )
     }
 
     @Test
-    fun `should return success with data when calling get countries`() = runTest(standardTestDispatcher.scheduler) {
-        // Given
-        val sampleContinents = listOf(Continent(name = "", code = ""))
-        Mockito.`when`(repository.getContinents()).thenReturn(ResultState.Success(sampleContinents))
+    fun `should return success with data when calling get countries`() =
+        runTest(standardTestDispatcher.scheduler) {
+            // Given
+            val sampleContinents = listOf(Continent(name = "", code = ""))
+            Mockito.`when`(repository.getContinents())
+                .thenReturn(ResultState.Success(sampleContinents))
+            Mockito.`when`(continentImageUseCase.findContinentImage(anyString())).thenReturn(-1)
 
-        // When
-        val continents = useCase.getContinents()
+            // When
+            val continents = useCase.getContinents()
 
-        // Then
-        assertThat(continents).isInstanceOf(ResultState.Success::class.java)
-        assertThat(continents).isEqualTo(ResultState.Success(sampleContinents))
-    }
+            // Then
+            assertThat(continents).isInstanceOf(ResultState.Success::class.java)
+            assertThat(continents).isEqualTo(ResultState.Success(sampleContinents.map {
+                ContinentView(
+                    continent = it,
+                    imageResource = continentImageUseCase.findContinentImage(it.name)
+                )
+            }))
+        }
 
     @Test
-    fun `should return failure when calling get countries`() = runTest(standardTestDispatcher.scheduler) {
-        // Given
-        Mockito.`when`(repository.getContinents()).thenReturn(ResultState.Failure(error = ""))
+    fun `should return failure when calling get countries`() =
+        runTest(standardTestDispatcher.scheduler) {
+            // Given
+            Mockito.`when`(repository.getContinents()).thenReturn(ResultState.Failure(error = ""))
 
-        // When
-        val continents = useCase.getContinents()
+            // When
+            val continents = useCase.getContinents()
 
-        // Then
-        assertThat(continents).isInstanceOf(ResultState.Failure::class.java)
-    }
+            // Then
+            assertThat(continents).isInstanceOf(ResultState.Failure::class.java)
+        }
 }

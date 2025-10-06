@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-internal class DefaultContinentImageUseCase : ContinentImageUseCase {
+internal class DefaultContinentImageUseCase @Inject constructor() : ContinentImageUseCase {
 
     override fun findContinentImage(name: String): Int {
         return when (name) {

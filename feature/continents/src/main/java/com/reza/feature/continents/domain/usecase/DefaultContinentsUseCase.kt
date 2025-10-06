@@ -3,6 +3,7 @@ package com.reza.feature.continents.domain.usecase
 import com.reza.common.domain.model.ResultState
 import com.reza.feature.continents.domain.model.Continent
 import com.reza.feature.continents.domain.repository.ContinentRepository
+import com.reza.feature.continents.presentation.ContinentView
 import com.reza.threading.common.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -10,9 +11,27 @@ import javax.inject.Inject
 
 internal class DefaultContinentsUseCase @Inject constructor(
     private val continentRepository: ContinentRepository,
+    private val continentImageUseCase: ContinentImageUseCase,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : ContinentsUseCase {
-    override suspend fun getContinents(): ResultState<List<Continent>> = withContext(ioDispatcher) {
-        continentRepository.getContinents()
+    override suspend fun getContinents(): ResultState<List<ContinentView>> = withContext(ioDispatcher) {
+        when (val result = continentRepository.getContinents()) {
+            is ResultState.Success -> {
+                ResultState.Success(result.data.transformToContinentViews {
+                    continentImageUseCase.findContinentImage(it)
+                })
+            }
+            is ResultState.Failure -> {
+                ResultState.Failure(result.error)
+            }
+        }
     }
 }
+
+private fun List<Continent>.transformToContinentViews(imageResource: (String) -> Int): List<ContinentView> =
+    this.map { continent ->
+        ContinentView(
+            continent = continent,
+            imageResource = imageResource(continent.name)
+        )
+    }
