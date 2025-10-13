@@ -26,6 +26,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.reza.feature.continents.R
 import com.reza.feature.continents.domain.model.Continent
 import com.reza.feature.continents.presentation.components.ContinentList
+import com.reza.systemdesign.ui.common.LoadingItem
 import com.reza.systemdesign.ui.common.ShimmerLazyColumn
 import com.reza.systemdesign.ui.util.UiTags
 
@@ -111,7 +112,8 @@ fun ContinentsScreen(
                         }
 
                         ContinentsUiState.Loading -> {
-                            ShimmerLazyColumn()
+//                            ShimmerLazyColumn()
+                            LoadingItem()
                         }
                         ContinentsUiState.Refreshing -> Unit
                     }
