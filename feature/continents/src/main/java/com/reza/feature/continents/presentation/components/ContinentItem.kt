@@ -25,7 +25,6 @@ import com.reza.feature.continents.domain.model.Continent
 import com.reza.feature.continents.presentation.ContinentView
 import com.reza.systemdesign.ui.util.UiTags
 
-
 @Composable
 internal fun ContinentItem(
     modifier: Modifier = Modifier,
@@ -38,12 +37,12 @@ internal fun ContinentItem(
             contentColor = MaterialTheme.colorScheme.onSurface
         ),
         modifier = modifier
-            .clip(MaterialTheme.shapes.small)
             .clickable { onSelectContinent(continentView.continent) }
-            .testTag(UiTags.ContinentScreen.CONTINENT_ITEM),
+            .testTag(UiTags.ContinentScreen.CONTINENT_ITEM)
+            .clip(MaterialTheme.shapes.small),
         shape = MaterialTheme.shapes.small,
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 8.dp
+            defaultElevation = 2.dp
         )
     ) {
         Row(

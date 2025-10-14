@@ -30,8 +30,7 @@ internal fun ContinentList(
         ) { continentView ->
             ContinentItem(
                 modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .padding(top = 16.dp)
+                    .padding(top = 16.dp, start = 16.dp, end = 16.dp)
                     .fillMaxWidth(),
                 continentView = continentView,
                 onSelectContinent = onSelectContinent

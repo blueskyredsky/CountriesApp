@@ -112,7 +112,6 @@ fun ContinentsScreen(
                         }
 
                         ContinentsUiState.Loading -> {
-//                            ShimmerLazyColumn()
                             LoadingItem()
                         }
                         ContinentsUiState.Refreshing -> Unit
