@@ -1,6 +1,7 @@
 package com.reza.feature.continents.presentation.components
 
 import android.content.res.Configuration
+import androidx.activity.compose.ReportDrawnWhen
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -8,12 +9,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import com.reza.countriesapp.ui.theme.CountriesAppTheme
 import com.reza.feature.continents.R
 import com.reza.feature.continents.domain.model.Continent
 import com.reza.feature.continents.presentation.ContinentView
+import com.reza.systemdesign.ui.util.UiTags
 
 @Composable
 internal fun ContinentList(
@@ -21,8 +24,12 @@ internal fun ContinentList(
     modifier: Modifier = Modifier,
     onSelectContinent: (Continent) -> Unit,
 ) {
+    ReportDrawnWhen { continents.isNotEmpty() }
+
     LazyColumn(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier
+            .testTag(UiTags.ContinentScreen.CONTINENTS_LAZY_COLUMN)
+            .fillMaxSize()
     ) {
         items(
             key = { item -> item.continent.code },

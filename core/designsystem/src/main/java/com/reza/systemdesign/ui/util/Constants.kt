@@ -6,6 +6,7 @@ object UiTags {
     }
     object ContinentScreen {
         const val ROOT = "continents_screen_root"
+        const val CONTINENTS_LAZY_COLUMN = "continents_lazy_column"
         const val SHIMMER_LAZY_COLUMN = "shimmer_lazy_column"
         const val CONTINENT_ITEM = "continent_item"
     }

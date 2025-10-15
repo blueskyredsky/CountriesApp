@@ -41,6 +41,8 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.designsystem)
+
     implementation(libs.androidx.test.ext.junit)
     implementation(libs.espresso.core)
     implementation(libs.uiautomator)
