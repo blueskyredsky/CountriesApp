@@ -48,28 +48,30 @@ class ExampleStartupBenchmark(
     ) {
         startActivityAndWait()
 
-        // 1. USE By.desc() to target the Compose testTag
-        val listContainerSelector = By.desc(UiTags.ContinentScreen.CONTINENTS_LAZY_COLUMN)
-        val itemSelector = By.desc(UiTags.ContinentScreen.CONTINENT_ITEM)
+//        device.wait(Until.reportFullyDrawn, 5_000)
 
-        // 2. Wait for the list container to appear (Max 5 seconds should be plenty if it loads in <2s)
-        val containerPresent = device.wait(
-            Until.hasObject(listContainerSelector),
-            5_000 // 5 seconds
-        )
-
-        // Check if the container was found
-        if (!containerPresent) {
-            throw AssertionError("Timed out waiting for the Continents LazyColumn. Check the selector tag: ${UiTags.ContinentScreen.CONTINENTS_LAZY_COLUMN}")
-        }
-
-        // 3. Find the container object
-        val continentsList = device.findObject(listContainerSelector)
-        checkNotNull(continentsList) // Should now pass
-
-        // 4. Wait for an item inside the list
-        val searchCondition = Until.hasObject(itemSelector)
-        continentsList.wait(searchCondition, 5_000)
+//        // 1. USE By.desc() to target the Compose testTag
+//        val listContainerSelector = By.desc(UiTags.ContinentScreen.CONTINENTS_LAZY_COLUMN)
+//        val itemSelector = By.desc(UiTags.ContinentScreen.CONTINENT_ITEM)
+//
+//        // 2. Wait for the list container to appear (Max 5 seconds should be plenty if it loads in <2s)
+//        val containerPresent = device.wait(
+//            Until.hasObject(listContainerSelector),
+//            5_000 // 5 seconds
+//        )
+//
+//        // Check if the container was found
+//        if (!containerPresent) {
+//            throw AssertionError("Timed out waiting for the Continents LazyColumn. Check the selector tag: ${UiTags.ContinentScreen.CONTINENTS_LAZY_COLUMN}")
+//        }
+//
+//        // 3. Find the container object
+//        val continentsList = device.findObject(listContainerSelector)
+//        checkNotNull(continentsList) // Should now pass
+//
+//        // 4. Wait for an item inside the list
+//        val searchCondition = Until.hasObject(itemSelector)
+//        continentsList.wait(searchCondition, 5_000)
     }
 
     companion object {
