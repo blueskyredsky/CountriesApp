@@ -72,7 +72,6 @@ class ContinentsScreenTest {
         // Manually create the ContinentViewModel using the injected fakes
         continentsViewModel = ContinentsViewModel(
             continentsUseCase = fakeContinentsUseCase,
-            continentsImageUseCase = fakeContinentImageUseCase,
             stringResolver = fakeStringResolver
         )
     }
