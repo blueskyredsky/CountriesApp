@@ -17,6 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.reza.countriesapp.ui.theme.CountriesAppTheme
@@ -38,7 +40,8 @@ internal fun ContinentItem(
         ),
         modifier = modifier
             .clickable { onSelectContinent(continentView.continent) }
-            .testTag(UiTags.ContinentScreen.CONTINENT_ITEM)
+            .testTag("continent_item")
+            .semantics { contentDescription = "continent_item" }
             .clip(MaterialTheme.shapes.small),
         shape = MaterialTheme.shapes.small,
         elevation = CardDefaults.cardElevation(

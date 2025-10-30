@@ -26,8 +26,8 @@ class ExampleStartupBenchmark {
         pressHome()
         startActivityAndWait()
 
-        val contentList = device.findObject(By.res("continent_list"))
-        val searchCondition = Until.hasObject(By.res("continent_item"))
+        val contentList = device.findObject(By.desc("continent_list"))
+        val searchCondition = Until.hasObject(By.desc("continent_item"))
         // Wait until a continent item within the list is rendered
         contentList.wait(searchCondition, 5_000)
     }

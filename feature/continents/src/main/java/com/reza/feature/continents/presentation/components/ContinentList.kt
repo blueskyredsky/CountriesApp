@@ -10,6 +10,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import com.reza.countriesapp.ui.theme.CountriesAppTheme
@@ -28,7 +30,8 @@ internal fun ContinentList(
 
     LazyColumn(
         modifier = modifier
-            .testTag(UiTags.ContinentScreen.CONTINENTS_LAZY_COLUMN)
+            .testTag("continent_list")
+            .semantics { contentDescription = "continent_list" }
             .fillMaxSize()
     ) {
         items(
