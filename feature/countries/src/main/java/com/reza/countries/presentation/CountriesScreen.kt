@@ -44,6 +44,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.reza.countries.domain.model.Country
@@ -235,6 +237,10 @@ private fun CountriesList(
     Box(modifier = modifier.fillMaxSize()) {
         LazyColumn(
             modifier = Modifier
+                .testTag("country_list")
+                .semantics {
+                    contentDescription = "country_list"
+                }
                 .padding(vertical = 8.dp)
                 .fillMaxSize()
                 .pullRefresh(pullRefreshState)
@@ -272,7 +278,10 @@ private fun CountryItem(
         ),
         modifier = modifier
             .clip(MaterialTheme.shapes.small)
-            .testTag(UiTags.CountriesScreen.COUNTRY_ITEM),
+            .testTag("country_item")
+            .semantics {
+                contentDescription = "country_item"
+            },
         shape = MaterialTheme.shapes.small,
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
