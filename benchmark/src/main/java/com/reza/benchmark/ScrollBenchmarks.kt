@@ -22,40 +22,40 @@ class ScrollBenchmarks {
             packageName = "com.reza.countriesapp.production",
             iterations = 2,
             metrics = listOf(FrameTimingMetric()),
-            startupMode = StartupMode.COLD,
+            startupMode = StartupMode.WARM,
             setupBlock = {
-                // Start the default activity, but don't measure the frames yet
                 pressHome()
-                startActivityAndWait()
+                startActivityAndWait() // Starts the app and waits for the first frame
 
                 val continentList = device.findObject(By.desc("continent_list"))
-                val continentItemCondition = Until.hasObject(By.desc("continent_item"))
-                // Wait until a continent item within the list is rendered
-                continentList.wait(continentItemCondition, 2_000)
+                // Wait until the initial list is rendered
+                continentList.wait(Until.hasObject(By.desc("continent_item")), 2_000)
 
                 // Select the first continent item
                 val item = device.findObjects(By.desc("continent_item"))[0]
                 item.click()
 
-                // Wait until the screen is gone
-                device.wait(Until.gone(By.desc("continent_list")), 1_000)
+                // Wait for the OLD screen to be GONE (Increased timeout for stability)
+                device.wait(Until.gone(By.desc("continent_list")), 5_000)
 
-                val newScreenListCondition = Until.hasObject(By.desc("country_list"))
-                device.wait(newScreenListCondition, 5_000)
+                // Wait for the NEW screen's main element to EXIST
+                device.wait(Until.hasObject(By.desc("country_list")), 5_000)
             }
         ) {
-            val countryList = device.findObject(By.desc("country_list"))
-            val countryItemCondition = Until.hasObject(By.desc("country_item"))
-            // Wait until a country item within the list is rendered
-            countryList.wait(countryItemCondition, 2_000)
+            // MEASUREMENT BLOCK
 
-            // Set gesture margin to avoid triggering gesture navigation
+            // 1. Reliably find the list UiObject2 before measurement starts
+            val countryList = device.wait(
+                Until.findObject(By.desc("country_list")),
+                5_000
+            ) ?: throw IllegalStateException("Country list not found for measurement.")
+
+            // 2. Wait for the list items to be visible
+            countryList.wait(Until.hasObject(By.desc("country_item")), 2_000)
+
+            // Set gesture margin and scroll
             countryList.setGestureMargin(device.displayWidth / 5)
-
-            // Scroll down the list
             countryList.fling(Direction.DOWN)
-
-            // Wait for the scroll to finish
             device.waitForIdle()
         }
     }
