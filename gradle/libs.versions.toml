@@ -35,6 +35,8 @@ runner = "1.7.0"
 kotlin = "2.1.0"
 kotlinxSerializationJson = "1.9.0"
 agp = "8.11.1"
+baselineprofile = "1.2.4"
+profileinstaller = "1.4.1"
 
 [libraries]
 androidx-core = { module = "androidx.test:core", version.ref = "core" }
@@ -78,6 +80,7 @@ google-material = { group = "com.google.android.material", name = "material", ve
 compose-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "compose-lifecycle" }
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+androidx-profileinstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "profileinstaller" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }
@@ -91,5 +94,6 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt" }
 kotlin-parcelize = { id = "kotlin-parcelize" }
+baselineprofile = { id = "androidx.baselineprofile", version.ref = "baselineprofile" }
 
 [bundles]
