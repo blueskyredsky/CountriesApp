@@ -1,9 +1,12 @@
 package com.baselineprofile
 
+import androidx.benchmark.macro.MacrobenchmarkScope
 import androidx.benchmark.macro.junit4.BaselineProfileRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.uiautomator.By
+import androidx.test.uiautomator.Until
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -65,4 +68,14 @@ class BaselineProfileGenerator {
             // https://d.android.com/training/testing/other-components/ui-automator
         }
     }
+}
+
+fun MacrobenchmarkScope.waitForAsyncContent() {
+    device.wait(Until.hasObject(By.desc("continent_list")), 5_000)
+    val continentList = device.findObject(By.desc("continent_list"))
+    continentList.wait(Until.hasObject(By.desc("continent_item")), 5_000)
+}
+
+fun MacrobenchmarkScope.goToCountriesScreenJourney() {
+
 }
