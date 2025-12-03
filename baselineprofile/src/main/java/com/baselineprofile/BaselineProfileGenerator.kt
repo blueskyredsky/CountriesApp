@@ -6,6 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
+import androidx.test.uiautomator.Direction
 import androidx.test.uiautomator.Until
 import org.junit.Rule
 import org.junit.Test
@@ -77,5 +78,22 @@ fun MacrobenchmarkScope.waitForAsyncContent() {
 }
 
 fun MacrobenchmarkScope.goToCountriesScreenJourney() {
+    val item = device.findObjects(By.desc("continent_item"))[0]
+    item.click()
 
+    device.wait(Until.gone(By.desc("continent_list")), 5_000)
+    device.wait(Until.hasObject(By.desc("country_list")), 5_000)
+}
+
+fun MacrobenchmarkScope.scrollCountriesListJourney() {
+    val countryList = device.wait(
+        Until.findObject(By.desc("country_list")),
+        5_000
+    ) ?: throw IllegalStateException("Country list not found for measurement.")
+
+    countryList.wait(Until.hasObject(By.desc("country_item")), 2_000)
+
+    countryList.setGestureMargin(device.displayWidth / 5)
+    countryList.fling(Direction.DOWN)
+    device.waitForIdle()
 }
