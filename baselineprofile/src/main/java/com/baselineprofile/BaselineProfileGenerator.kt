@@ -59,6 +59,9 @@ class BaselineProfileGenerator {
             pressHome()
             startActivityAndWait()
 
+            waitForAsyncContent()
+            goToCountriesScreenJourney()
+            scrollCountriesListJourney()
             // TODO Write more interactions to optimize advanced journeys of your app.
             // For example:
             // 1. Wait until the content is asynchronously loaded
