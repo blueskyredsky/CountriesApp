@@ -33,10 +33,13 @@ class ScrollBenchmarks {
             startupMode = StartupMode.WARM,
             iterations = 10,
             setupBlock = {
-                // TODO implement
+                pressHome()
+                startActivityAndWait()
             },
             measureBlock = {
-                // TODO implement
+                waitForAsyncContent()
+                goToCountriesScreenJourney()
+                scrollCountriesListJourney()
             }
         )
     }
